@@ -1,0 +1,24 @@
+{
+  "version": 2,
+  "name": "earthcone-home-nursing",
+  "builds": [
+    {
+      "src": "public/**/*",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "api/inquiry.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/inquiry",
+      "dest": "/api/inquiry.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/public/$1"
+    }
+  ]
+}
