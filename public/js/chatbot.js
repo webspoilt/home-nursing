@@ -408,7 +408,7 @@
             answers[step.id] = value;
             currentStep++;
             if (currentStep >= steps.length) {
-              setTimeout(() => showSummary(), 300);
+              setTimeout(() => directToWhatsApp(), 300);
             } else {
               setTimeout(() => processStep(), 300);
             }
@@ -440,6 +440,23 @@
           showRestartButton();
         }, 300);
       }, 500);
+    }, 600);
+  }
+
+  function directToWhatsApp() {
+    showTyping();
+    setTimeout(() => {
+      hideTyping();
+      addBotMessage('Thank you! 🙏 Connecting you to our care team on WhatsApp...');
+      const waMsg = buildWhatsAppMessage();
+      const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(waMsg)}`;
+      setTimeout(() => {
+        window.open(url, '_blank');
+        setTimeout(() => {
+          addBotMessage('WhatsApp opened! Our team will respond within minutes. 💚');
+          showRestartButton();
+        }, 500);
+      }, 800);
     }, 600);
   }
 
