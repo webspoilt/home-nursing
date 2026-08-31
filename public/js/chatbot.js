@@ -249,9 +249,34 @@
         40% { transform: scale(1); opacity: 1; }
       }
 
+      #ec-greeting-bubble {
+        position: fixed; bottom: 92px; right: 24px; z-index: 9997;
+        background: #fff; color: #334155;
+        padding: 14px 18px; border-radius: 16px;
+        border-bottom-right-radius: 4px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        font-size: 14px; font-weight: 600; line-height: 1.4;
+        font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+        max-width: 260px;
+        transform: scale(0.8) translateY(10px);
+        opacity: 0; pointer-events: none;
+        transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+        cursor: pointer;
+      }
+      #ec-greeting-bubble.show {
+        transform: scale(1) translateY(0);
+        opacity: 1; pointer-events: auto;
+      }
+      #ec-greeting-bubble .ec-close-greet {
+        position: absolute; top: 4px; right: 8px;
+        background: none; border: none; color: #94a3b8;
+        font-size: 16px; cursor: pointer; line-height: 1;
+      }
+
       @media (max-width: 420px) {
         #ec-chatbot-panel { right: 8px; bottom: 90px; width: calc(100vw - 16px); }
         #ec-chatbot-toggle { bottom: 18px; right: 18px; width: 54px; height: 54px; }
+        #ec-greeting-bubble { right: 18px; bottom: 80px; max-width: 220px; font-size: 13px; }
       }
     `;
     document.head.appendChild(style);
@@ -283,16 +308,56 @@
 
     // Events
     toggle.addEventListener('click', () => {
-      isOpen = !isOpen;
-      panel.classList.toggle('open', isOpen);
-      toggle.classList.toggle('open', isOpen);
-      toggle.innerHTML = isOpen
-        ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`
-        : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`;
-      if (isOpen && currentStep === 0 && document.getElementById('ec-chat-body').children.length === 0) {
-        startChat();
-      }
+      openChat(toggle, panel);
     });
+
+    // Greeting Bubble
+    const greeting = document.createElement('div');
+    greeting.id = 'ec-greeting-bubble';
+    greeting.innerHTML = `
+      <button class="ec-close-greet" aria-label="Close">&times;</button>
+      👋 Hi! Need help finding the right nursing care? I can assist you!`;
+    document.body.appendChild(greeting);
+
+    // Close greeting bubble (X button)
+    greeting.querySelector('.ec-close-greet').addEventListener('click', (e) => {
+      e.stopPropagation();
+      greeting.classList.remove('show');
+    });
+
+    // Click greeting bubble → open chatbot
+    greeting.addEventListener('click', () => {
+      greeting.classList.remove('show');
+      if (!isOpen) openChat(toggle, panel);
+    });
+
+    // Auto-show greeting bubble after 2 seconds
+    setTimeout(() => {
+      if (!isOpen) greeting.classList.add('show');
+    }, 2000);
+
+    // Auto-open chatbot after 5 seconds if still not opened
+    setTimeout(() => {
+      if (!isOpen) {
+        greeting.classList.remove('show');
+        openChat(toggle, panel);
+      }
+    }, 5000);
+  }
+
+  function openChat(toggle, panel) {
+    isOpen = !isOpen;
+    panel.classList.toggle('open', isOpen);
+    toggle.classList.toggle('open', isOpen);
+    // Hide greeting bubble when chat is open
+    const greeting = document.getElementById('ec-greeting-bubble');
+    if (greeting && isOpen) greeting.classList.remove('show');
+    toggle.innerHTML = isOpen
+      ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`
+      : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`;
+    if (isOpen && currentStep === 0 && document.getElementById('ec-chat-body').children.length === 0) {
+      startChat();
+    }
   }
 
   // ── Chat Logic ──
