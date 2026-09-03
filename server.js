@@ -1,88 +1,157 @@
 const express = require('express');
 const path = require('path');
-const fs = require('fs');
+const cors = require('cors');
+const helmet = require('helmet');
+const compression = require('compression');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const ADMIN_KEY = process.env.ADMIN_API_KEY || 'earthcone-admin-2024';
+
+// Database module
+const {
+  initDatabase,
+  insertLead,
+  insertInquiry,
+  getAllLeads,
+  getAllInquiries,
+  getLeadCount,
+  getInquiryCount
+} = require('./db/database');
 
 // Middleware
+app.use(cors());
+app.use(helmet({ contentSecurityPolicy: false }));
+app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Lead Storage Database file path (lightweight production local DB)
-const LEADS_FILE = path.join(__dirname, 'data', 'leads.json');
+// Target WhatsApp number
+const TARGET_WHATSAPP = '919931450495';
 
-// Ensure data directory exists
-if (!fs.existsSync(path.join(__dirname, 'data'))) {
-  fs.mkdirSync(path.join(__dirname, 'data'));
-}
-if (!fs.existsSync(LEADS_FILE)) {
-  fs.writeFileSync(LEADS_FILE, JSON.stringify([]));
-}
-
-// API Endpoint to capture and log customer inquiries before forwarding
-app.post('/api/inquiry', (req, res) => {
+// ── Lead Capture API (Used by Estimator Form & Chatbot) ──
+app.post('/api/leads', (req, res) => {
   try {
-    const { name, phone, service, duration, location, notes, timestamp } = req.body;
+    const { phone, email, service, source, name, details } = req.body;
 
-    if (!name || !phone) {
-      return res.status(400).json({ success: false, message: 'Name and Phone are required.' });
+    if (!phone || phone.replace(/\D/g, '').length < 8) {
+      return res.status(400).json({ success: false, message: 'Valid phone number is required.' });
     }
 
-    const newLead = {
-      id: 'LEAD-' + Date.now(),
-      name,
-      phone,
-      service: service || 'General Nursing Inquiry',
-      duration: duration || 'Not specified',
-      location: location || 'Bangalore',
-      notes: notes || '',
-      receivedAt: timestamp || new Date().toISOString(),
-      status: 'New'
-    };
+    const leadId = insertLead({
+      phone: phone.trim(),
+      email: (email || '').trim(),
+      service: service || 'General Nursing Care',
+      source: source || 'estimate-form'
+    });
 
-    // Save lead to persistent storage
-    const rawData = fs.readFileSync(LEADS_FILE, 'utf8');
-    const leads = JSON.parse(rawData || '[]');
-    leads.unshift(newLead);
-    fs.writeFileSync(LEADS_FILE, JSON.stringify(leads, null, 2));
+    // Generate formatted WhatsApp handoff URL
+    let waMsg = `*Hello EarthCone Home Nursing!* 💚\n`;
+    waMsg += `I just requested an estimate on your website.\n\n`;
+    if (name) waMsg += `👤 *Name:* ${name}\n`;
+    waMsg += `📞 *Phone:* ${phone.trim()}\n`;
+    if (email) waMsg += `✉️ *Email:* ${email.trim()}\n`;
+    waMsg += `🩺 *Service:* ${service || 'General Nursing Care'}\n`;
+    if (details) waMsg += `📝 *Details:* ${details}\n`;
+    waMsg += `\n_Ref ID: EC-${leadId}_`;
+    waMsg += `\n_Please share an estimate and care availability._`;
 
-    // Construct formatted WhatsApp redirect link
-    const targetNumber = '919931450495';
-    let waMessage = `*Hello EarthCone Home Nursing, I would like to book a service:*\n\n`;
-    waMessage += `👤 *Name:* ${name}\n`;
-    waMessage += `📞 *Contact Phone:* ${phone}\n`;
-    waMessage += `🩺 *Service Required:* ${service}\n`;
-    if (duration) waMessage += `⏱️ *Shift / Duration:* ${duration}\n`;
-    waMessage += `📍 *Location in Bengaluru:* ${location}\n`;
-    if (notes && notes.trim() !== '') waMessage += `📝 *Patient Notes:* ${notes.trim()}\n`;
-    waMessage += `\n_Reference ID: ${newLead.id}_`;
-
-    const encodedMessage = encodeURIComponent(waMessage);
-    const waUrl = `https://wa.me/${targetNumber}?text=${encodedMessage}`;
+    const waUrl = `https://wa.me/${TARGET_WHATSAPP}?text=${encodeURIComponent(waMsg)}`;
 
     return res.status(200).json({
       success: true,
-      message: 'Inquiry registered successfully',
-      leadId: newLead.id,
+      message: 'Lead registered successfully in database.',
+      leadId: `EC-${leadId}`,
       whatsappUrl: waUrl
     });
 
   } catch (error) {
-    console.error('Lead processing error:', error);
+    console.error('Lead capture error:', error);
+    return res.status(500).json({ success: false, message: 'Server error saving lead.' });
+  }
+});
+
+// ── Full Inquiry API (Hero Form, Contact Form, Chatbot) ──
+app.post('/api/inquiry', (req, res) => {
+  try {
+    const { name, phone, service, duration, location, notes, source } = req.body;
+
+    if (!phone || phone.replace(/\D/g, '').length < 8) {
+      return res.status(400).json({ success: false, message: 'Valid phone number is required.' });
+    }
+
+    const leadId = insertInquiry({
+      name: (name || 'Customer').trim(),
+      phone: phone.trim(),
+      service: service || 'General Nursing Inquiry',
+      duration: duration || '',
+      location: location || 'Bengaluru',
+      notes: notes || '',
+      source: source || 'inquiry-form'
+    });
+
+    // Also store in leads table for consolidated sales follow-up
+    try {
+      insertLead({
+        phone: phone.trim(),
+        email: '',
+        service: service || 'General Nursing Inquiry',
+        source: source || 'inquiry-form'
+      });
+    } catch (e) {
+      // safe fallback
+    }
+
+    // WhatsApp Message
+    let waMsg = `*Hello EarthCone Home Nursing, I would like to book a service:*\n\n`;
+    waMsg += `👤 *Name:* ${(name || 'Customer').trim()}\n`;
+    waMsg += `📞 *Contact:* ${phone.trim()}\n`;
+    waMsg += `🩺 *Service:* ${service || 'General Nursing'}\n`;
+    if (duration) waMsg += `⏱️ *Duration:* ${duration}\n`;
+    if (location) waMsg += `📍 *Location:* ${location}\n`;
+    if (notes && notes.trim()) waMsg += `📝 *Notes:* ${notes.trim()}\n`;
+    waMsg += `\n_Ref: EC-${leadId}_`;
+
+    const waUrl = `https://wa.me/${TARGET_WHATSAPP}?text=${encodeURIComponent(waMsg)}`;
+
+    return res.status(200).json({
+      success: true,
+      message: 'Inquiry registered successfully in database.',
+      leadId: `EC-${leadId}`,
+      whatsappUrl: waUrl
+    });
+
+  } catch (error) {
+    console.error('Inquiry error:', error);
     return res.status(500).json({ success: false, message: 'Server error processing inquiry.' });
   }
 });
 
-// Admin endpoint to view captured leads (can be protected with API key)
+// ── Admin: View Captured Leads & Inquiries ──
 app.get('/api/leads', (req, res) => {
+  const key = req.query.key || req.headers['x-api-key'];
+  if (key !== ADMIN_KEY) {
+    return res.status(401).json({ error: 'Unauthorized. Provide ?key=YOUR_KEY or x-api-key header.' });
+  }
+
   try {
-    const rawData = fs.readFileSync(LEADS_FILE, 'utf8');
-    const leads = JSON.parse(rawData || '[]');
-    res.status(200).json({ count: leads.length, leads });
+    const leads = getAllLeads();
+    const inquiries = getAllInquiries();
+    const leadCount = getLeadCount();
+    const inquiryCount = getInquiryCount();
+
+    res.status(200).json({
+      summary: {
+        totalLeads: leadCount,
+        totalInquiries: inquiryCount,
+        database: 'SQLite (sql.js persistent)'
+      },
+      leads,
+      inquiries
+    });
   } catch (error) {
-    res.status(500).json({ error: 'Unable to retrieve leads.' });
+    res.status(500).json({ error: 'Unable to retrieve leads from database.' });
   }
 });
 
@@ -91,10 +160,22 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.listen(PORT, () => {
-  console.log(`=======================================================`);
-  console.log(`🩺 EarthCone Home Nursing Production Server is Running`);
-  console.log(`🌐 URL: http://localhost:${PORT}`);
-  console.log(`📊 Leads API: http://localhost:${PORT}/api/leads`);
-  console.log(`=======================================================`);
-});
+// Start Server after initializing database
+async function startServer() {
+  try {
+    await initDatabase();
+    app.listen(PORT, () => {
+      console.log(`═════════════════════════════════════════════════════`);
+      console.log(`🩺 EarthCone Home Nursing Production Server Running`);
+      console.log(`🌐 URL:        http://localhost:${PORT}`);
+      console.log(`📊 Admin API:  http://localhost:${PORT}/api/leads?key=${ADMIN_KEY}`);
+      console.log(`💾 Database:   SQLite (db/earthcone.db)`);
+      console.log(`═════════════════════════════════════════════════════`);
+    });
+  } catch (err) {
+    console.error('Fatal: Failed to initialize SQLite database:', err);
+    process.exit(1);
+  }
+}
+
+startServer();

@@ -91,7 +91,7 @@
         <a href="#home" class="hover:text-teal-600 transition">Home</a>
         <a href="#services" class="hover:text-teal-600 transition">Services</a>
         <a href="#estimator" class="hover:text-teal-600 transition flex items-center gap-1 text-teal-700 bg-teal-50 px-2.5 py-1 rounded-lg border border-teal-100">
-          <i data-lucide="calculator" class="w-3.5 h-3.5"></i> Rate Estimator
+          <i data-lucide="calculator" class="w-3.5 h-3.5"></i> Get Estimate
         </a>
         <a href="#why-us" class="hover:text-teal-600 transition">Why Us</a>
         <a href="#how-it-works" class="hover:text-teal-600 transition">Process</a>
@@ -99,8 +99,8 @@
         <a href="#contact" class="hover:text-teal-600 transition">Contact</a>
       </nav>
 
-      <!-- Desktop CTAs -->
-      <div class="hidden sm:flex items-center space-x-3">
+      <!-- Desktop CTAs (shown on lg+ to prevent tablet overlap) -->
+      <div class="hidden lg:flex items-center space-x-3">
         <a href="tel:+919931450495" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 text-slate-800 text-xs sm:text-sm font-bold hover:bg-slate-100 transition shadow-sm">
           <i data-lucide="phone-call" class="w-4 h-4 text-cyan-600"></i>
           <span>Call Helpline</span>
@@ -128,14 +128,14 @@
     </div>
 
     <!-- Mobile Drawer -->
-    <div id="mobile-menu" class="hidden lg:hidden border-t border-slate-100 bg-white/98 backdrop-blur-xl px-5 pt-3 pb-6 space-y-3 shadow-2xl">
+    <div id="mobile-menu" class="hidden lg:hidden border-t border-slate-100 bg-white/98 backdrop-blur-xl px-5 pt-3 pb-6 space-y-3 shadow-2xl max-h-[calc(100vh-5rem)] overflow-y-auto">
       <a href="#home" class="mobile-nav-link block py-2.5 px-3 rounded-xl font-semibold text-slate-700 hover:bg-teal-50 hover:text-teal-700">Home</a>
       <a href="#services" class="mobile-nav-link block py-2.5 px-3 rounded-xl font-semibold text-slate-700 hover:bg-teal-50 hover:text-teal-700">Services</a>
-      <a href="#estimator" class="mobile-nav-link block py-2.5 px-3 rounded-xl font-semibold text-teal-700 bg-teal-50/80">Rate Estimator</a>
+      <a href="#estimator" class="mobile-nav-link block py-2.5 px-3 rounded-xl font-semibold text-teal-700 bg-teal-50/80">Get Estimate</a>
       <a href="#why-us" class="mobile-nav-link block py-2.5 px-3 rounded-xl font-semibold text-slate-700 hover:bg-teal-50 hover:text-teal-700">Why Choose Us</a>
       <a href="#how-it-works" class="mobile-nav-link block py-2.5 px-3 rounded-xl font-semibold text-slate-700 hover:bg-teal-50 hover:text-teal-700">How It Works</a>
       <a href="#testimonials" class="mobile-nav-link block py-2.5 px-3 rounded-xl font-semibold text-slate-700 hover:bg-teal-50 hover:text-teal-700">Testimonials</a>
-      <a href="#contact" class="mobile-nav-link block py-2.5 px-3 rounded-xl font-semibold text-slate-700 hover:bg-teal-50 hover:text-teal-700">Contact & Location</a>
+      <a href="#contact" class="mobile-nav-link block py-2.5 px-3 rounded-xl font-semibold text-slate-700 hover:bg-teal-50 hover:text-teal-700">Contact &amp; Location</a>
       <div class="pt-3 border-t border-slate-100 flex flex-col gap-2.5">
         <a href="tel:+919931450495" class="w-full flex items-center justify-center gap-2 py-3 rounded-xl border border-slate-200 text-slate-800 font-bold bg-slate-50">
           <i data-lucide="phone-call" class="w-4 h-4 text-cyan-600"></i>
@@ -278,6 +278,8 @@
                     <option value="24/7 Critical & Bedside Nursing">24/7 Critical & Bedside Nursing</option>
                     <option value="Elderly & Senior Citizen Care">Elderly & Senior Citizen Care</option>
                     <option value="Post-Operative & Surgery Recovery">Post-Operative & Surgery Recovery</option>
+                    <option value="Sterile Dressing & Wound Care">Sterile Dressing & Wound Care</option>
+                    <option value="Ryles Tube Insertion & Feeding">Ryles Tube Insertion & Feeding</option>
                     <option value="Home Visit Procedures (Injections/IV/Dressing)">Home Visit Procedures (Injections/IV/Dressing)</option>
                     <option value="Physiotherapy & Rehabilitation">Physiotherapy & Rehabilitation</option>
                     <option value="Palliative & Chronic Care">Palliative & Chronic Care</option>
@@ -321,11 +323,11 @@
           <p class="text-xs text-slate-300">Our medical supervisor is on stand-by across Kalyan Nagar &amp; Bengaluru.</p>
         </div>
       </div>
-      <div class="flex items-center gap-3">
-        <a href="tel:+919931450495" class="px-5 py-2.5 rounded-xl bg-white text-slate-900 font-extrabold text-xs sm:text-sm hover:bg-slate-100 transition shadow flex items-center gap-2">
+      <div class="flex flex-col sm:flex-row items-center gap-2.5 sm:gap-3 w-full sm:w-auto">
+        <a href="tel:+919931450495" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-white text-slate-900 font-extrabold text-xs sm:text-sm hover:bg-slate-100 transition shadow flex items-center justify-center gap-2">
           <i data-lucide="phone" class="w-4 h-4 text-rose-600"></i> Call +91 9931450495
         </a>
-        <a href="https://wa.me/919931450495?text=Hi%20EarthCone,%20I%20have%20an%20urgent%20nursing%20requirement." target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 rounded-xl bg-emerald-500 text-white font-extrabold text-xs sm:text-sm hover:bg-emerald-600 transition shadow flex items-center gap-2">
+        <a href="https://wa.me/919931450495?text=Hi%20EarthCone,%20I%20have%20an%20urgent%20nursing%20requirement." target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-emerald-500 text-white font-extrabold text-xs sm:text-sm hover:bg-emerald-600 transition shadow flex items-center justify-center gap-2">
           <i data-lucide="message-square" class="w-4 h-4"></i> Urgent WhatsApp
         </a>
       </div>
@@ -526,102 +528,156 @@
           </div>
         </div>
 
+        <!-- Service Card 7: Sterile Dressing & Wound Care -->
+        <div class="interactive-card bg-slate-50/70 hover:bg-white rounded-3xl p-7 border border-slate-200/80 flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="w-14 h-14 rounded-2xl bg-rose-100 text-rose-700 flex items-center justify-center shadow-sm">
+              <i data-lucide="crosshair" class="w-7 h-7"></i>
+            </div>
+            <h3 class="font-heading text-xl font-bold text-slate-900">
+              Sterile Dressing &amp; Wound Care
+            </h3>
+            <p class="text-slate-600 text-sm leading-relaxed">
+              Clinical-grade sterile dressing, bed sore staging &amp; treatment, surgical incision care, and diabetic ulcer management by certified home nurses.
+            </p>
+            <ul class="space-y-2 text-xs text-slate-600 pt-2 border-t border-slate-200">
+              <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-rose-600"></i> Bed sore prevention &amp; advanced dressings</li>
+              <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-rose-600"></i> Post-surgery stitch, staple &amp; suture care</li>
+              <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-rose-600"></i> Diabetic foot &amp; chronic wound healing</li>
+            </ul>
+          </div>
+          <div class="pt-6 mt-4 flex gap-2">
+            <a href="https://wa.me/919931450495?text=Hello%20EarthCone%20Home%20Nursing,%20I%20want%20to%20inquire%20about%20Sterile%20Dressing%20%26%20Wound%20Care." 
+               target="_blank" 
+               rel="noopener noreferrer" 
+               class="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-rose-50 hover:bg-emerald-600 text-rose-700 hover:text-white font-bold text-xs sm:text-sm transition-all duration-200">
+              <i data-lucide="message-circle" class="w-4 h-4"></i>
+              <span>Inquire on WhatsApp</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Service Card 8: Ryles Tube Insertion & Feeding Care -->
+        <div class="interactive-card bg-slate-50/70 hover:bg-white rounded-3xl p-7 border border-slate-200/80 flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="w-14 h-14 rounded-2xl bg-teal-100 text-teal-800 flex items-center justify-center shadow-sm">
+              <i data-lucide="stethoscope" class="w-7 h-7"></i>
+            </div>
+            <h3 class="font-heading text-xl font-bold text-slate-900">
+              Ryles Tube Insertion &amp; Feeding Care
+            </h3>
+            <p class="text-slate-600 text-sm leading-relaxed">
+              Safe nasogastric (Ryles) tube insertion, aspiration checks, regular flushing, scheduled nutritional enteral feeding, and blockage relief at home.
+            </p>
+            <ul class="space-y-2 text-xs text-slate-600 pt-2 border-t border-slate-200">
+              <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-teal-600"></i> Expert Ryles tube insertion &amp; replacement</li>
+              <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-teal-600"></i> Liquid diet &amp; crushed medicine administration</li>
+              <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-teal-600"></i> Aspiration prevention &amp; position protocol</li>
+            </ul>
+          </div>
+          <div class="pt-6 mt-4 flex gap-2">
+            <a href="https://wa.me/919931450495?text=Hello%20EarthCone%20Home%20Nursing,%20I%20want%20to%20inquire%20about%20Ryles%20Tube%20Insertion%20%26%20Feeding%20Care." 
+               target="_blank" 
+               rel="noopener noreferrer" 
+               class="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-teal-50 hover:bg-emerald-600 text-teal-700 hover:text-white font-bold text-xs sm:text-sm transition-all duration-200">
+              <i data-lucide="message-circle" class="w-4 h-4"></i>
+              <span>Inquire on WhatsApp</span>
+            </a>
+          </div>
+        </div>
+
       </div>
 
     </div>
   </section>
 
-  <!-- Interactive Care Cost & Rate Estimator -->
+  <!-- Get Free Estimate — Lead Capture -->
   <section id="estimator" class="py-20 bg-slate-100/70 border-y border-slate-200/80 relative">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       
       <div class="text-center max-w-2xl mx-auto mb-12 space-y-2">
         <span class="text-xs font-extrabold uppercase tracking-widest text-teal-700 bg-teal-100/70 px-3.5 py-1.5 rounded-full border border-teal-200">
-          Transparent Pricing Calculator
+          Free Personalized Estimate
         </span>
         <h2 class="font-heading text-3xl font-extrabold text-slate-900 tracking-tight">
-          Estimate Your Home Nursing Plan Cost
+          Get Your Custom Nursing Care Quote
         </h2>
-        <p class="text-slate-600 text-sm">
-          Select your medical service requirement to get a live estimated plan cost for Bangalore.
+        <p class="text-slate-600 text-sm sm:text-base">
+          Share your details and our care specialist will contact you within 30 minutes with a personalized estimate tailored to your needs.
         </p>
       </div>
 
-      <div class="bg-white rounded-3xl p-7 sm:p-10 shadow-xl border border-slate-200/90 grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+      <div class="bg-white rounded-3xl p-6 sm:p-10 shadow-xl border border-slate-200/90 max-w-2xl mx-auto">
         
-        <!-- Calculator Controls -->
-        <div class="md:col-span-7 space-y-5">
+        <!-- Lead Form -->
+        <form id="lead-capture-form" class="space-y-5">
           
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wide">1. Select Medical Care Service</label>
-            <select id="calc-service" class="w-full p-3 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500 font-semibold text-slate-800">
-              <option value="bedside">24/7 Critical & Bedside ICU Nursing</option>
-              <option value="elderly">Elderly & Senior Citizen Assistance</option>
-              <option value="postop">Post-Operative & Surgery Recovery</option>
-              <option value="procedures">Home Visit Clinical Procedures (Injections/IV)</option>
-              <option value="physio">Physiotherapy & Neuro-Rehabilitation</option>
-              <option value="palliative">Palliative & Chronic Illness Support</option>
-            </select>
-          </div>
-
-          <div>
-            <label class="block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wide">2. Select Duration / Shift</label>
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-              <div>
-                <input type="radio" id="dur-visit" name="calc-duration" value="visit" class="hidden plan-radio">
-                <label for="dur-visit" class="block text-center py-2.5 px-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 cursor-pointer hover:bg-slate-50 transition">Per Visit</label>
-              </div>
-              <div>
-                <input type="radio" id="dur-12hr" name="calc-duration" value="12hr" checked class="hidden plan-radio">
-                <label for="dur-12hr" class="block text-center py-2.5 px-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 cursor-pointer hover:bg-slate-50 transition">12 Hours</label>
-              </div>
-              <div>
-                <input type="radio" id="dur-24hr" name="calc-duration" value="24hr" class="hidden plan-radio">
-                <label for="dur-24hr" class="block text-center py-2.5 px-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 cursor-pointer hover:bg-slate-50 transition">24 Hours</label>
-              </div>
-              <div>
-                <input type="radio" id="dur-month" name="calc-duration" value="monthly" class="hidden plan-radio">
-                <label for="dur-month" class="block text-center py-2.5 px-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 cursor-pointer hover:bg-slate-50 transition">Monthly</label>
-              </div>
+            <label class="block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wide">Mobile Number *</label>
+            <div class="relative">
+              <i data-lucide="phone" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5"></i>
+              <input type="tel" id="lead-phone" required placeholder="e.g. 9876543210" 
+                     class="w-full pl-10 pr-4 py-3 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition font-semibold text-slate-800">
             </div>
           </div>
 
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wide">3. Staff Qualification Level</label>
-            <div class="grid grid-cols-2 gap-2">
-              <div>
-                <input type="radio" id="lvl-standard" name="calc-level" value="standard" checked class="hidden plan-radio">
-                <label for="lvl-standard" class="block text-center py-2.5 px-3 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 cursor-pointer hover:bg-slate-50 transition">
-                  Certified Nurse (GNM / ANM)
-                </label>
-              </div>
-              <div>
-                <input type="radio" id="lvl-icu" name="calc-level" value="icu" class="hidden plan-radio">
-                <label for="lvl-icu" class="block text-center py-2.5 px-3 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 cursor-pointer hover:bg-slate-50 transition">
-                  ICU / B.Sc Senior Specialist
-                </label>
-              </div>
+            <label class="block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wide">Email Address <span class="text-slate-400 font-normal">(optional)</span></label>
+            <div class="relative">
+              <i data-lucide="mail" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5"></i>
+              <input type="email" id="lead-email" placeholder="your.email@example.com" 
+                     class="w-full pl-10 pr-4 py-3 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition text-slate-800">
             </div>
           </div>
 
-        </div>
-
-        <!-- Calculated Summary Box -->
-        <div class="md:col-span-5 bg-gradient-to-br from-slate-900 to-teal-950 text-white rounded-2xl p-6 text-center space-y-4 shadow-xl border border-teal-500/20">
-          <span class="text-[11px] font-bold text-teal-400 uppercase tracking-widest">Estimated Pricing</span>
           <div>
-            <h3 id="calc-estimate-cost" class="font-heading font-extrabold text-3xl sm:text-4xl text-white">₹1,400 / shift</h3>
-            <p class="text-xs text-slate-300 mt-1">Starting standard rates for South Bengaluru</p>
+            <label class="block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wide">Service You're Interested In</label>
+            <div class="relative">
+              <i data-lucide="heart-pulse" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5"></i>
+              <select id="lead-service" class="w-full pl-10 pr-4 py-3 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition appearance-none font-semibold text-slate-800">
+                <option value="24/7 Critical & Bedside Nursing">24/7 Critical & Bedside Nursing</option>
+                <option value="Elderly & Senior Citizen Care">Elderly & Senior Citizen Care</option>
+                <option value="Post-Operative & Surgery Recovery">Post-Operative & Surgery Recovery</option>
+                <option value="Home Visit Procedures (Injections/IV)">Home Visit Procedures (Injections/IV)</option>
+                <option value="Physiotherapy & Rehabilitation">Physiotherapy & Rehabilitation</option>
+                <option value="Palliative & Chronic Care">Palliative & Chronic Care</option>
+                <option value="Wound Dressing & Care">Wound Dressing & Care</option>
+                <option value="Ryles Tube & Feeding">Ryles Tube & Feeding</option>
+                <option value="General Inquiry">Not sure — need guidance</option>
+              </select>
+            </div>
           </div>
-          <div class="pt-3 border-t border-white/10 space-y-2 text-left text-xs text-slate-300">
-            <div class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> No advance lock-in deposits</div>
-            <div class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Free nurse replacement guarantee</div>
-            <div class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Medical supervisor weekly checks</div>
+
+          <button type="submit" id="lead-submit-btn" class="btn-shimmer w-full py-4 px-6 bg-gradient-to-r from-teal-600 via-teal-700 to-cyan-700 text-white font-bold text-base rounded-xl shadow-lg shadow-teal-600/30 transition flex items-center justify-center gap-2.5 hover:-translate-y-0.5 transform">
+            <i data-lucide="send" class="w-5 h-5"></i>
+            <span>Get My Free Estimate</span>
+          </button>
+
+          <p class="text-[11px] text-center text-slate-400 flex items-center justify-center gap-1">
+            <i data-lucide="lock" class="w-3 h-3 text-emerald-500"></i> Your details are 100% confidential. No spam, ever.
+          </p>
+        </form>
+
+        <!-- Success State (hidden by default) -->
+        <div id="lead-success" class="hidden text-center space-y-5 py-4">
+          <div class="w-20 h-20 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
+            <i data-lucide="check-circle-2" class="w-10 h-10"></i>
           </div>
-          <a id="calc-whatsapp-btn" href="https://wa.me/919931450495" target="_blank" rel="noopener noreferrer" class="btn-shimmer w-full py-3 px-4 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-sm shadow-md flex items-center justify-center gap-2">
-            <i data-lucide="message-circle" class="w-4 h-4"></i>
-            <span>Lock This Rate on WhatsApp</span>
-          </a>
+          <div class="space-y-2">
+            <h3 class="font-heading font-extrabold text-2xl text-slate-900">Thank You! 🎉</h3>
+            <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-md mx-auto">
+              Our care specialist will contact you <strong class="text-teal-700">within 30 minutes</strong> with a personalized estimate tailored to your needs.
+            </p>
+          </div>
+          <div class="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+            <a href="https://wa.me/919931450495?text=Hello%20EarthCone,%20I%20just%20submitted%20an%20estimate%20request." target="_blank" rel="noopener noreferrer" 
+               class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-md transition">
+              <i data-lucide="message-circle" class="w-4 h-4"></i> Chat on WhatsApp Now
+            </a>
+            <a href="tel:+919931450495" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white border border-slate-200 text-slate-800 font-bold text-sm shadow-sm transition hover:bg-slate-50">
+              <i data-lucide="phone-call" class="w-4 h-4 text-cyan-600"></i> Call Helpline
+            </a>
+          </div>
         </div>
 
       </div>
@@ -692,7 +748,7 @@
         </div>
 
         <div class="lg:col-span-6">
-          <div class="bg-gradient-to-br from-slate-900 via-brand-navy to-teal-950 text-white rounded-3xl p-8 sm:p-10 shadow-2xl relative overflow-hidden">
+          <div class="bg-gradient-to-br from-slate-900 via-brand-navy to-teal-950 text-white rounded-3xl p-5 sm:p-10 shadow-2xl relative overflow-hidden">
             
             <div class="absolute top-0 right-0 w-64 h-64 bg-teal-500/10 rounded-full blur-3xl"></div>
             
@@ -704,22 +760,22 @@
                 </h3>
               </div>
 
-              <div class="grid grid-cols-2 gap-6">
-                <div class="p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
-                  <p class="font-heading font-extrabold text-3xl sm:text-4xl text-teal-400">500+</p>
-                  <p class="text-xs sm:text-sm text-slate-300 mt-1">Recovered Patients</p>
+              <div class="grid grid-cols-2 gap-3 sm:gap-6">
+                <div class="p-3 sm:p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+                  <p class="font-heading font-extrabold text-2xl sm:text-4xl text-teal-400">500+</p>
+                  <p class="text-[11px] sm:text-sm text-slate-300 mt-1">Recovered Patients</p>
                 </div>
-                <div class="p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
-                  <p class="font-heading font-extrabold text-3xl sm:text-4xl text-cyan-400">24/7</p>
-                  <p class="text-xs sm:text-sm text-slate-300 mt-1">Supervisor On Call</p>
+                <div class="p-3 sm:p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+                  <p class="font-heading font-extrabold text-2xl sm:text-4xl text-cyan-400">24/7</p>
+                  <p class="text-[11px] sm:text-sm text-slate-300 mt-1">Supervisor On Call</p>
                 </div>
-                <div class="p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
-                  <p class="font-heading font-extrabold text-3xl sm:text-4xl text-emerald-400">100%</p>
-                  <p class="text-xs sm:text-sm text-slate-300 mt-1">Background Verified</p>
+                <div class="p-3 sm:p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+                  <p class="font-heading font-extrabold text-2xl sm:text-4xl text-emerald-400">100%</p>
+                  <p class="text-[11px] sm:text-sm text-slate-300 mt-1">Background Verified</p>
                 </div>
-                <div class="p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
-                  <p class="font-heading font-extrabold text-3xl sm:text-4xl text-amber-400">&lt; 30m</p>
-                  <p class="text-xs sm:text-sm text-slate-300 mt-1">Local Response Time</p>
+                <div class="p-3 sm:p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+                  <p class="font-heading font-extrabold text-2xl sm:text-4xl text-amber-400">&lt; 30m</p>
+                  <p class="text-[11px] sm:text-sm text-slate-300 mt-1">Local Response Time</p>
                 </div>
               </div>
 
@@ -1051,6 +1107,8 @@
                       <option value="24/7 Critical & Bedside Nursing">24/7 Critical & Bedside Nursing</option>
                       <option value="Elderly & Senior Citizen Care">Elderly & Senior Citizen Care</option>
                       <option value="Post-Operative & Surgery Recovery">Post-Operative & Surgery Recovery</option>
+                      <option value="Sterile Dressing & Wound Care">Sterile Dressing & Wound Care</option>
+                      <option value="Ryles Tube Insertion & Feeding">Ryles Tube Insertion & Feeding</option>
                       <option value="Home Visit Procedures (Injections/IV/Dressing)">Home Visit Procedures (Injections/IV/Dressing)</option>
                       <option value="Physiotherapy & Rehabilitation">Physiotherapy & Rehabilitation</option>
                       <option value="Palliative & Chronic Care">Palliative & Chronic Care</option>
@@ -1086,16 +1144,16 @@
                 <textarea id="form-notes" rows="2" placeholder="e.g. Patient is 74 yrs old, needs catheter care and mobility support..." class="w-full p-3 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition"></textarea>
               </div>
 
-              <button type="submit" class="btn-shimmer w-full py-4 px-6 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-base rounded-xl shadow-xl shadow-emerald-600/25 transition flex items-center justify-center gap-2.5">
-                <i data-lucide="message-circle" class="w-5 h-5"></i>
-                <span>Submit & Chat on WhatsApp (+91 9931450495)</span>
+              <button type="submit" class="btn-shimmer w-full py-3.5 sm:py-4 px-4 sm:px-6 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm sm:text-base rounded-xl shadow-xl shadow-emerald-600/25 transition flex items-center justify-center gap-2.5">
+                <i data-lucide="message-circle" class="w-5 h-5 shrink-0"></i>
+                <span>Submit &amp; Chat on WhatsApp <span class="hidden sm:inline">(+91 9931450495)</span></span>
               </button>
 
             </form>
           </div>
 
           <div class="rounded-3xl overflow-hidden border border-slate-200 shadow-sm">
-            <div class="bg-slate-100 p-3 px-4 flex items-center justify-between border-b border-slate-200">
+            <div class="bg-slate-100 p-3 px-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1.5 sm:gap-0 border-b border-slate-200">
               <span class="text-xs font-bold text-slate-700 flex items-center gap-1.5">
                 <i data-lucide="map" class="w-4 h-4 text-teal-600"></i> Service Hub: Kalyan Nagar, Bengaluru - 560043
               </span>
@@ -1160,11 +1218,13 @@
           <h4 class="font-heading font-bold text-sm text-white uppercase tracking-wider">Our Services</h4>
           <ul class="space-y-2 text-xs sm:text-sm">
             <li><a href="#services" class="hover:text-teal-400 transition">24/7 Bedside Nursing Care</a></li>
-            <li><a href="#services" class="hover:text-teal-400 transition">Elderly & Senior Citizen Care</a></li>
+            <li><a href="#services" class="hover:text-teal-400 transition">Elderly &amp; Senior Citizen Care</a></li>
             <li><a href="#services" class="hover:text-teal-400 transition">Post-Surgery Rehabilitation</a></li>
-            <li><a href="#services" class="hover:text-teal-400 transition">Injections, IV Drips & Dressing</a></li>
+            <li><a href="#services" class="hover:text-teal-400 transition">Sterile Dressing &amp; Wound Care</a></li>
+            <li><a href="#services" class="hover:text-teal-400 transition">Ryles Tube Insertion &amp; Feeding</a></li>
+            <li><a href="#services" class="hover:text-teal-400 transition">Injections, IV Drips &amp; Dressing</a></li>
             <li><a href="#services" class="hover:text-teal-400 transition">Home Physiotherapy</a></li>
-            <li><a href="#services" class="hover:text-teal-400 transition">Palliative & Chronic Care</a></li>
+            <li><a href="#services" class="hover:text-teal-400 transition">Palliative &amp; Chronic Care</a></li>
           </ul>
         </div>
 
@@ -1172,11 +1232,12 @@
           <h4 class="font-heading font-bold text-sm text-white uppercase tracking-wider">Quick Links</h4>
           <ul class="space-y-2 text-xs sm:text-sm">
             <li><a href="#home" class="hover:text-teal-400 transition">Home</a></li>
-            <li><a href="#estimator" class="hover:text-teal-400 transition">Cost Estimator</a></li>
+            <li><a href="#services" class="hover:text-teal-400 transition">Services</a></li>
+            <li><a href="#estimator" class="hover:text-teal-400 transition">Get Estimate</a></li>
             <li><a href="#why-us" class="hover:text-teal-400 transition">Why Choose Us</a></li>
             <li><a href="#how-it-works" class="hover:text-teal-400 transition">How It Works</a></li>
             <li><a href="#testimonials" class="hover:text-teal-400 transition">Testimonials</a></li>
-            <li><a href="#contact" class="hover:text-teal-400 transition">Contact & Coverage</a></li>
+            <li><a href="#contact" class="hover:text-teal-400 transition">Contact &amp; Coverage</a></li>
           </ul>
         </div>
 

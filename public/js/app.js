@@ -53,78 +53,102 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Interactive Care Cost & Plan Estimator
-  const serviceSelect = document.getElementById('calc-service');
-  const durationRadios = document.querySelectorAll('input[name="calc-duration"]');
-  const nurseLevelRadios = document.querySelectorAll('input[name="calc-level"]');
-  const estCostDisplay = document.getElementById('calc-estimate-cost');
-  const calcBookBtn = document.getElementById('calc-whatsapp-btn');
+  // ── Lead Capture & Quote Request Handler ──
+  const leadForm = document.getElementById('lead-capture-form');
+  const leadSuccess = document.getElementById('lead-success');
 
-  // Base pricing rate matrix (Bengaluru market standard)
-  const baseRates = {
-    'bedside': { 'visit': 650, '12hr': 1400, '24hr': 2400, 'monthly': 58000 },
-    'elderly': { 'visit': 500, '12hr': 1200, '24hr': 2100, 'monthly': 48000 },
-    'postop': { 'visit': 750, '12hr': 1500, '24hr': 2600, 'monthly': 62000 },
-    'procedures': { 'visit': 450, '12hr': 1100, '24hr': 1900, 'monthly': 38000 },
-    'physio': { 'visit': 900, '12hr': 1800, '24hr': 3200, 'monthly': 70000 },
-    'palliative': { 'visit': 800, '12hr': 1600, '24hr': 2800, 'monthly': 65000 }
-  };
+  if (leadForm) {
+    leadForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const phoneInput = document.getElementById('lead-phone');
+      const emailInput = document.getElementById('lead-email');
+      const serviceInput = document.getElementById('lead-service');
+      const submitBtn = document.getElementById('lead-submit-btn');
 
-  function updateEstimate() {
-    if (!serviceSelect || !estCostDisplay) return;
-    const selectedService = serviceSelect.value || 'bedside';
-    let selectedDuration = '12hr';
-    durationRadios.forEach(r => { if (r.checked) selectedDuration = r.value; });
+      const phone = phoneInput ? phoneInput.value.trim() : '';
+      const email = emailInput ? emailInput.value.trim() : '';
+      const service = serviceInput ? serviceInput.value : 'General Nursing Care';
 
-    let levelMultiplier = 1.0;
-    nurseLevelRadios.forEach(r => {
-      if (r.checked && r.value === 'icu') levelMultiplier = 1.25;
+      if (!phone || phone.replace(/\D/g, '').length < 8) {
+        showToast('Please enter a valid mobile number', 'error');
+        return;
+      }
+
+      // Disable button during submission
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i> <span>Saving Details & Connecting...</span>`;
+        if (window.lucide) lucide.createIcons();
+      }
+
+      showToast('Saving your details & opening WhatsApp...');
+
+      try {
+        const response = await fetch('/api/leads', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            phone,
+            email,
+            service,
+            source: 'estimate-lead-form'
+          })
+        });
+
+        const data = await response.json();
+
+        // Switch to success card state
+        leadForm.classList.add('hidden');
+        if (leadSuccess) {
+          leadSuccess.classList.remove('hidden');
+          if (window.lucide) lucide.createIcons();
+        }
+
+        // WhatsApp direct link formulation
+        const targetUrl = (data && data.whatsappUrl)
+          ? data.whatsappUrl
+          : `https://wa.me/919931450495?text=${encodeURIComponent(
+              `*Hello EarthCone Home Nursing!* 💚\nI requested an estimate for *${service}*.\n📞 *Phone:* ${phone}\n${email ? `✉️ *Email:* ${email}\n` : ''}\nPlease provide details and availability.`
+            )}`;
+
+        setTimeout(() => {
+          window.open(targetUrl, '_blank');
+        }, 600);
+
+      } catch (err) {
+        console.warn('Network issue saving lead, proceeding to WhatsApp:', err);
+        // Fallback to WhatsApp even if backend offline
+        leadForm.classList.add('hidden');
+        if (leadSuccess) {
+          leadSuccess.classList.remove('hidden');
+          if (window.lucide) lucide.createIcons();
+        }
+        const fallbackUrl = `https://wa.me/919931450495?text=${encodeURIComponent(
+          `*Hello EarthCone Home Nursing!* 💚\nI requested an estimate for *${service}*.\n📞 *Phone:* ${phone}\n${email ? `✉️ *Email:* ${email}\n` : ''}\nPlease provide details and availability.`
+        )}`;
+        setTimeout(() => {
+          window.open(fallbackUrl, '_blank');
+        }, 500);
+      }
     });
-
-    const rates = baseRates[selectedService] || baseRates['bedside'];
-    const base = rates[selectedDuration] || 1400;
-    const calculatedPrice = Math.round(base * levelMultiplier);
-
-    let priceFormatted = '';
-    if (selectedDuration === 'monthly') {
-      priceFormatted = `₹${calculatedPrice.toLocaleString('en-IN')} / month`;
-    } else if (selectedDuration === 'visit') {
-      priceFormatted = `₹${calculatedPrice.toLocaleString('en-IN')} / visit`;
-    } else {
-      priceFormatted = `₹${calculatedPrice.toLocaleString('en-IN')} / shift`;
-    }
-
-    estCostDisplay.textContent = priceFormatted;
-
-    // Update WhatsApp link with the calculated estimate
-    if (calcBookBtn) {
-      const serviceName = serviceSelect.options[serviceSelect.selectedIndex].text;
-      const message = `Hello EarthCone Home Nursing, I used the Care Estimator on your website for *${serviceName}* (${selectedDuration} shift). The estimated rate is ${priceFormatted}. I would like to confirm availability for BTM / Bengaluru.`;
-      calcBookBtn.href = `https://wa.me/919931450495?text=${encodeURIComponent(message)}`;
-    }
   }
 
-  if (serviceSelect) serviceSelect.addEventListener('change', updateEstimate);
-  durationRadios.forEach(r => r.addEventListener('change', updateEstimate));
-  nurseLevelRadios.forEach(r => r.addEventListener('change', updateEstimate));
-  updateEstimate();
-
-  // Toast Notification Trigger
+  // Toast Notification Trigger (Responsive fixed styling)
   function showToast(message, type = 'success') {
     let toast = document.getElementById('app-toast');
     if (!toast) {
       toast = document.createElement('div');
       toast.id = 'app-toast';
-      toast.className = 'fixed top-6 right-6 z-50 flex items-center gap-3 px-5 py-3.5 rounded-2xl shadow-2xl transition-all duration-300 transform translate-y-[-100px] opacity-0 text-sm font-semibold';
+      toast.className = 'fixed top-5 left-4 right-4 sm:left-auto sm:right-6 max-w-sm sm:max-w-md mx-auto sm:mx-0 z-50 flex items-center gap-3 px-5 py-3.5 rounded-2xl shadow-2xl transition-all duration-300 transform translate-y-[-120px] opacity-0 text-sm font-semibold';
       document.body.appendChild(toast);
     }
 
     if (type === 'success') {
-      toast.className = 'fixed top-6 right-6 z-50 flex items-center gap-3 px-5 py-3.5 rounded-2xl shadow-2xl transition-all duration-300 text-sm font-semibold bg-slate-900 text-white border border-teal-500/40';
-      toast.innerHTML = `<i data-lucide="check-circle" class="w-5 h-5 text-emerald-400"></i> <span>${message}</span>`;
+      toast.className = 'fixed top-5 left-4 right-4 sm:left-auto sm:right-6 max-w-sm sm:max-w-md mx-auto sm:mx-0 z-50 flex items-center gap-3 px-5 py-3.5 rounded-2xl shadow-2xl transition-all duration-300 text-sm font-semibold bg-slate-900 text-white border border-teal-500/40';
+      toast.innerHTML = `<i data-lucide="check-circle" class="w-5 h-5 text-emerald-400 shrink-0"></i> <span>${message}</span>`;
     } else {
-      toast.className = 'fixed top-6 right-6 z-50 flex items-center gap-3 px-5 py-3.5 rounded-2xl shadow-2xl transition-all duration-300 text-sm font-semibold bg-rose-900 text-white border border-rose-500/40';
-      toast.innerHTML = `<i data-lucide="alert-circle" class="w-5 h-5 text-rose-300"></i> <span>${message}</span>`;
+      toast.className = 'fixed top-5 left-4 right-4 sm:left-auto sm:right-6 max-w-sm sm:max-w-md mx-auto sm:mx-0 z-50 flex items-center gap-3 px-5 py-3.5 rounded-2xl shadow-2xl transition-all duration-300 text-sm font-semibold bg-rose-900 text-white border border-rose-500/40';
+      toast.innerHTML = `<i data-lucide="alert-circle" class="w-5 h-5 text-rose-300 shrink-0"></i> <span>${message}</span>`;
     }
 
     if (window.lucide) lucide.createIcons();
@@ -137,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Animate Out after 3.5s
     setTimeout(() => {
-      toast.style.transform = 'translateY(-100px)';
+      toast.style.transform = 'translateY(-120px)';
       toast.style.opacity = '0';
     }, 3500);
   }

@@ -25,6 +25,8 @@
         { label: '🏥 Bedside / ICU Nursing', value: 'Bedside / ICU Nursing' },
         { label: '👴 Elderly & Senior Care', value: 'Elderly & Senior Care' },
         { label: '🩹 Post-Surgery Recovery', value: 'Post-Surgery Recovery' },
+        { label: '🩸 Sterile Dressing & Wound Care', value: 'Sterile Dressing & Wound Care' },
+        { label: '🩺 Ryles Tube Insertion & Feeding', value: 'Ryles Tube Insertion & Feeding' },
         { label: '💉 Injections / IV / Drips', value: 'Injections / IV / Drips' },
         { label: '🧑‍⚕️ Physiotherapy', value: 'Physiotherapy' },
         { label: '🫶 Palliative & Chronic Care', value: 'Palliative & Chronic Care' }
@@ -108,7 +110,7 @@
       #ec-chatbot-panel {
         position: fixed; bottom: 100px; right: 24px; z-index: 9998;
         width: 370px; max-width: calc(100vw - 32px);
-        max-height: 520px;
+        max-height: min(530px, calc(100dvh - 120px));
         background: #fff; border-radius: 20px;
         box-shadow: 0 25px 60px -12px rgba(0,0,0,0.25);
         display: flex; flex-direction: column;
@@ -197,7 +199,7 @@
       .ec-input-row input {
         flex: 1; padding: 11px 14px;
         border: 1.5px solid #e2e8f0; border-radius: 12px;
-        font-size: 14px; outline: none;
+        font-size: 16px; outline: none;
         font-family: inherit; color: #334155;
         transition: border-color 0.2s;
       }
@@ -510,9 +512,29 @@
 
   function directToWhatsApp() {
     showTyping();
+
+    // Persist full lead details to database
+    try {
+      fetch('/api/inquiry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: answers.name || 'Chatbot User',
+          phone: answers.phone || '',
+          service: answers.service || 'General Nursing Care',
+          duration: answers.shift || '',
+          location: answers.area || 'Bengaluru',
+          notes: `Patient: ${answers.patient || 'Not specified'}`,
+          source: 'chatbot'
+        })
+      }).catch(e => console.warn('Offline mode or server unavailable:', e));
+    } catch (err) {
+      console.warn('Error saving lead to DB:', err);
+    }
+
     setTimeout(() => {
       hideTyping();
-      addBotMessage('Thank you! 🙏 Connecting you to our care team on WhatsApp...');
+      addBotMessage('Thank you! 🙏 Details saved. Connecting you to our care team on WhatsApp...');
       const waMsg = buildWhatsAppMessage();
       const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(waMsg)}`;
       setTimeout(() => {
