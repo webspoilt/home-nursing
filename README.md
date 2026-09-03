@@ -53,7 +53,7 @@ All business details are centralized in the application:
 - **Helpline Phone:** `+91 9931450495`
 - **WhatsApp API:** `+91 9931450495`
 - **Email:** `earthconehomenursing@gmail.com`
-- **Location:** BTM 1st Stage, Bengaluru, Karnataka - 560020
+- **Location:** Kalyan Nagar, Bengaluru, Karnataka - 560043
 
 ---
 
@@ -64,7 +64,7 @@ When handing over this solution to the client, highlight these key revenue-gener
 1. **Instant WhatsApp Conversion Engine:**
    Every form submission and service button automatically generates a structured WhatsApp message with patient details, shift requirements, and locality to ensure near-zero drop-off rates.
 2. **Local SEO & South Bangalore Focus:**
-   Optimized specifically for high-intent medical queries around BTM Layout, JP Nagar, HSR Layout, Koramangala, Jayanagar, and Bannerghatta Road.
+   Optimized specifically for high-intent medical queries around Kalyan Nagar, JP Nagar, HSR Layout, Koramangala, Jayanagar, and Bannerghatta Road.
 3. **Mobile-First Responsive UX:**
    Designed with sticky emergency call ribbons, pulsating WhatsApp quick triggers, and sub-second load times on 4G/5G mobile networks.
 4. **Zero Maintenance Burden:**

@@ -56,12 +56,12 @@
       id: 'area',
       message: 'Which area in Bengaluru?',
       options: [
-        { label: '📍 BTM Layout', value: 'BTM Layout' },
-        { label: '📍 JP Nagar', value: 'JP Nagar' },
-        { label: '📍 HSR Layout', value: 'HSR Layout' },
-        { label: '📍 Koramangala', value: 'Koramangala' },
-        { label: '📍 Jayanagar', value: 'Jayanagar' },
-        { label: '📍 Bannerghatta Road', value: 'Bannerghatta Road' },
+        { label: '📍 Kalyan Nagar', value: 'Kalyan Nagar' },
+        { label: '📍 Hebbal', value: 'Hebbal' },
+        { label: '📍 Thanisandra', value: 'Thanisandra' },
+        { label: '📍 Kammanahalli', value: 'Kammanahalli' },
+        { label: '📍 HRBR Layout', value: 'HRBR Layout' },
+        { label: '📍 Banaswadi', value: 'Banaswadi' },
         { label: '📍 Other Area', value: 'Other Area' }
       ]
     },
