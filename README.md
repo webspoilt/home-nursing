@@ -9,11 +9,14 @@ Welcome to the digital platform build for **EarthCone Home Nursing (Bengaluru)**
 ```
 earthcone-home-nursing/
 ├── public/                 # Production-optimized front-end assets
+│   ├── css/                # Custom design system & responsive styling
+│   ├── js/                 # Chatbot widget & core app logic
+│   ├── logos/              # Brand logos & favicon
 │   └── index.html          # High-converting one-page application
+├── db/                     # SQLite Database Engine
+│   └── database.js         # Schema, table setup, persistent queries
 ├── api/                    # Serverless APIs
 │   └── inquiry.js          # Cloud lead handler (Vercel/Netlify/Node)
-├── data/                   # Persistent storage directory
-│   └── leads.json          # Auto-saved leads database
 ├── docs/                   # Client documentation & quick-start guides
 │   └── CLIENT_HANDOVER.md  # Client user manual
 ├── server.js               # Standalone production Node.js/Express server
@@ -40,6 +43,13 @@ npm install
 npm start
 ```
 The server will boot on `http://localhost:3000`.
+
+### 📊 Accessing Captured Sales Leads
+View all captured customer inquiries, phone numbers, and estimate requests via the protected admin endpoint:
+```
+http://localhost:3000/api/leads?key=earthcone-admin-2024
+```
+*(Key can be configured in `.env` via `ADMIN_API_KEY`)*
 
 ### Option 3: Static Web Hosting (cPanel / Apache / Nginx / Hostinger)
 - Simply point the web root to the `public/` directory or upload the contents of `public/` directly to your `public_html` folder.
