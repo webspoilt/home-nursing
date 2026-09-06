@@ -9,12 +9,20 @@
     {
       "src": "api/inquiry.js",
       "use": "@vercel/node"
+    },
+    {
+      "src": "api/leads.js",
+      "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/api/inquiry",
       "dest": "/api/inquiry.js"
+    },
+    {
+      "src": "/api/leads",
+      "dest": "/api/leads.js"
     },
     {
       "src": "/(.*)",

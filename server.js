@@ -30,6 +30,22 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Target WhatsApp number
 const TARGET_WHATSAPP = '919931450495';
 
+// Helper: Forward to Google Sheets if webhook configured
+async function forwardToGoogleSheets(payload) {
+  const googleSheetUrl = process.env.GOOGLE_SHEET_WEBHOOK_URL;
+  if (googleSheetUrl && googleSheetUrl.startsWith('http')) {
+    try {
+      await fetch(googleSheetUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+    } catch (err) {
+      console.warn('Google Sheet forward warning:', err.message);
+    }
+  }
+}
+
 // ── Lead Capture API (Used by Estimator Form & Chatbot) ──
 app.post('/api/leads', (req, res) => {
   try {
@@ -43,6 +59,19 @@ app.post('/api/leads', (req, res) => {
       phone: phone.trim(),
       email: (email || '').trim(),
       service: service || 'General Nursing Care',
+      source: source || 'estimate-form'
+    });
+
+    // Forward to Google Sheets asynchronously
+    forwardToGoogleSheets({
+      leadId: `EC-${leadId}`,
+      name: (name || 'Estimate Lead').trim(),
+      phone: phone.trim(),
+      email: (email || '').trim(),
+      service: service || 'General Nursing Care',
+      duration: '',
+      location: 'Bengaluru',
+      notes: details || '',
       source: source || 'estimate-form'
     });
 
@@ -102,6 +131,19 @@ app.post('/api/inquiry', (req, res) => {
     } catch (e) {
       // safe fallback
     }
+
+    // Also forward to Google Sheets asynchronously
+    forwardToGoogleSheets({
+      leadId: `EC-${leadId}`,
+      name: (name || 'Customer').trim(),
+      phone: phone.trim(),
+      email: '',
+      service: service || 'General Nursing Inquiry',
+      duration: duration || '',
+      location: location || 'Bengaluru',
+      notes: notes || '',
+      source: source || 'inquiry-form'
+    });
 
     // WhatsApp Message
     let waMsg = `*Hello EarthCone Home Nursing, I would like to book a service:*\n\n`;

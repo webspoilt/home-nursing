@@ -1,4 +1,4 @@
-// Vercel Serverless Function for Lead Intake & WhatsApp formulation
+// Vercel Serverless Function for Lead Intake, Google Sheets Sync & WhatsApp formulation
 module.exports = async (req, res) => {
   // CORS configuration
   res.setHeader('Access-Control-Allow-Credentials', true);
@@ -18,18 +18,44 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const { name, phone, service, duration, location, notes } = req.body || {};
+    const { name, phone, email, service, duration, location, notes, source } = req.body || {};
 
-    if (!name || !phone) {
-      return res.status(400).json({ success: false, message: 'Name and Phone number are required.' });
+    if (!phone || phone.replace(/\D/g, '').length < 8) {
+      return res.status(400).json({ success: false, message: 'Valid Phone number is required.' });
     }
 
     const leadId = 'EC-' + Date.now().toString(36).toUpperCase();
     const targetNumber = '919931450495';
 
+    // ── 1. Asynchronously forward lead to Google Sheets (if Webhook configured) ──
+    const googleSheetUrl = process.env.GOOGLE_SHEET_WEBHOOK_URL;
+    if (googleSheetUrl && googleSheetUrl.startsWith('http')) {
+      try {
+        await fetch(googleSheetUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            leadId,
+            name: (name || 'Website Visitor').trim(),
+            phone: phone.trim(),
+            email: (email || '').trim(),
+            service: service || 'General Nursing Inquiry',
+            duration: duration || '',
+            location: location || 'Bengaluru',
+            notes: notes || '',
+            source: source || 'inquiry-form'
+          })
+        });
+      } catch (err) {
+        console.warn('Google Sheet sync notice:', err.message);
+      }
+    }
+
+    // ── 2. Formulate WhatsApp Message ──
     let waMessage = `*Hello EarthCone Home Nursing, I would like to book a service:*\n\n`;
-    waMessage += `👤 *Name:* ${name}\n`;
-    waMessage += `📞 *Contact Phone:* ${phone}\n`;
+    waMessage += `👤 *Name:* ${(name || 'Customer').trim()}\n`;
+    waMessage += `📞 *Contact Phone:* ${phone.trim()}\n`;
+    if (email) waMessage += `✉️ *Email:* ${email.trim()}\n`;
     waMessage += `🩺 *Service Required:* ${service || 'General Inquiries'}\n`;
     if (duration) waMessage += `⏱️ *Shift / Duration:* ${duration}\n`;
     waMessage += `📍 *Location in Bengaluru:* ${location || 'Bengaluru'}\n`;

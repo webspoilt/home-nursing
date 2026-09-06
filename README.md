@@ -45,11 +45,18 @@ npm start
 The server will boot on `http://localhost:3000`.
 
 ### 📊 Accessing Captured Sales Leads
-View all captured customer inquiries, phone numbers, and estimate requests via the protected admin endpoint:
-```
-http://localhost:3000/api/leads?key=earthcone-admin-2024
-```
-*(Key can be configured in `.env` via `ADMIN_API_KEY`)*
+1. **Locally (SQLite Database)**:
+   View captured customer inquiries via the protected admin endpoint:
+   ```
+   http://localhost:3000/api/leads?key=earthcone-admin-2024
+   ```
+
+2. **On Vercel (100% Free Live Google Sheets Database)**:
+   Every lead can be sent directly to your private Google Sheet spreadsheet on your phone/PC:
+   - Open [`GoogleSheets_Webhook_Script.js`](GoogleSheets_Webhook_Script.js) in the project.
+   - Follow the 5 quick steps inside to deploy your free Google Apps Script webhook.
+   - Add your Webhook URL into Vercel Project Settings (`Environment Variables` -> `GOOGLE_SHEET_WEBHOOK_URL`).
+   - Done! Every website inquiry and chatbot lead will appear live in your Google Sheet spreadsheet!
 
 ### Option 3: Static Web Hosting (cPanel / Apache / Nginx / Hostinger)
 - Simply point the web root to the `public/` directory or upload the contents of `public/` directly to your `public_html` folder.
