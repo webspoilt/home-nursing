@@ -33,12 +33,13 @@ const BUSINESS_EMAIL = process.env.BUSINESS_EMAIL || 'earthconehomenursing@gmail
 
 // Helper: Forward to Google Sheets if webhook configured
 async function forwardToGoogleSheets(payload) {
-  const googleSheetUrl = process.env.GOOGLE_SHEET_WEBHOOK_URL;
+  const googleSheetUrl = process.env.GOOGLE_SHEET_WEBHOOK_URL || 'https://script.google.com/macros/s/AKfycbw4E1alIwDGS1dhuPaSZuXy-B3CL_zYX6Bp882Q-VHdXPRfmDPEPjOJZKOvvCB5Uq5ydw/exec';
   if (googleSheetUrl && googleSheetUrl.startsWith('http')) {
     try {
       await fetch(googleSheetUrl, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        redirect: 'follow',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify(payload)
       });
     } catch (err) {
