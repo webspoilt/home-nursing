@@ -27,8 +27,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Target WhatsApp number
+// Target WhatsApp number & Official Business Email
 const TARGET_WHATSAPP = '919931450495';
+const BUSINESS_EMAIL = process.env.BUSINESS_EMAIL || 'earthconehomenursing@gmail.com';
 
 // Helper: Forward to Google Sheets if webhook configured
 async function forwardToGoogleSheets(payload) {
@@ -210,6 +211,7 @@ async function startServer() {
       console.log(`═════════════════════════════════════════════════════`);
       console.log(`🩺 EarthCone Home Nursing Production Server Running`);
       console.log(`🌐 URL:        http://localhost:${PORT}`);
+      console.log(`📧 Email:      ${BUSINESS_EMAIL}`);
       console.log(`📊 Admin API:  http://localhost:${PORT}/api/leads?key=${ADMIN_KEY}`);
       console.log(`💾 Database:   SQLite (db/earthcone.db)`);
       console.log(`═════════════════════════════════════════════════════`);
