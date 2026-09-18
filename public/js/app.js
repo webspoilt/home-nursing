@@ -14,6 +14,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const yearEl = document.getElementById('current-year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
+  // Visitor Analytics Beacon (Logs IP, city, referral & screen size to Google Sheets/Vercel)
+  try {
+    fetch('/api/track', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        page: window.location.pathname,
+        referrer: document.referrer || 'Direct Visit',
+        screen: `${window.screen.width}x${window.screen.height}`,
+        userAgent: navigator.userAgent
+      })
+    }).catch(() => {});
+  } catch (e) {}
+
   // Scroll Progress Bar
   const progressBar = document.getElementById('scroll-progress');
   window.addEventListener('scroll', () => {

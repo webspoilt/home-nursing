@@ -10,6 +10,10 @@
       "destination": "/api/leads.js"
     },
     {
+      "source": "/api/track",
+      "destination": "/api/track.js"
+    },
+    {
       "source": "/(.*)",
       "destination": "/public/$1"
     }
