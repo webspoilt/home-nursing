@@ -1,21 +1,31 @@
 {
-  "cleanUrls": true,
-  "rewrites": [
+  "version": 2,
+  "builds": [
     {
-      "source": "/api/inquiry",
-      "destination": "/api/inquiry.js"
+      "src": "public/**/*",
+      "use": "@vercel/static"
     },
     {
-      "source": "/api/leads",
-      "destination": "/api/leads.js"
+      "src": "api/*.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/inquiry",
+      "dest": "/api/inquiry.js"
     },
     {
-      "source": "/api/track",
-      "destination": "/api/track.js"
+      "src": "/api/leads",
+      "dest": "/api/leads.js"
     },
     {
-      "source": "/(.*)",
-      "destination": "/public/$1"
+      "src": "/api/track",
+      "dest": "/api/track.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/public/$1"
     }
   ]
 }
