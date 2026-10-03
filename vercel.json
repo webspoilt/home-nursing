@@ -24,6 +24,18 @@
       "dest": "/api/track.js"
     },
     {
+      "src": "/api/auth/google",
+      "dest": "/api/auth-google.js"
+    },
+    {
+      "src": "/api/user/phone",
+      "dest": "/api/user-phone.js"
+    },
+    {
+      "src": "/api/bookings",
+      "dest": "/api/bookings.js"
+    },
+    {
       "src": "/(.*)",
       "dest": "/public/$1"
     }

@@ -177,6 +177,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
+  <!-- Google Identity Services (GIS) for Google Sign-In & One-Tap -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -263,22 +266,23 @@
 
       <!-- Desktop CTAs (shown on lg+ to prevent tablet overlap) -->
       <div class="hidden lg:flex items-center space-x-3">
-        <a href="tel:+919931450495" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 text-slate-800 text-xs sm:text-sm font-bold hover:bg-slate-100 transition shadow-sm">
-          <i data-lucide="phone-call" class="w-4 h-4 text-cyan-600"></i>
-          <span>Call Helpline</span>
-        </a>
+        <!-- Client Portal Google Auth / User Dropdown Container -->
+        <div class="portal-auth-btn-container"></div>
 
-        <a href="https://wa.me/919931450495?text=Hello%20EarthCone%20Home%20Nursing,%20I%20want%20to%20inquire%20about%20your%20nursing%20services." 
-           target="_blank" 
-           rel="noopener noreferrer" 
-           class="btn-shimmer inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 text-white text-xs sm:text-sm font-bold hover:bg-emerald-700 shadow-lg shadow-emerald-600/25 transition transform hover:-translate-y-0.5">
-          <i data-lucide="message-circle" class="w-4 h-4"></i>
-          <span>Chat on WhatsApp</span>
+        <button onclick="EarthConePortal.openBookingWizard()" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-teal-200 text-teal-800 bg-teal-50/80 text-xs sm:text-sm font-bold hover:bg-teal-100/80 transition shadow-xs">
+          <i data-lucide="calendar-plus" class="w-4 h-4 text-teal-600"></i>
+          <span>Schedule Care</span>
+        </button>
+
+        <a href="tel:+919931450495" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 text-slate-800 text-xs sm:text-sm font-bold hover:bg-slate-100 transition shadow-xs">
+          <i data-lucide="phone-call" class="w-4 h-4 text-cyan-600"></i>
+          <span>Helpline</span>
         </a>
       </div>
 
       <!-- Mobile Button -->
       <div class="flex lg:hidden items-center space-x-2">
+        <div class="portal-auth-btn-container scale-90"></div>
         <a href="tel:+919931450495" class="p-2.5 rounded-xl bg-teal-50 text-teal-700 border border-teal-200/70">
           <i data-lucide="phone" class="w-4 h-4"></i>
         </a>
@@ -293,7 +297,12 @@
     <div id="mobile-menu" class="hidden lg:hidden border-t border-slate-100 bg-white/98 backdrop-blur-xl px-5 pt-3 pb-6 space-y-3 shadow-2xl max-h-[calc(100vh-5rem)] overflow-y-auto">
       <a href="#home" class="mobile-nav-link block py-2.5 px-3 rounded-xl font-semibold text-slate-700 hover:bg-teal-50 hover:text-teal-700">Home</a>
       <a href="#services" class="mobile-nav-link block py-2.5 px-3 rounded-xl font-semibold text-slate-700 hover:bg-teal-50 hover:text-teal-700">Services</a>
-      <a href="#estimator" class="mobile-nav-link block py-2.5 px-3 rounded-xl font-semibold text-teal-700 bg-teal-50/80">Get Estimate</a>
+      <button onclick="EarthConePortal.openBookingWizard()" class="w-full text-left mobile-nav-link block py-2.5 px-3 rounded-xl font-bold text-teal-800 bg-teal-50 border border-teal-100 flex items-center gap-2">
+        <i data-lucide="calendar-plus" class="w-4 h-4 text-teal-600"></i> Schedule Patient Assessment
+      </button>
+      <button onclick="EarthConePortal.openDashboard()" class="w-full text-left mobile-nav-link block py-2.5 px-3 rounded-xl font-semibold text-slate-700 hover:bg-slate-50 flex items-center gap-2">
+        <i data-lucide="layout-dashboard" class="w-4 h-4 text-slate-500"></i> My Care Dashboard
+      </button>
       <a href="#why-us" class="mobile-nav-link block py-2.5 px-3 rounded-xl font-semibold text-slate-700 hover:bg-teal-50 hover:text-teal-700">Why Choose Us</a>
       <a href="#how-it-works" class="mobile-nav-link block py-2.5 px-3 rounded-xl font-semibold text-slate-700 hover:bg-teal-50 hover:text-teal-700">How It Works</a>
       <a href="#testimonials" class="mobile-nav-link block py-2.5 px-3 rounded-xl font-semibold text-slate-700 hover:bg-teal-50 hover:text-teal-700">Testimonials</a>
@@ -302,10 +311,6 @@
         <a href="tel:+919931450495" class="w-full flex items-center justify-center gap-2 py-3 rounded-xl border border-slate-200 text-slate-800 font-bold bg-slate-50">
           <i data-lucide="phone-call" class="w-4 h-4 text-cyan-600"></i>
           <span>Call +91 9931450495</span>
-        </a>
-        <a href="https://wa.me/919931450495?text=Hello%20EarthCone%20Home%20Nursing,%20I%20want%20to%20inquire%20about%20your%20nursing%20services." target="_blank" rel="noopener noreferrer" class="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-emerald-600 text-white font-bold shadow-lg shadow-emerald-600/30">
-          <i data-lucide="message-circle" class="w-4 h-4"></i>
-          <span>Chat on WhatsApp</span>
         </a>
       </div>
     </div>
@@ -352,18 +357,16 @@
 
           <!-- Dual Conversion Buttons -->
           <div class="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-            <a href="https://wa.me/919931450495?text=Hello%20EarthCone%20Home%20Nursing,%20I%20want%20to%20book%20a%20nurse%20for%20home%20care." 
-               target="_blank" 
-               rel="noopener noreferrer" 
-               class="btn-shimmer w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-base shadow-xl shadow-emerald-600/30 hover:shadow-emerald-600/45 transition transform hover:-translate-y-0.5">
-              <i data-lucide="message-circle" class="w-5 h-5"></i>
-              <span>Book a Nurse via WhatsApp</span>
-            </a>
+            <button onclick="EarthConePortal.openBookingWizard()" 
+                    class="btn-shimmer w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-teal-700 hover:bg-teal-800 text-white font-extrabold text-base shadow-xl shadow-teal-900/20 hover:shadow-teal-900/30 transition transform hover:-translate-y-0.5">
+              <i data-lucide="clipboard-check" class="w-5 h-5"></i>
+              <span>Schedule Patient Assessment</span>
+            </button>
 
             <a href="tel:+919931450495" 
                class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-2xl bg-white hover:bg-slate-50 text-slate-800 font-bold text-base border border-slate-300 shadow-sm transition">
-              <i data-lucide="phone-call" class="w-5 h-5 text-cyan-600"></i>
-              <span>Call Helpline</span>
+              <i data-lucide="phone-call" class="w-5 h-5 text-teal-600"></i>
+              <span>24/7 Clinical Helpline</span>
             </a>
           </div>
 
@@ -1447,6 +1450,9 @@
 
   <!-- Guided Chat Bot Widget -->
   <script src="js/chatbot.js"></script>
+
+  <!-- Patient Care Portal & Booking Engine -->
+  <script src="js/portal.js"></script>
 
   <!-- Custom JS Application Logic -->
   <script src="js/app.js"></script>
