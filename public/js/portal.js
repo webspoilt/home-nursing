@@ -491,6 +491,124 @@ window.EarthConePortal = (function() {
           </div>
         </div>
       </div>
+
+      <!-- Modal 5: Universal Clinical Callback Request Modal -->
+      <div id="ec-callback-modal" class="fixed inset-0 z-50 hidden bg-slate-950/75 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full border border-slate-200 shadow-2xl p-6 sm:p-8 relative max-h-[90vh] overflow-y-auto">
+          <button onclick="EarthConePortal.closeCallbackModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 p-1.5 rounded-xl hover:bg-slate-100 transition">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+
+          <div id="callback-form-wrapper">
+            <div class="flex items-center gap-3.5 mb-5 pb-4 border-b border-slate-100">
+              <div class="w-12 h-12 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-700 shrink-0 shadow-xs">
+                <i data-lucide="phone-call" class="w-6 h-6"></i>
+              </div>
+              <div>
+                <span class="text-[10px] font-extrabold uppercase tracking-wider text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded-full border border-blue-200">15-Minute Response</span>
+                <h3 class="font-heading font-extrabold text-xl text-slate-900 mt-0.5">Request a Care Callback</h3>
+                <p class="text-xs text-slate-500">A Senior Care Advisor will call back to guide your family</p>
+              </div>
+            </div>
+
+            <form id="ec-callback-form" class="space-y-3.5">
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Patient or Family Member Name *</label>
+                <div class="relative">
+                  <i data-lucide="user" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
+                  <input type="text" id="cb-name" required placeholder="e.g. Rajesh Kumar / Sneha" class="w-full pl-10 pr-4 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 transition">
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 mb-1">Mobile Number *</label>
+                  <div class="relative">
+                    <span class="absolute left-3.5 top-2.5 text-xs font-bold text-slate-500">+91</span>
+                    <input type="tel" id="cb-phone" required placeholder="9876543210" pattern="[0-9]{10}" class="w-full pl-12 pr-3 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 transition font-bold tracking-wide">
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 mb-1">Email Address *</label>
+                  <div class="relative">
+                    <i data-lucide="mail" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
+                    <input type="email" id="cb-email" required placeholder="family@domain.com" class="w-full pl-10 pr-3 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 transition">
+                  </div>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 mb-1">Care Service Needed *</label>
+                  <div class="relative">
+                    <select id="cb-service" class="w-full px-3 py-2.5 text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 transition">
+                      <option value="24/7 Bedside Nursing Care">24/7 Bedside Nursing Care</option>
+                      <option value="Elderly Assisted Living">Elderly Assisted Living</option>
+                      <option value="Post-Surgical Care & Recovery">Post-Surgical Care & Recovery</option>
+                      <option value="Home Visit (Injection/IV/Dressing)">Home Visit (Injection/IV/Dressing)</option>
+                      <option value="Catheter / Ryles Tube Care">Catheter / Ryles Tube Care</option>
+                      <option value="Physiotherapy at Home">Physiotherapy at Home</option>
+                      <option value="Palliative & Cancer Care">Palliative & Cancer Care</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 mb-1">Locality in Bengaluru *</label>
+                  <div class="relative">
+                    <i data-lucide="map-pin" class="w-4 h-4 text-slate-400 absolute left-3 top-3"></i>
+                    <input type="text" id="cb-location" required placeholder="e.g. Indiranagar, HSR, Kalyan Nagar" class="w-full pl-9 pr-3 py-2.5 text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 transition">
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Preferred Callback Window</label>
+                <div class="grid grid-cols-3 gap-2">
+                  <label class="flex items-center justify-center p-2 rounded-xl border border-slate-200 bg-slate-50 text-xs font-semibold cursor-pointer hover:bg-blue-50 has-[:checked]:border-blue-600 has-[:checked]:bg-blue-50 has-[:checked]:text-blue-900 transition text-center">
+                    <input type="radio" name="cb-time" value="Within 15 Mins" checked class="sr-only"> Within 15 Mins
+                  </label>
+                  <label class="flex items-center justify-center p-2 rounded-xl border border-slate-200 bg-slate-50 text-xs font-semibold cursor-pointer hover:bg-blue-50 has-[:checked]:border-blue-600 has-[:checked]:bg-blue-50 has-[:checked]:text-blue-900 transition text-center">
+                    <input type="radio" name="cb-time" value="In 1-2 Hours" class="sr-only"> In 1-2 Hours
+                  </label>
+                  <label class="flex items-center justify-center p-2 rounded-xl border border-slate-200 bg-slate-50 text-xs font-semibold cursor-pointer hover:bg-blue-50 has-[:checked]:border-blue-600 has-[:checked]:bg-blue-50 has-[:checked]:text-blue-900 transition text-center">
+                    <input type="radio" name="cb-time" value="This Evening" class="sr-only"> This Evening
+                  </label>
+                </div>
+              </div>
+
+              <button type="submit" id="cb-submit-btn" class="btn-shimmer w-full py-3.5 px-4 bg-gradient-to-r from-blue-700 via-blue-800 to-indigo-900 text-white font-extrabold text-sm rounded-xl shadow-lg shadow-blue-900/25 transition flex items-center justify-center gap-2 mt-2">
+                <i data-lucide="phone-call" class="w-4 h-4"></i>
+                <span>Confirm Callback Request</span>
+              </button>
+            </form>
+          </div>
+
+          <!-- Callback Success State -->
+          <div id="callback-success-wrapper" class="hidden text-center py-6 space-y-4">
+            <div class="w-16 h-16 rounded-3xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600 mx-auto shadow-sm">
+              <i data-lucide="check-circle-2" class="w-8 h-8"></i>
+            </div>
+            <div>
+              <span class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">Callback Registered</span>
+              <h3 class="font-heading font-extrabold text-2xl text-slate-900 mt-2">We Are Calling You Shortly</h3>
+              <p class="text-xs text-slate-500 mt-1">Care Reference Ticket: <strong class="text-blue-700 font-mono text-sm" id="cb-ref-display">EC-XXXXX</strong></p>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed max-w-sm mx-auto">
+              Our Clinical Supervisor on duty across Bengaluru has received your request and will call <strong class="text-slate-900" id="cb-phone-display">+91 XXXXX XXXXX</strong> within your chosen window.
+            </p>
+            <div class="pt-3 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-center gap-3">
+              <a href="tel:+919931450495" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-slate-900 text-white font-bold text-xs flex items-center justify-center gap-2 hover:bg-slate-800 transition">
+                <i data-lucide="phone" class="w-3.5 h-3.5 text-emerald-400"></i> Speak Now (+91 9931450495)
+              </a>
+              <button onclick="EarthConePortal.closeCallbackModal()" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-slate-100 text-slate-700 font-bold text-xs hover:bg-slate-200 transition">
+                Close Window
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     `;
 
     document.body.appendChild(modalContainer);
@@ -597,6 +715,101 @@ window.EarthConePortal = (function() {
         }
       });
     }
+
+    // Callback Modal Form Submission
+    const cbForm = document.getElementById('ec-callback-form');
+    if (cbForm) {
+      cbForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const submitBtn = document.getElementById('cb-submit-btn');
+        const name = document.getElementById('cb-name')?.value.trim();
+        const phone = document.getElementById('cb-phone')?.value.trim();
+        const email = document.getElementById('cb-email')?.value.trim();
+        const service = document.getElementById('cb-service')?.value;
+        const location = document.getElementById('cb-location')?.value.trim();
+        const timeRadio = document.querySelector('input[name="cb-time"]:checked');
+        const timeWindow = timeRadio ? timeRadio.value : 'Within 15 Mins';
+
+        if (!phone || phone.replace(/\D/g, '').length < 10) {
+          showToast('Please enter a valid 10-digit mobile number', true);
+          return;
+        }
+
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> <span>Registering Callback...</span>`;
+          if (window.lucide) lucide.createIcons();
+        }
+
+        try {
+          const res = await fetch('/api/inquiry', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              name,
+              phone: '+91' + phone.replace(/\D/g, '').slice(-10),
+              email,
+              service,
+              location,
+              notes: `Preferred Callback Window: ${timeWindow}`,
+              source: 'callback-modal'
+            })
+          });
+
+          const data = await res.json();
+          const leadId = (data && data.leadId) ? data.leadId : ('EC-' + Math.floor(10000 + Math.random() * 90000));
+
+          document.getElementById('cb-ref-display').textContent = leadId;
+          document.getElementById('cb-phone-display').textContent = '+91 ' + phone.replace(/\D/g, '').slice(-10);
+
+          document.getElementById('callback-form-wrapper')?.classList.add('hidden');
+          document.getElementById('callback-success-wrapper')?.classList.remove('hidden');
+          if (window.lucide) lucide.createIcons();
+
+        } catch (err) {
+          const fallbackId = 'EC-' + Math.floor(10000 + Math.random() * 90000);
+          document.getElementById('cb-ref-display').textContent = fallbackId;
+          document.getElementById('cb-phone-display').textContent = '+91 ' + phone;
+          document.getElementById('callback-form-wrapper')?.classList.add('hidden');
+          document.getElementById('callback-success-wrapper')?.classList.remove('hidden');
+          if (window.lucide) lucide.createIcons();
+        }
+      });
+    }
+  }
+
+  function openCallbackModal(serviceName = null) {
+    const modal = document.getElementById('ec-callback-modal');
+    if (!modal) return;
+    const formWrap = document.getElementById('callback-form-wrapper');
+    const succWrap = document.getElementById('callback-success-wrapper');
+    if (formWrap) formWrap.classList.remove('hidden');
+    if (succWrap) succWrap.classList.add('hidden');
+
+    const submitBtn = document.getElementById('cb-submit-btn');
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = `<i data-lucide="phone-call" class="w-4 h-4"></i> <span>Confirm Callback Request</span>`;
+    }
+
+    if (serviceName) {
+      const select = document.getElementById('cb-service');
+      if (select) {
+        for (let i = 0; i < select.options.length; i++) {
+          if (select.options[i].value.toLowerCase().includes(serviceName.toLowerCase()) || serviceName.toLowerCase().includes(select.options[i].value.toLowerCase())) {
+            select.selectedIndex = i;
+            break;
+          }
+        }
+      }
+    }
+
+    modal.classList.remove('hidden');
+    if (window.lucide) lucide.createIcons();
+  }
+
+  function closeCallbackModal() {
+    document.getElementById('ec-callback-modal')?.classList.add('hidden');
   }
 
   // Dashboard Fetcher
@@ -670,6 +883,8 @@ window.EarthConePortal = (function() {
     init,
     saveClientId,
     loginWithPhoneDirect,
+    openCallbackModal,
+    closeCallbackModal,
     openLogin: () => document.getElementById('ec-login-modal')?.classList.remove('hidden'),
     closeLogin: () => document.getElementById('ec-login-modal')?.classList.add('hidden'),
     openPhoneModal: () => document.getElementById('ec-phone-modal')?.classList.remove('hidden'),

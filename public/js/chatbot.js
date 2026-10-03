@@ -92,19 +92,19 @@
       #ec-chatbot-toggle {
         position: fixed; bottom: 24px; right: 24px; z-index: 9999;
         width: 60px; height: 60px; border-radius: 50%;
-        background: linear-gradient(135deg, #0d9488, #0284c7);
+        background: linear-gradient(135deg, #0a2540, #034ea1);
         color: #fff; border: none; cursor: pointer;
-        box-shadow: 0 6px 24px rgba(13,148,136,0.45);
+        box-shadow: 0 6px 24px rgba(3,78,161,0.45);
         display: flex; align-items: center; justify-content: center;
         transition: all 0.3s ease;
         animation: ec-pulse 2s infinite;
       }
-      #ec-chatbot-toggle:hover { transform: scale(1.1); }
-      #ec-chatbot-toggle svg { width: 28px; height: 28px; }
-      #ec-chatbot-toggle.open { animation: none; background: #475569; }
+      #ec-chatbot-toggle:hover { transform: scale(1.08); }
+      #ec-chatbot-toggle svg { width: 26px; height: 26px; }
+      #ec-chatbot-toggle.open { animation: none; background: #1e293b; }
       @keyframes ec-pulse {
-        0%, 100% { box-shadow: 0 6px 24px rgba(13,148,136,0.45); }
-        50% { box-shadow: 0 6px 36px rgba(13,148,136,0.7), 0 0 0 12px rgba(13,148,136,0.12); }
+        0%, 100% { box-shadow: 0 6px 24px rgba(3,78,161,0.4); }
+        50% { box-shadow: 0 6px 36px rgba(3,78,161,0.65), 0 0 0 10px rgba(3,78,161,0.12); }
       }
 
       #ec-chatbot-panel {
@@ -447,13 +447,13 @@
     const step = steps[currentStep];
     if (!step) return;
 
-    // Special shortcut: "Talk Now" → immediate WhatsApp
+    // Special shortcut: "Talk Now" → immediate phone helpline & callback option
     if (step.id === 'service' && answers['welcome'] === 'Talk Now') {
       showTyping();
       setTimeout(() => {
         hideTyping();
-        addBotMessage('Sure! Let me connect you directly to our team on WhatsApp.');
-        setTimeout(() => showWhatsAppButton(), 400);
+        addBotMessage('Our Clinical Care Supervisor on duty across Bengaluru is available 24/7.');
+        setTimeout(() => showActionButtons(), 400);
       }, 600);
       return;
     }
@@ -475,7 +475,7 @@
             answers[step.id] = value;
             currentStep++;
             if (currentStep >= steps.length) {
-              setTimeout(() => directToWhatsApp(), 300);
+              setTimeout(() => completeCallbackFlow(), 300);
             } else {
               setTimeout(() => processStep(), 300);
             }
@@ -490,7 +490,7 @@
     setTimeout(() => {
       hideTyping();
 
-      const summary = `Here's what I've got:\n\n` +
+      const summary = `Here are your care details:\n\n` +
         `🩺 Service: ${answers.service || '-'}\n` +
         `👤 Patient: ${answers.patient || '-'}\n` +
         `⏱️ Shift: ${answers.shift || '-'}\n` +
@@ -501,19 +501,19 @@
       addBotMessage(summary);
 
       setTimeout(() => {
-        addBotMessage('Tap below to send all these details to our care team on WhatsApp. They will respond within minutes! 💚');
+        addBotMessage('Would you like our Clinical Supervisor to call you to confirm your care schedule?');
         setTimeout(() => {
-          showWhatsAppButton();
+          showActionButtons();
           showRestartButton();
         }, 300);
       }, 500);
     }, 600);
   }
 
-  function directToWhatsApp() {
+  function completeCallbackFlow() {
     showTyping();
 
-    // Persist full lead details to database
+    // Persist full lead details to database & sheets
     try {
       fetch('/api/inquiry', {
         method: 'POST',
@@ -524,7 +524,7 @@
           service: answers.service || 'General Nursing Care',
           duration: answers.shift || '',
           location: answers.area || 'Bengaluru',
-          notes: `Patient: ${answers.patient || 'Not specified'}`,
+          notes: `Patient: ${answers.patient || 'Not specified'} (Chat Assistant)`,
           source: 'chatbot'
         })
       }).catch(e => console.warn('Offline mode or server unavailable:', e));
@@ -534,30 +534,39 @@
 
     setTimeout(() => {
       hideTyping();
-      addBotMessage('Thank you! 🙏 Details saved. Connecting you to our care team on WhatsApp...');
-      const waMsg = buildWhatsAppMessage();
-      const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(waMsg)}`;
+      const userName = answers.name ? answers.name : 'there';
+      addBotMessage(`Thank you, ${userName}! 📋 Your care callback request has been registered.`);
       setTimeout(() => {
-        window.open(url, '_blank');
+        addBotMessage(`Our Clinical Supervisor on duty across Bengaluru will call ${answers.phone || 'you'} within 15 minutes.`);
         setTimeout(() => {
-          addBotMessage('WhatsApp opened! Our team will respond within minutes. 💚');
+          showActionButtons();
           showRestartButton();
-        }, 500);
-      }, 800);
+        }, 300);
+      }, 500);
     }, 600);
   }
 
-  function showWhatsAppButton() {
+  function showActionButtons() {
+    const wrap = document.createElement('div');
+    wrap.style.cssText = 'display: flex; flex-direction: column; gap: 8px; margin-top: 10px; width: 100%;';
+
+    const callBtn = document.createElement('a');
+    callBtn.href = 'tel:+919931450495';
+    callBtn.style.cssText = 'display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; background: #0a2540; color: #fff; border-radius: 12px; font-size: 13px; font-weight: 700; text-decoration: none; transition: opacity 0.2s;';
+    callBtn.innerHTML = `<span>📞 Speak with Supervisor Now (+91 9931450495)</span>`;
+
     const waMsg = buildWhatsAppMessage();
     const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(waMsg)}`;
+    const waBtn = document.createElement('a');
+    waBtn.href = url;
+    waBtn.target = '_blank';
+    waBtn.rel = 'noopener noreferrer';
+    waBtn.style.cssText = 'display: flex; align-items: center; justify-content: center; gap: 8px; padding: 10px; background: #f8fafc; color: #0f172a; border: 1px solid #cbd5e1; border-radius: 12px; font-size: 12px; font-weight: 600; text-decoration: none;';
+    waBtn.innerHTML = `<span>💬 Or Message on WhatsApp (Optional)</span>`;
 
-    const btn = document.createElement('button');
-    btn.className = 'ec-wa-btn';
-    btn.innerHTML = `
-      <svg viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766 0-3.18-2.587-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86.174.086.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.144.39-.086.159.058 1.011.477 1.184.564.173.087.289.129.332.202.043.073.043.419-.101.824z"/><path d="M12 2C6.486 2 2 6.486 2 12c0 1.846.507 3.578 1.389 5.064L2.055 22l5.064-1.334A9.94 9.94 0 0 0 12 22c5.514 0 10-4.486 10-10S17.514 2 12 2zm0 18.2c-1.637 0-3.17-.468-4.477-1.28l-.321-.202-3.003.79.803-2.93-.221-.351A8.172 8.172 0 0 1 3.8 12c0-4.521 3.679-8.2 8.2-8.2 4.522 0 8.2 3.679 8.2 8.2 0 4.521-3.678 8.2-8.2 8.2z"/></svg>
-      Chat on WhatsApp`;
-    btn.addEventListener('click', () => window.open(url, '_blank'));
-    body().appendChild(btn);
+    wrap.appendChild(callBtn);
+    wrap.appendChild(waBtn);
+    body().appendChild(wrap);
     scrollBottom();
   }
 

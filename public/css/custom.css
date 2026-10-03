@@ -3,17 +3,19 @@
    ========================================================================== */
 
 :root {
-  --primary-teal: #0d9488;
-  --primary-teal-dark: #0f766e;
-  --primary-cyan: #0284c7;
-  --accent-emerald: #10b981;
-  --trust-navy: #0f172a;
-  --glass-bg: rgba(255, 255, 255, 0.82);
-  --glass-border: rgba(255, 255, 255, 0.6);
-  --glass-dark-bg: rgba(15, 23, 42, 0.75);
-  --glass-dark-border: rgba(255, 255, 255, 0.1);
-  --card-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.06), 0 0 1px 1px rgba(15, 23, 42, 0.04);
-  --card-hover-shadow: 0 25px 50px -12px rgba(13, 148, 136, 0.22), 0 0 1px 1px rgba(13, 148, 136, 0.12);
+  --primary-brand: #034ea1;
+  --primary-brand-dark: #002d62;
+  --primary-teal: #0891b2;
+  --primary-teal-dark: #0e7490;
+  --accent-blue: #2563eb;
+  --accent-soft-blue: #f0f7ff;
+  --trust-navy: #0a2540;
+  --glass-bg: rgba(255, 255, 255, 0.92);
+  --glass-border: rgba(226, 232, 240, 0.8);
+  --glass-dark-bg: rgba(10, 37, 64, 0.85);
+  --glass-dark-border: rgba(255, 255, 255, 0.12);
+  --card-shadow: 0 10px 30px -10px rgba(10, 37, 64, 0.08), 0 0 1px 1px rgba(10, 37, 64, 0.04);
+  --card-hover-shadow: 0 20px 40px -12px rgba(3, 78, 161, 0.18), 0 0 1px 1px rgba(3, 78, 161, 0.15);
 }
 
 /* Base Smoothness */
@@ -168,5 +170,35 @@ body {
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #0d9488;
+  background: #034ea1;
+}
+
+/* Floating Clinical Callback Capsule */
+.floating-callback-badge {
+  box-shadow: 0 12px 30px -5px rgba(3, 78, 161, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.2);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.floating-callback-badge:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 16px 36px -4px rgba(3, 78, 161, 0.5);
+}
+
+/* Mobile Bottom Healthcare Bar */
+@media (max-width: 768px) {
+  .mobile-bottom-care-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 45;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid #e2e8f0;
+    padding: 10px 14px;
+    box-shadow: 0 -8px 24px rgba(10, 37, 64, 0.08);
+  }
+  body {
+    padding-bottom: 72px; /* Prevent content cutoff by mobile bar */
+  }
 }

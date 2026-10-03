@@ -357,33 +357,39 @@
 
           <!-- Dual Conversion Buttons -->
           <div class="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-            <button onclick="EarthConePortal.openBookingWizard()" 
-                    class="btn-shimmer w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-teal-700 hover:bg-teal-800 text-white font-extrabold text-base shadow-xl shadow-teal-900/20 hover:shadow-teal-900/30 transition transform hover:-translate-y-0.5">
-              <i data-lucide="clipboard-check" class="w-5 h-5"></i>
-              <span>Schedule Patient Assessment</span>
+            <button onclick="EarthConePortal.openCallbackModal()" 
+                    class="btn-shimmer w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-blue-700 via-blue-800 to-indigo-900 text-white font-extrabold text-base shadow-xl shadow-blue-900/25 hover:shadow-blue-900/40 transition transform hover:-translate-y-0.5">
+              <i data-lucide="phone-call" class="w-5 h-5"></i>
+              <span>Request a Care Callback</span>
             </button>
 
-            <a href="tel:+919931450495" 
-               class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-2xl bg-white hover:bg-slate-50 text-slate-800 font-bold text-base border border-slate-300 shadow-sm transition">
-              <i data-lucide="phone-call" class="w-5 h-5 text-teal-600"></i>
-              <span>24/7 Clinical Helpline</span>
-            </a>
+            <button onclick="EarthConePortal.openBookingWizard()" 
+                    class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-2xl bg-white hover:bg-slate-50 text-slate-800 font-bold text-base border border-slate-300 shadow-sm transition">
+              <i data-lucide="clipboard-check" class="w-5 h-5 text-blue-700"></i>
+              <span>Schedule Patient Assessment</span>
+            </button>
+          </div>
+
+          <div class="pt-2 flex items-center justify-center lg:justify-start gap-2 text-xs font-semibold text-slate-500">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span>Senior Medical Supervisor on Stand-by:</span>
+            <a href="tel:+919931450495" class="text-blue-700 font-bold hover:underline">+91 9931450495</a>
           </div>
 
           <!-- Trust Badges -->
           <div class="pt-6 border-t border-slate-200/80 grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-6 text-center sm:text-left">
             <div class="flex flex-col sm:flex-row items-center gap-3">
-              <div class="w-11 h-11 rounded-2xl bg-teal-50 border border-teal-100 flex items-center justify-center text-teal-600 shrink-0 shadow-sm">
+              <div class="w-11 h-11 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-700 shrink-0 shadow-sm">
                 <i data-lucide="activity" class="w-5 h-5"></i>
               </div>
               <div>
                 <p class="font-heading font-bold text-sm text-slate-900 leading-tight">24/7 Availability</p>
-                <p class="text-xs text-slate-500">Day & Night Care</p>
+                <p class="text-xs text-slate-500">Day & Night Shifts</p>
               </div>
             </div>
 
             <div class="flex flex-col sm:flex-row items-center gap-3">
-              <div class="w-11 h-11 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 shrink-0 shadow-sm">
+              <div class="w-11 h-11 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-700 shrink-0 shadow-sm">
                 <i data-lucide="shield-check" class="w-5 h-5"></i>
               </div>
               <div>
@@ -393,11 +399,11 @@
             </div>
 
             <div class="flex flex-col sm:flex-row items-center gap-3">
-              <div class="w-11 h-11 rounded-2xl bg-cyan-50 border border-cyan-100 flex items-center justify-center text-cyan-600 shrink-0 shadow-sm">
+              <div class="w-11 h-11 rounded-2xl bg-teal-50 border border-teal-100 flex items-center justify-center text-teal-700 shrink-0 shadow-sm">
                 <i data-lucide="user-check" class="w-5 h-5"></i>
               </div>
               <div>
-                <p class="font-heading font-bold text-sm text-slate-900 leading-tight">Trained Staff</p>
+                <p class="font-heading font-bold text-sm text-slate-900 leading-tight">Hospital-Grade Staff</p>
                 <p class="text-xs text-slate-500">GNM & ICU Qualified</p>
               </div>
             </div>
@@ -405,69 +411,80 @@
 
         </div>
 
-        <!-- Right Quick Booking Card (Glassmorphic) -->
+        <!-- Right Quick Booking Card (Hospital Trust Card) -->
         <div class="lg:col-span-5 relative">
-          <div class="relative glass-panel rounded-3xl p-7 sm:p-9 shadow-2xl border border-white/80">
-            <div class="flex items-center justify-between mb-5">
+          <div class="relative bg-white/95 backdrop-blur-md rounded-3xl p-6 sm:p-8 shadow-2xl border border-slate-200/90">
+            <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
               <div>
-                <span class="text-xs font-bold uppercase tracking-wider text-teal-600">Quick Response In 30 Mins</span>
-                <h3 class="font-heading font-extrabold text-xl text-slate-900">Request Nursing Assistance</h3>
+                <span class="text-[10px] font-extrabold uppercase tracking-wider text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded-full border border-blue-200">15-Min Care Advisor Response</span>
+                <h3 class="font-heading font-extrabold text-xl text-slate-900 mt-1">Request a Care Callback</h3>
+                <p class="text-xs text-slate-500">Free medical evaluation & custom nursing quote</p>
               </div>
-              <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-teal-500 to-teal-700 text-white flex items-center justify-center shadow-md">
-                <i data-lucide="stethoscope" class="w-5 h-5"></i>
+              <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-700 to-indigo-900 text-white flex items-center justify-center shadow-md shrink-0">
+                <i data-lucide="phone-incoming" class="w-5 h-5"></i>
               </div>
             </div>
 
-            <form id="hero-quick-form" class="space-y-4">
+            <form id="hero-quick-form" class="space-y-3">
               <div>
-                <label class="block text-xs font-semibold text-slate-700 mb-1">Patient or Attendant Name</label>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Patient or Attendant Name *</label>
                 <div class="relative">
-                  <i data-lucide="user" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5"></i>
-                  <input type="text" id="hero-name" required placeholder="e.g. Rajesh Kumar" class="w-full pl-10 pr-4 py-2.5 text-sm bg-white/90 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition shadow-inner">
+                  <i data-lucide="user" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
+                  <input type="text" id="hero-name" required placeholder="e.g. Rajesh Kumar" class="w-full pl-10 pr-4 py-2 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition">
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 mb-1">Contact Phone *</label>
+                  <div class="relative">
+                    <span class="absolute left-3 top-2 text-xs font-bold text-slate-500">+91</span>
+                    <input type="tel" id="hero-phone" required placeholder="9876543210" pattern="[0-9]{10}" class="w-full pl-11 pr-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition font-bold">
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 mb-1">Email Address *</label>
+                  <div class="relative">
+                    <i data-lucide="mail" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
+                    <input type="email" id="hero-email" required placeholder="care@family.com" class="w-full pl-10 pr-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition">
+                  </div>
                 </div>
               </div>
 
               <div>
-                <label class="block text-xs font-semibold text-slate-700 mb-1">Phone Number (WhatsApp)</label>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Nursing Care Service Needed *</label>
                 <div class="relative">
-                  <i data-lucide="phone" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5"></i>
-                  <input type="tel" id="hero-phone" required placeholder="e.g. 9876543210" class="w-full pl-10 pr-4 py-2.5 text-sm bg-white/90 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition shadow-inner">
-                </div>
-              </div>
-
-              <div>
-                <label class="block text-xs font-semibold text-slate-700 mb-1">Service Required</label>
-                <div class="relative">
-                  <i data-lucide="heart-pulse" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5"></i>
-                  <select id="hero-service" class="w-full pl-10 pr-4 py-2.5 text-sm bg-white/90 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition appearance-none text-slate-700 shadow-inner">
-                    <option value="24/7 Critical & Bedside Nursing">24/7 Critical & Bedside Nursing</option>
-                    <option value="Elderly & Senior Citizen Care">Elderly & Senior Citizen Care</option>
+                  <i data-lucide="heart-pulse" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
+                  <select id="hero-service" class="w-full pl-10 pr-4 py-2 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition appearance-none text-slate-700">
+                    <option value="24/7 Bedside ICU Nursing Care">24/7 Bedside ICU Nursing Care</option>
+                    <option value="Elderly & Senior Citizen Assisted Living">Elderly & Senior Citizen Assisted Living</option>
                     <option value="Post-Operative & Surgery Recovery">Post-Operative & Surgery Recovery</option>
                     <option value="Sterile Dressing & Wound Care">Sterile Dressing & Wound Care</option>
-                    <option value="Ryles Tube Insertion & Feeding">Ryles Tube Insertion & Feeding</option>
-                    <option value="Home Visit Procedures (Injections/IV/Dressing)">Home Visit Procedures (Injections/IV/Dressing)</option>
-                    <option value="Physiotherapy & Rehabilitation">Physiotherapy & Rehabilitation</option>
-                    <option value="Palliative & Chronic Care">Palliative & Chronic Care</option>
+                    <option value="Ryles Tube / Catheter Care at Home">Ryles Tube / Catheter Care at Home</option>
+                    <option value="Home Visit Procedures (Injections/IV Drips)">Home Visit Procedures (Injections/IV Drips)</option>
+                    <option value="Physiotherapy & Mobility Rehabilitation">Physiotherapy & Mobility Rehabilitation</option>
+                    <option value="Palliative & Cancer Care">Palliative & Cancer Care</option>
                   </select>
                 </div>
               </div>
 
               <div>
-                <label class="block text-xs font-semibold text-slate-700 mb-1">Location / Area in Bengaluru</label>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Locality in Bengaluru *</label>
                 <div class="relative">
-                  <i data-lucide="map-pin" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5"></i>
-                  <input type="text" id="hero-location" required placeholder="e.g. Kalyan Nagar, JP Nagar, HSR" class="w-full pl-10 pr-4 py-2.5 text-sm bg-white/90 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition shadow-inner">
+                  <i data-lucide="map-pin" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
+                  <input type="text" id="hero-location" required placeholder="e.g. Kalyan Nagar, Indiranagar, HSR, Whitefield" class="w-full pl-10 pr-4 py-2 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition">
                 </div>
               </div>
 
-              <button type="submit" class="btn-shimmer w-full py-3.5 px-4 bg-gradient-to-r from-teal-600 via-teal-700 to-cyan-700 text-white font-bold text-sm rounded-xl shadow-lg shadow-teal-600/30 transition flex items-center justify-center gap-2">
-                <i data-lucide="send" class="w-4 h-4"></i>
-                <span>Get Instant Quote on WhatsApp</span>
+              <button type="submit" id="hero-submit-btn" class="btn-shimmer w-full py-3.5 px-4 bg-gradient-to-r from-blue-700 via-blue-800 to-indigo-900 text-white font-extrabold text-sm rounded-xl shadow-lg shadow-blue-900/30 transition flex items-center justify-center gap-2 mt-2">
+                <i data-lucide="phone-call" class="w-4 h-4"></i>
+                <span>Request a Callback (Free Consultation)</span>
               </button>
             </form>
 
-            <p class="text-[11px] text-center text-slate-400 mt-3 flex items-center justify-center gap-1">
-              <i data-lucide="lock" class="w-3 h-3 text-emerald-500"></i> Your details are strictly confidential & secure
+            <p class="text-[11px] text-center text-slate-400 mt-3 flex items-center justify-center gap-1.5">
+              <i data-lucide="lock" class="w-3.5 h-3.5 text-blue-600"></i> Strict Healthcare Privacy &bull; Zero Spam
             </p>
           </div>
         </div>
@@ -492,9 +509,9 @@
         <a href="tel:+919931450495" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-white text-slate-900 font-extrabold text-xs sm:text-sm hover:bg-slate-100 transition shadow flex items-center justify-center gap-2">
           <i data-lucide="phone" class="w-4 h-4 text-rose-600"></i> Call +91 9931450495
         </a>
-        <a href="https://wa.me/919931450495?text=Hi%20EarthCone,%20I%20have%20an%20urgent%20nursing%20requirement." target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-emerald-500 text-white font-extrabold text-xs sm:text-sm hover:bg-emerald-600 transition shadow flex items-center justify-center gap-2">
-          <i data-lucide="message-square" class="w-4 h-4"></i> Urgent WhatsApp
-        </a>
+        <button onclick="EarthConePortal.openCallbackModal('Immediate Urgent Nursing')" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-extrabold text-xs sm:text-sm transition shadow flex items-center justify-center gap-2">
+          <i data-lucide="phone-call" class="w-4 h-4"></i> Request Immediate Callback
+        </button>
       </div>
     </div>
   </section>
@@ -537,14 +554,15 @@
               <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-teal-600"></i> Continuous vitals & medication logs</li>
             </ul>
           </div>
-          <div class="pt-6 mt-4 flex gap-2">
-            <a href="https://wa.me/919931450495?text=Hello%20EarthCone%20Home%20Nursing,%20I%20want%20to%20inquire%20about%2024/7%20Critical%20%26%20Bedside%20Nursing." 
-               target="_blank" 
-               rel="noopener noreferrer" 
-               class="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-teal-50 hover:bg-emerald-600 text-teal-700 hover:text-white font-bold text-xs sm:text-sm transition-all duration-200">
-              <i data-lucide="message-circle" class="w-4 h-4"></i>
-              <span>Inquire on WhatsApp</span>
-            </a>
+          <div class="pt-5 mt-4 border-t border-slate-200/90 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div>
+              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Care Starting From</span>
+              <p class="font-heading font-extrabold text-base text-slate-900">₹2,499<span class="text-xs font-normal text-slate-500"> / 24-hr day</span></p>
+            </div>
+            <button onclick="EarthConePortal.openCallbackModal('24/7 Critical & Bedside Nursing')" class="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-blue-50 hover:bg-blue-600 text-blue-700 hover:text-white font-bold text-xs transition-all duration-200 shadow-xs cursor-pointer">
+              <i data-lucide="phone-call" class="w-3.5 h-3.5"></i>
+              <span>Request Callback</span>
+            </button>
           </div>
         </div>
 
@@ -566,14 +584,15 @@
               <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-blue-600"></i> Timely diet & medicine administration</li>
             </ul>
           </div>
-          <div class="pt-6 mt-4 flex gap-2">
-            <a href="https://wa.me/919931450495?text=Hello%20EarthCone%20Home%20Nursing,%20I%20want%20to%20inquire%20about%20Elderly%20%26%20Senior%20Citizen%20Care." 
-               target="_blank" 
-               rel="noopener noreferrer" 
-               class="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-blue-50 hover:bg-emerald-600 text-blue-700 hover:text-white font-bold text-xs sm:text-sm transition-all duration-200">
-              <i data-lucide="message-circle" class="w-4 h-4"></i>
-              <span>Inquire on WhatsApp</span>
-            </a>
+          <div class="pt-5 mt-4 border-t border-slate-200/90 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div>
+              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Care Starting From</span>
+              <p class="font-heading font-extrabold text-base text-slate-900">₹1,499<span class="text-xs font-normal text-slate-500"> / 12-hr shift</span></p>
+            </div>
+            <button onclick="EarthConePortal.openCallbackModal('Elderly & Senior Citizen Care')" class="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-blue-50 hover:bg-blue-600 text-blue-700 hover:text-white font-bold text-xs transition-all duration-200 shadow-xs cursor-pointer">
+              <i data-lucide="phone-call" class="w-3.5 h-3.5"></i>
+              <span>Request Callback</span>
+            </button>
           </div>
         </div>
 
@@ -595,14 +614,15 @@
               <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-cyan-600"></i> Pain relief & post-op monitoring</li>
             </ul>
           </div>
-          <div class="pt-6 mt-4 flex gap-2">
-            <a href="https://wa.me/919931450495?text=Hello%20EarthCone%20Home%20Nursing,%20I%20want%20to%20inquire%20about%20Post-Operative%20%26%20Surgery%20Recovery." 
-               target="_blank" 
-               rel="noopener noreferrer" 
-               class="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-cyan-50 hover:bg-emerald-600 text-cyan-700 hover:text-white font-bold text-xs sm:text-sm transition-all duration-200">
-              <i data-lucide="message-circle" class="w-4 h-4"></i>
-              <span>Inquire on WhatsApp</span>
-            </a>
+          <div class="pt-5 mt-4 border-t border-slate-200/90 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div>
+              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Care Starting From</span>
+              <p class="font-heading font-extrabold text-base text-slate-900">₹1,699<span class="text-xs font-normal text-slate-500"> / shift</span></p>
+            </div>
+            <button onclick="EarthConePortal.openCallbackModal('Post-Operative & Surgery Recovery')" class="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-blue-50 hover:bg-blue-600 text-blue-700 hover:text-white font-bold text-xs transition-all duration-200 shadow-xs cursor-pointer">
+              <i data-lucide="phone-call" class="w-3.5 h-3.5"></i>
+              <span>Request Callback</span>
+            </button>
           </div>
         </div>
 
@@ -624,14 +644,15 @@
               <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-amber-600"></i> Foley Catheter insertion & Blood Sugar check</li>
             </ul>
           </div>
-          <div class="pt-6 mt-4 flex gap-2">
-            <a href="https://wa.me/919931450495?text=Hello%20EarthCone%20Home%20Nursing,%20I%20want%20to%20inquire%20about%20Home%20Visit%20Procedures." 
-               target="_blank" 
-               rel="noopener noreferrer" 
-               class="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-amber-50 hover:bg-emerald-600 text-amber-800 hover:text-white font-bold text-xs sm:text-sm transition-all duration-200">
-              <i data-lucide="message-circle" class="w-4 h-4"></i>
-              <span>Inquire on WhatsApp</span>
-            </a>
+          <div class="pt-5 mt-4 border-t border-slate-200/90 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div>
+              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Care Starting From</span>
+              <p class="font-heading font-extrabold text-base text-slate-900">₹599<span class="text-xs font-normal text-slate-500"> / visit</span></p>
+            </div>
+            <button onclick="EarthConePortal.openCallbackModal('Home Visit Medical Procedures')" class="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-blue-50 hover:bg-blue-600 text-blue-700 hover:text-white font-bold text-xs transition-all duration-200 shadow-xs cursor-pointer">
+              <i data-lucide="phone-call" class="w-3.5 h-3.5"></i>
+              <span>Request Callback</span>
+            </button>
           </div>
         </div>
 
@@ -653,14 +674,15 @@
               <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-indigo-600"></i> Chronic back & neck pain relief</li>
             </ul>
           </div>
-          <div class="pt-6 mt-4 flex gap-2">
-            <a href="https://wa.me/919931450495?text=Hello%20EarthCone%20Home%20Nursing,%20I%20want%20to%20inquire%20about%20Physiotherapy%20%26%20Rehabilitation." 
-               target="_blank" 
-               rel="noopener noreferrer" 
-               class="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-indigo-50 hover:bg-emerald-600 text-indigo-700 hover:text-white font-bold text-xs sm:text-sm transition-all duration-200">
-              <i data-lucide="message-circle" class="w-4 h-4"></i>
-              <span>Inquire on WhatsApp</span>
-            </a>
+          <div class="pt-5 mt-4 border-t border-slate-200/90 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div>
+              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Care Starting From</span>
+              <p class="font-heading font-extrabold text-base text-slate-900">₹899<span class="text-xs font-normal text-slate-500"> / session</span></p>
+            </div>
+            <button onclick="EarthConePortal.openCallbackModal('Physiotherapy & Rehabilitation')" class="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-blue-50 hover:bg-blue-600 text-blue-700 hover:text-white font-bold text-xs transition-all duration-200 shadow-xs cursor-pointer">
+              <i data-lucide="phone-call" class="w-3.5 h-3.5"></i>
+              <span>Request Callback</span>
+            </button>
           </div>
         </div>
 
@@ -682,14 +704,15 @@
               <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i> Psychological counseling & family aid</li>
             </ul>
           </div>
-          <div class="pt-6 mt-4 flex gap-2">
-            <a href="https://wa.me/919931450495?text=Hello%20EarthCone%20Home%20Nursing,%20I%20want%20to%20inquire%20about%20Palliative%20%26%20Chronic%20Care." 
-               target="_blank" 
-               rel="noopener noreferrer" 
-               class="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-emerald-50 hover:bg-emerald-600 text-emerald-700 hover:text-white font-bold text-xs sm:text-sm transition-all duration-200">
-              <i data-lucide="message-circle" class="w-4 h-4"></i>
-              <span>Inquire on WhatsApp</span>
-            </a>
+          <div class="pt-5 mt-4 border-t border-slate-200/90 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div>
+              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Care Starting From</span>
+              <p class="font-heading font-extrabold text-base text-slate-900">₹1,799<span class="text-xs font-normal text-slate-500"> / shift</span></p>
+            </div>
+            <button onclick="EarthConePortal.openCallbackModal('Palliative & Chronic Care')" class="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-blue-50 hover:bg-blue-600 text-blue-700 hover:text-white font-bold text-xs transition-all duration-200 shadow-xs cursor-pointer">
+              <i data-lucide="phone-call" class="w-3.5 h-3.5"></i>
+              <span>Request Callback</span>
+            </button>
           </div>
         </div>
 
@@ -711,14 +734,15 @@
               <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-rose-600"></i> Diabetic foot &amp; chronic wound healing</li>
             </ul>
           </div>
-          <div class="pt-6 mt-4 flex gap-2">
-            <a href="https://wa.me/919931450495?text=Hello%20EarthCone%20Home%20Nursing,%20I%20want%20to%20inquire%20about%20Sterile%20Dressing%20%26%20Wound%20Care." 
-               target="_blank" 
-               rel="noopener noreferrer" 
-               class="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-rose-50 hover:bg-emerald-600 text-rose-700 hover:text-white font-bold text-xs sm:text-sm transition-all duration-200">
-              <i data-lucide="message-circle" class="w-4 h-4"></i>
-              <span>Inquire on WhatsApp</span>
-            </a>
+          <div class="pt-5 mt-4 border-t border-slate-200/90 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div>
+              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Care Starting From</span>
+              <p class="font-heading font-extrabold text-base text-slate-900">₹699<span class="text-xs font-normal text-slate-500"> / visit</span></p>
+            </div>
+            <button onclick="EarthConePortal.openCallbackModal('Sterile Dressing & Wound Care')" class="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-blue-50 hover:bg-blue-600 text-blue-700 hover:text-white font-bold text-xs transition-all duration-200 shadow-xs cursor-pointer">
+              <i data-lucide="phone-call" class="w-3.5 h-3.5"></i>
+              <span>Request Callback</span>
+            </button>
           </div>
         </div>
 
@@ -740,14 +764,15 @@
               <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-teal-600"></i> Aspiration prevention &amp; position protocol</li>
             </ul>
           </div>
-          <div class="pt-6 mt-4 flex gap-2">
-            <a href="https://wa.me/919931450495?text=Hello%20EarthCone%20Home%20Nursing,%20I%20want%20to%20inquire%20about%20Ryles%20Tube%20Insertion%20%26%20Feeding%20Care." 
-               target="_blank" 
-               rel="noopener noreferrer" 
-               class="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-teal-50 hover:bg-emerald-600 text-teal-700 hover:text-white font-bold text-xs sm:text-sm transition-all duration-200">
-              <i data-lucide="message-circle" class="w-4 h-4"></i>
-              <span>Inquire on WhatsApp</span>
-            </a>
+          <div class="pt-5 mt-4 border-t border-slate-200/90 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div>
+              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Care Starting From</span>
+              <p class="font-heading font-extrabold text-base text-slate-900">₹799<span class="text-xs font-normal text-slate-500"> / visit</span></p>
+            </div>
+            <button onclick="EarthConePortal.openCallbackModal('Ryles Tube Insertion & Feeding Care')" class="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-blue-50 hover:bg-blue-600 text-blue-700 hover:text-white font-bold text-xs transition-all duration-200 shadow-xs cursor-pointer">
+              <i data-lucide="phone-call" class="w-3.5 h-3.5"></i>
+              <span>Request Callback</span>
+            </button>
           </div>
         </div>
 
@@ -761,14 +786,14 @@
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       
       <div class="text-center max-w-2xl mx-auto mb-12 space-y-2">
-        <span class="text-xs font-extrabold uppercase tracking-widest text-teal-700 bg-teal-100/70 px-3.5 py-1.5 rounded-full border border-teal-200">
-          Free Personalized Estimate
+        <span class="text-xs font-extrabold uppercase tracking-widest text-blue-700 bg-blue-100/70 px-3.5 py-1.5 rounded-full border border-blue-200">
+          Personalized Care Estimate
         </span>
         <h2 class="font-heading text-3xl font-extrabold text-slate-900 tracking-tight">
-          Get Your Custom Nursing Care Quote
+          Request a Custom Nursing Care Plan &amp; Estimate
         </h2>
         <p class="text-slate-600 text-sm sm:text-base">
-          Share your details and our care specialist will contact you within 30 minutes with a personalized estimate tailored to your needs.
+          Share patient requirements and our Clinical Supervisor will contact you within 15–30 minutes with transparent pricing and care options.
         </p>
       </div>
 
@@ -782,16 +807,16 @@
             <div class="relative">
               <i data-lucide="phone" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5"></i>
               <input type="tel" id="lead-phone" required placeholder="e.g. 9876543210" 
-                     class="w-full pl-10 pr-4 py-3 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition font-semibold text-slate-800">
+                     class="w-full pl-10 pr-4 py-3 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition font-semibold text-slate-800">
             </div>
           </div>
 
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wide">Email Address <span class="text-slate-400 font-normal">(optional)</span></label>
+            <label class="block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wide">Email Address <span class="text-slate-400 font-normal">(for care plan &amp; invoice)</span></label>
             <div class="relative">
               <i data-lucide="mail" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5"></i>
               <input type="email" id="lead-email" placeholder="your.email@example.com" 
-                     class="w-full pl-10 pr-4 py-3 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition text-slate-800">
+                     class="w-full pl-10 pr-4 py-3 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition text-slate-800">
             </div>
           </div>
 
@@ -799,7 +824,7 @@
             <label class="block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wide">Service You're Interested In</label>
             <div class="relative">
               <i data-lucide="heart-pulse" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5"></i>
-              <select id="lead-service" class="w-full pl-10 pr-4 py-3 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition appearance-none font-semibold text-slate-800">
+              <select id="lead-service" class="w-full pl-10 pr-4 py-3 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition appearance-none font-semibold text-slate-800">
                 <option value="24/7 Critical & Bedside Nursing">24/7 Critical & Bedside Nursing</option>
                 <option value="Elderly & Senior Citizen Care">Elderly & Senior Citizen Care</option>
                 <option value="Post-Operative & Surgery Recovery">Post-Operative & Surgery Recovery</option>
@@ -813,34 +838,35 @@
             </div>
           </div>
 
-          <button type="submit" id="lead-submit-btn" class="btn-shimmer w-full py-4 px-6 bg-gradient-to-r from-teal-600 via-teal-700 to-cyan-700 text-white font-bold text-base rounded-xl shadow-lg shadow-teal-600/30 transition flex items-center justify-center gap-2.5 hover:-translate-y-0.5 transform">
-            <i data-lucide="send" class="w-5 h-5"></i>
-            <span>Get My Free Estimate</span>
+          <button type="submit" id="lead-submit-btn" class="btn-shimmer w-full py-4 px-6 bg-gradient-to-r from-blue-700 via-blue-800 to-indigo-900 text-white font-bold text-base rounded-xl shadow-lg shadow-blue-900/30 transition flex items-center justify-center gap-2.5 hover:-translate-y-0.5 transform cursor-pointer">
+            <i data-lucide="phone-call" class="w-5 h-5"></i>
+            <span>Request Official Care Estimate &amp; Callback</span>
           </button>
 
           <p class="text-[11px] text-center text-slate-400 flex items-center justify-center gap-1">
-            <i data-lucide="lock" class="w-3 h-3 text-emerald-500"></i> Your details are 100% confidential. No spam, ever.
+            <i data-lucide="lock" class="w-3 h-3 text-emerald-500"></i> Your medical details are strictly confidential. No spam, ever.
           </p>
         </form>
 
         <!-- Success State (hidden by default) -->
         <div id="lead-success" class="hidden text-center space-y-5 py-4">
-          <div class="w-20 h-20 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
+          <div class="w-20 h-20 rounded-3xl bg-emerald-50 border border-emerald-200 text-emerald-600 flex items-center justify-center mx-auto shadow-sm">
             <i data-lucide="check-circle-2" class="w-10 h-10"></i>
           </div>
           <div class="space-y-2">
-            <h3 class="font-heading font-extrabold text-2xl text-slate-900">Thank You! 🎉</h3>
+            <span class="text-xs font-extrabold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">Request Registered</span>
+            <h3 class="font-heading font-extrabold text-2xl text-slate-900 mt-2">We Are Preparing Your Estimate</h3>
             <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-md mx-auto">
-              Our care specialist will contact you <strong class="text-teal-700">within 30 minutes</strong> with a personalized estimate tailored to your needs.
+              Our Clinical Supervisor on duty across Bengaluru has received your request and will call you <strong class="text-blue-700">within 15–30 minutes</strong> with detailed pricing and nurse availability.
             </p>
           </div>
           <div class="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
-            <a href="https://wa.me/919931450495?text=Hello%20EarthCone,%20I%20just%20submitted%20an%20estimate%20request." target="_blank" rel="noopener noreferrer" 
-               class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-md transition">
-              <i data-lucide="message-circle" class="w-4 h-4"></i> Chat on WhatsApp Now
+            <a href="tel:+919931450495" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm shadow-md transition">
+              <i data-lucide="phone" class="w-4 h-4 text-emerald-400"></i> Speak Now (+91 9931450495)
             </a>
-            <a href="tel:+919931450495" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white border border-slate-200 text-slate-800 font-bold text-sm shadow-sm transition hover:bg-slate-50">
-              <i data-lucide="phone-call" class="w-4 h-4 text-cyan-600"></i> Call Helpline
+            <a href="https://wa.me/919931450495?text=Hello%20EarthCone,%20I%20just%20submitted%20an%20estimate%20request%20on%20your%20website." target="_blank" rel="noopener noreferrer" 
+               class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white border border-slate-200 text-slate-700 hover:text-emerald-700 font-bold text-sm shadow-sm transition hover:bg-slate-50">
+              <i data-lucide="message-circle" class="w-4 h-4 text-emerald-600"></i> Or Message on WhatsApp
             </a>
           </div>
         </div>
@@ -944,14 +970,14 @@
                 </div>
               </div>
 
-              <div class="p-5 rounded-2xl bg-teal-500/10 border border-teal-500/20 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div class="p-5 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div class="text-center sm:text-left">
                   <p class="font-bold text-sm text-white">Have a special medical condition?</p>
-                  <p class="text-xs text-slate-300">Speak directly with our Nursing Supervisor</p>
+                  <p class="text-xs text-blue-200">Speak directly with our Nursing Supervisor</p>
                 </div>
-                <a href="https://wa.me/919931450495?text=Hello%20EarthCone,%20I%20would%20like%20to%20consult%20your%20nursing%20supervisor." target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs whitespace-nowrap shadow-md flex items-center gap-1.5">
-                  <i data-lucide="message-circle" class="w-4 h-4"></i> Talk to Supervisor
-                </a>
+                <button onclick="EarthConePortal.openCallbackModal('Senior Supervisor Consultation')" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs whitespace-nowrap shadow-md flex items-center gap-1.5 transition cursor-pointer">
+                  <i data-lucide="phone-call" class="w-4 h-4"></i> Speak with Supervisor
+                </button>
               </div>
 
             </div>
@@ -963,55 +989,202 @@
     </div>
   </section>
 
-  <!-- 3-Step Process -->
-  <section id="how-it-works" class="py-20 bg-slate-50 border-t border-slate-200/80">
+  <!-- 8-Step Nurse Verification & Clinical Standards Protocol -->
+  <section id="verification-protocol" class="py-20 bg-slate-50 border-t border-slate-200/80">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
       <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
-        <span class="text-xs font-extrabold uppercase tracking-widest text-teal-600 bg-teal-100/60 px-3.5 py-1.5 rounded-full border border-teal-200">
-          Seamless 3-Step Process
+        <span class="text-xs font-extrabold uppercase tracking-widest text-blue-700 bg-blue-50 px-3.5 py-1.5 rounded-full border border-blue-200">
+          Hospital-Grade Standards
         </span>
         <h2 class="font-heading text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-          How to Book a Nurse at Home
+          Our 8-Step Clinical Nurse Vetting Protocol
         </h2>
-        <p class="text-slate-600 text-sm sm:text-base">
-          Getting compassionate medical assistance at your home in Bengaluru takes less than 2 minutes.
+        <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+          Your family’s safety, clinical precision, and dignity are non-negotiable. Only top 5% of nursing applicants qualify to join EarthCone Home Nursing.
         </p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         
-        <div class="relative bg-white p-8 rounded-3xl border border-slate-200 shadow-sm text-center space-y-4">
-          <div class="w-16 h-16 rounded-2xl bg-teal-600 text-white font-extrabold text-2xl flex items-center justify-center mx-auto shadow-md shadow-teal-600/20">
-            1
+        <!-- Step 1 -->
+        <div class="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-sm space-y-3 hover:border-blue-400 hover:shadow-md transition">
+          <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-800 font-extrabold text-sm flex items-center justify-center">
+            01
           </div>
-          <h3 class="font-heading font-bold text-lg text-slate-900">Reach Out via WhatsApp or Call</h3>
-          <p class="text-slate-600 text-sm leading-relaxed">
-            Message or call us at <strong class="text-teal-700">+91 9931450495</strong> with the patient's requirements and doctor's advice.
+          <h3 class="font-heading font-bold text-base text-slate-900">Government ID &amp; Police Verification</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            100% Aadhaar, permanent address proof, and local Bengaluru police criminal background clearance checks.
           </p>
         </div>
 
-        <div class="relative bg-white p-8 rounded-3xl border border-slate-200 shadow-sm text-center space-y-4">
-          <div class="w-16 h-16 rounded-2xl bg-cyan-600 text-white font-extrabold text-2xl flex items-center justify-center mx-auto shadow-md shadow-cyan-600/20">
-            2
+        <!-- Step 2 -->
+        <div class="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-sm space-y-3 hover:border-blue-400 hover:shadow-md transition">
+          <div class="w-10 h-10 rounded-xl bg-teal-100 text-teal-800 font-extrabold text-sm flex items-center justify-center">
+            02
           </div>
-          <h3 class="font-heading font-bold text-lg text-slate-900">Staff Matching & Assessment</h3>
-          <p class="text-slate-600 text-sm leading-relaxed">
-            Our clinical supervisor matches the best verified nurse suited for the patient's specific medical and language preferences.
+          <h3 class="font-heading font-bold text-base text-slate-900">KNC &amp; INC Council Registration</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Strict authentication of B.Sc Nursing and GNM degrees with the Karnataka Nursing Council &amp; Indian Nursing Council.
           </p>
         </div>
 
-        <div class="relative bg-white p-8 rounded-3xl border border-slate-200 shadow-sm text-center space-y-4">
-          <div class="w-16 h-16 rounded-2xl bg-emerald-600 text-white font-extrabold text-2xl flex items-center justify-center mx-auto shadow-md shadow-emerald-600/20">
-            3
+        <!-- Step 3 -->
+        <div class="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-sm space-y-3 hover:border-blue-400 hover:shadow-md transition">
+          <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-800 font-extrabold text-sm flex items-center justify-center">
+            03
           </div>
-          <h3 class="font-heading font-bold text-lg text-slate-900">Care Begins at Your Home</h3>
-          <p class="text-slate-600 text-sm leading-relaxed">
-            The nurse arrives at your doorstep on schedule with full medical discipline, daily logs, and continuous supervisory check-ins.
+          <h3 class="font-heading font-bold text-base text-slate-900">ICU &amp; Hospital Clinical Experience</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Mandatory minimum of 2+ years bedside ICU, emergency ward, or post-surgical floor experience in recognized hospitals.
+          </p>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-sm space-y-3 hover:border-blue-400 hover:shadow-md transition">
+          <div class="w-10 h-10 rounded-xl bg-cyan-100 text-cyan-800 font-extrabold text-sm flex items-center justify-center">
+            04
+          </div>
+          <h3 class="font-heading font-bold text-base text-slate-900">Hands-on Skill Simulation</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Rigorous practical testing on Tracheostomy suctioning, IV cannulation, catheterization, and BiPAP operation.
+          </p>
+        </div>
+
+        <!-- Step 5 -->
+        <div class="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-sm space-y-3 hover:border-blue-400 hover:shadow-md transition">
+          <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 font-extrabold text-sm flex items-center justify-center">
+            05
+          </div>
+          <h3 class="font-heading font-bold text-base text-slate-900">Empathy &amp; Patient Ethics Screening</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Psychometric and bedside communication evaluation ensuring gentle, compassionate, and respectful eldercare.
+          </p>
+        </div>
+
+        <!-- Step 6 -->
+        <div class="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-sm space-y-3 hover:border-blue-400 hover:shadow-md transition">
+          <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 font-extrabold text-sm flex items-center justify-center">
+            06
+          </div>
+          <h3 class="font-heading font-bold text-base text-slate-900">Medical Fitness &amp; Hygiene Clearance</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Comprehensive annual health check, infectious disease screening, and mandatory immunization protocol.
+          </p>
+        </div>
+
+        <!-- Step 7 -->
+        <div class="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-sm space-y-3 hover:border-blue-400 hover:shadow-md transition">
+          <div class="w-10 h-10 rounded-xl bg-rose-100 text-rose-800 font-extrabold text-sm flex items-center justify-center">
+            07
+          </div>
+          <h3 class="font-heading font-bold text-base text-slate-900">24/7 Supervisor Audits &amp; Rounds</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Senior Nursing Officers conduct weekly random audits, medication log reviews, and family satisfaction check-ins.
+          </p>
+        </div>
+
+        <!-- Step 8 -->
+        <div class="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-sm space-y-3 hover:border-blue-400 hover:shadow-md transition">
+          <div class="w-10 h-10 rounded-xl bg-purple-100 text-purple-800 font-extrabold text-sm flex items-center justify-center">
+            08
+          </div>
+          <h3 class="font-heading font-bold text-base text-slate-900">Rapid 4-Hour Replacement Guarantee</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            If your family is ever dissatisfied or your nurse requires emergency leave, a verified backup is deployed within 4 hours.
           </p>
         </div>
 
       </div>
+
+      <!-- Trust Assurance Strip -->
+      <div class="mt-12 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl border border-blue-900/50">
+        <div class="flex items-center gap-4 text-center md:text-left">
+          <div class="w-14 h-14 rounded-2xl bg-blue-500/20 text-blue-300 flex items-center justify-center shrink-0 border border-blue-400/20">
+            <i data-lucide="shield-check" class="w-8 h-8"></i>
+          </div>
+          <div>
+            <h4 class="font-heading font-bold text-lg text-white">Need a verified nurse in Bengaluru today?</h4>
+            <p class="text-xs sm:text-sm text-slate-300 mt-0.5">Every deployed nurse carries official verification credentials and daily clinical monitoring charts.</p>
+          </div>
+        </div>
+        <div class="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
+          <button onclick="EarthConePortal.openCallbackModal('Vetted Nurse Consultation')" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-extrabold text-xs sm:text-sm shadow-md transition flex items-center justify-center gap-2 cursor-pointer">
+            <i data-lucide="phone-call" class="w-4 h-4"></i>
+            <span>Request a Care Callback</span>
+          </button>
+          <a href="tel:+919931450495" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-white/10 hover:bg-white/15 text-white font-bold text-xs sm:text-sm transition flex items-center justify-center gap-2 border border-white/20">
+            <i data-lucide="phone" class="w-4 h-4 text-emerald-400"></i>
+            <span>+91 9931450495</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 4-Step Care Journey -->
+  <section id="how-it-works" class="py-20 bg-white border-t border-slate-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+        <span class="text-xs font-extrabold uppercase tracking-widest text-teal-700 bg-teal-50 px-3.5 py-1.5 rounded-full border border-teal-200">
+          The Care Journey
+        </span>
+        <h2 class="font-heading text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+          How Clinical Home Care Works
+        </h2>
+        <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+          From your initial consultation to active bedside management, experience seamless healthcare with zero administrative friction.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative">
+        
+        <div class="relative bg-slate-50 p-7 rounded-3xl border border-slate-200/80 shadow-sm text-center space-y-4 hover:bg-white hover:border-blue-300 transition">
+          <div class="w-14 h-14 rounded-2xl bg-blue-700 text-white font-extrabold text-xl flex items-center justify-center mx-auto shadow-md shadow-blue-700/20">
+            01
+          </div>
+          <h3 class="font-heading font-bold text-base text-slate-900">Request Callback</h3>
+          <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">
+            Fill our quick callback form or call our 24/7 helpline. Our Nursing Supervisor calls you within 15 minutes to assess patient needs.
+          </p>
+        </div>
+
+        <div class="relative bg-slate-50 p-7 rounded-3xl border border-slate-200/80 shadow-sm text-center space-y-4 hover:bg-white hover:border-blue-300 transition">
+          <div class="w-14 h-14 rounded-2xl bg-teal-700 text-white font-extrabold text-xl flex items-center justify-center mx-auto shadow-md shadow-teal-700/20">
+            02
+          </div>
+          <h3 class="font-heading font-bold text-base text-slate-900">Clinical Assessment</h3>
+          <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">
+            We review doctor discharge summaries and prescriptions to design a personalized Care Plan tailored to patient vitals and routines.
+          </p>
+        </div>
+
+        <div class="relative bg-slate-50 p-7 rounded-3xl border border-slate-200/80 shadow-sm text-center space-y-4 hover:bg-white hover:border-blue-300 transition">
+          <div class="w-14 h-14 rounded-2xl bg-indigo-700 text-white font-extrabold text-xl flex items-center justify-center mx-auto shadow-md shadow-indigo-700/20">
+            03
+          </div>
+          <h3 class="font-heading font-bold text-base text-slate-900">Nurse Deployment</h3>
+          <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">
+            A verified, licensed GNM/B.Sc nurse is assigned and arrives at your doorstep anywhere in Bengaluru with complete clinical kit.
+          </p>
+        </div>
+
+        <div class="relative bg-slate-50 p-7 rounded-3xl border border-slate-200/80 shadow-sm text-center space-y-4 hover:bg-white hover:border-blue-300 transition">
+          <div class="w-14 h-14 rounded-2xl bg-emerald-700 text-white font-extrabold text-xl flex items-center justify-center mx-auto shadow-md shadow-emerald-700/20">
+            04
+          </div>
+          <h3 class="font-heading font-bold text-base text-slate-900">Ongoing Supervision</h3>
+          <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">
+            Continuous daily vitals charting, weekly supervisor check-ins, transparent billing, and 24/7 clinical emergency standby.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
 
     </div>
   </section>
@@ -1257,9 +1430,9 @@
           
           <div class="bg-white rounded-3xl p-7 sm:p-9 border border-slate-200/90 shadow-xl">
             <div class="mb-6">
-              <span class="text-xs font-bold uppercase tracking-wider text-emerald-600">Quick Booking & Inquiry</span>
-              <h3 class="font-heading font-extrabold text-2xl text-slate-900">Send Direct Inquiry</h3>
-              <p class="text-xs sm:text-sm text-slate-500 mt-1">Submit your details to automatically formulate your personalized WhatsApp booking request.</p>
+              <span class="text-xs font-bold uppercase tracking-wider text-blue-700 bg-blue-50 px-3 py-1 rounded-full border border-blue-200">Hospital-Grade Direct Intake</span>
+              <h3 class="font-heading font-extrabold text-2xl text-slate-900 mt-2">Request Dedicated Clinical Assessment &amp; Callback</h3>
+              <p class="text-xs sm:text-sm text-slate-500 mt-1">Submit patient details below. Our Clinical Supervisor on duty across Bengaluru reviews your case and calls you within 15 minutes.</p>
             </div>
 
             <form id="main-inquiry-form" class="space-y-4">
@@ -1269,15 +1442,33 @@
                   <label class="block text-xs font-semibold text-slate-700 mb-1.5">Full Name *</label>
                   <div class="relative">
                     <i data-lucide="user" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5"></i>
-                    <input type="text" id="form-name" required placeholder="Your full name" class="w-full pl-10 pr-4 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition">
+                    <input type="text" id="form-name" required placeholder="Your full name" class="w-full pl-10 pr-4 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition">
                   </div>
                 </div>
 
                 <div>
-                  <label class="block text-xs font-semibold text-slate-700 mb-1.5">Phone / WhatsApp Number *</label>
+                  <label class="block text-xs font-semibold text-slate-700 mb-1.5">Mobile Number *</label>
                   <div class="relative">
                     <i data-lucide="phone" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5"></i>
-                    <input type="tel" id="form-phone" required placeholder="e.g. 9931450495" class="w-full pl-10 pr-4 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition">
+                    <input type="tel" id="form-phone" required placeholder="e.g. 9931450495" class="w-full pl-10 pr-4 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition">
+                  </div>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-semibold text-slate-700 mb-1.5">Email Address <span class="text-slate-400 font-normal">(for care plan &amp; invoice)</span></label>
+                  <div class="relative">
+                    <i data-lucide="mail" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5"></i>
+                    <input type="email" id="form-email" placeholder="e.g. care@example.com" class="w-full pl-10 pr-4 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition text-slate-800">
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-semibold text-slate-700 mb-1.5">Location / Area in Bengaluru *</label>
+                  <div class="relative">
+                    <i data-lucide="map-pin" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5"></i>
+                    <input type="text" id="form-location" required placeholder="e.g. Indiranagar, Whitefield, HSR Layout" class="w-full pl-10 pr-4 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition">
                   </div>
                 </div>
               </div>
@@ -1287,7 +1478,7 @@
                   <label class="block text-xs font-semibold text-slate-700 mb-1.5">Service Needed *</label>
                   <div class="relative">
                     <i data-lucide="heart-pulse" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5"></i>
-                    <select id="form-service" class="w-full pl-10 pr-4 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition appearance-none text-slate-700">
+                    <select id="form-service" class="w-full pl-10 pr-4 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition appearance-none text-slate-700">
                       <option value="24/7 Critical & Bedside Nursing">24/7 Critical & Bedside Nursing</option>
                       <option value="Elderly & Senior Citizen Care">Elderly & Senior Citizen Care</option>
                       <option value="Post-Operative & Surgery Recovery">Post-Operative & Surgery Recovery</option>
@@ -1304,7 +1495,7 @@
                   <label class="block text-xs font-semibold text-slate-700 mb-1.5">Duration / Shift Required</label>
                   <div class="relative">
                     <i data-lucide="clock" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5"></i>
-                    <select id="form-duration" class="w-full pl-10 pr-4 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition appearance-none text-slate-700">
+                    <select id="form-duration" class="w-full pl-10 pr-4 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition appearance-none text-slate-700">
                       <option value="24 Hours (Full Day/Night Stay)">24 Hours (Full Day/Night Stay)</option>
                       <option value="12 Hours Day Shift">12 Hours Day Shift</option>
                       <option value="12 Hours Night Shift">12 Hours Night Shift</option>
@@ -1316,22 +1507,18 @@
               </div>
 
               <div>
-                <label class="block text-xs font-semibold text-slate-700 mb-1.5">Location / Area in Bengaluru *</label>
-                <div class="relative">
-                  <i data-lucide="map-pin" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5"></i>
-                  <input type="text" id="form-location" required placeholder="e.g. Kalyan Nagar, near Udupi Garden / Silk Board" class="w-full pl-10 pr-4 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition">
-                </div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1.5">Patient Condition / Medical Diagnosis (Optional)</label>
+                <textarea id="form-notes" rows="2" placeholder="e.g. 78-yr-old post hip-surgery, requires sterile dressing and mobility support..." class="w-full p-3 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition"></textarea>
               </div>
 
-              <div>
-                <label class="block text-xs font-semibold text-slate-700 mb-1.5">Patient Condition / Special Note (Optional)</label>
-                <textarea id="form-notes" rows="2" placeholder="e.g. Patient is 74 yrs old, needs catheter care and mobility support..." class="w-full p-3 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition"></textarea>
-              </div>
-
-              <button type="submit" class="btn-shimmer w-full py-3.5 sm:py-4 px-4 sm:px-6 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm sm:text-base rounded-xl shadow-xl shadow-emerald-600/25 transition flex items-center justify-center gap-2.5">
-                <i data-lucide="message-circle" class="w-5 h-5 shrink-0"></i>
-                <span>Submit &amp; Chat on WhatsApp <span class="hidden sm:inline">(+91 9931450495)</span></span>
+              <button type="submit" class="btn-shimmer w-full py-4 px-6 bg-gradient-to-r from-blue-700 via-blue-800 to-indigo-900 hover:from-blue-800 hover:to-indigo-950 text-white font-extrabold text-sm sm:text-base rounded-xl shadow-xl shadow-blue-900/25 transition flex items-center justify-center gap-2.5 cursor-pointer">
+                <i data-lucide="phone-call" class="w-5 h-5 shrink-0"></i>
+                <span>Request Official Care Assessment &amp; Callback</span>
               </button>
+
+              <p class="text-[11px] text-center text-slate-400 mt-2 flex items-center justify-center gap-1.5">
+                <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-500"></i> Handled strictly per medical confidentiality standards. 15-minute response SLA.
+              </p>
 
             </form>
           </div>
@@ -1447,6 +1634,27 @@
 
     </div>
   </footer>
+
+  <!-- Floating Clinical Callback Capsule (Desktop) -->
+  <div class="floating-callback-badge hidden md:flex items-center gap-3">
+    <button onclick="EarthConePortal.openCallbackModal()" class="flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-slate-900/95 hover:bg-slate-900 text-white text-xs font-bold shadow-2xl border border-blue-400/30 transition hover:scale-105 cursor-pointer backdrop-blur-md">
+      <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+      <i data-lucide="phone-call" class="w-3.5 h-3.5 text-blue-300"></i>
+      <span>Request a Care Callback</span>
+    </button>
+  </div>
+
+  <!-- Mobile Sticky Bottom Care Bar -->
+  <div class="mobile-bottom-care-bar md:hidden">
+    <a href="tel:+919931450495" class="btn-call">
+      <i data-lucide="phone" class="w-4 h-4"></i>
+      <span>Call Helpline</span>
+    </a>
+    <button onclick="EarthConePortal.openCallbackModal()" class="btn-callback">
+      <i data-lucide="phone-call" class="w-4 h-4"></i>
+      <span>Request Callback</span>
+    </button>
+  </div>
 
   <!-- Guided Chat Bot Widget -->
   <script src="js/chatbot.js"></script>
