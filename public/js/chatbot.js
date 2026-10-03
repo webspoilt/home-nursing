@@ -58,13 +58,13 @@
       id: 'area',
       message: 'Which area in Bengaluru?',
       options: [
-        { label: '📍 Kalyan Nagar', value: 'Kalyan Nagar' },
-        { label: '📍 Hebbal', value: 'Hebbal' },
-        { label: '📍 Thanisandra', value: 'Thanisandra' },
-        { label: '📍 Kammanahalli', value: 'Kammanahalli' },
-        { label: '📍 HRBR Layout', value: 'HRBR Layout' },
-        { label: '📍 Banaswadi', value: 'Banaswadi' },
-        { label: '📍 Other Area', value: 'Other Area' }
+        { label: '📍 All Over Bengaluru', value: 'All Over Bengaluru' },
+        { label: '📍 North Bengaluru', value: 'North Bengaluru' },
+        { label: '📍 South Bengaluru', value: 'South Bengaluru' },
+        { label: '📍 East Bengaluru', value: 'East Bengaluru' },
+        { label: '📍 West Bengaluru', value: 'West Bengaluru' },
+        { label: '📍 Central Bengaluru', value: 'Central Bengaluru' },
+        { label: '📍 Other Bengaluru Locality', value: 'Other Bengaluru Locality' }
       ]
     },
     {
