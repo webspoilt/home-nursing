@@ -19,6 +19,12 @@ module.exports = async (req, res) => {
     return res.status(200).end();
   }
 
+  if (req.method === 'GET') {
+    return res.status(200).json({
+      clientId: process.env.GOOGLE_CLIENT_ID || null
+    });
+  }
+
   if (req.method !== 'POST') {
     return res.status(405).json({ success: false, message: 'Method not allowed' });
   }

@@ -84,32 +84,138 @@ window.EarthConePortal = (function() {
   }
 
   // Google Identity Services (GIS)
-  function initGoogleAuth() {
-    if (!window.google || !window.google.accounts) {
-      setTimeout(initGoogleAuth, 400);
+  async function initGoogleAuth() {
+    let clientId = window.GOOGLE_CLIENT_ID || localStorage.getItem('ec_google_client_id');
+
+    if (!clientId) {
+      try {
+        const res = await fetch('/api/auth/google');
+        if (res.ok) {
+          const cfg = await res.json();
+          if (cfg.clientId) {
+            clientId = cfg.clientId;
+            window.GOOGLE_CLIENT_ID = clientId;
+          }
+        }
+      } catch (e) {
+        console.warn('Could not fetch server auth config:', e);
+      }
+    }
+
+    const isClientIdValid = clientId && !clientId.includes('dummy') && clientId.includes('apps.googleusercontent.com');
+    const googleBtnContainer = document.getElementById('g_id_signin_button');
+    if (!googleBtnContainer) return;
+
+    if (isClientIdValid) {
+      if (!window.google || !window.google.accounts) {
+        setTimeout(initGoogleAuth, 400);
+        return;
+      }
+      try {
+        window.google.accounts.id.initialize({
+          client_id: clientId,
+          callback: handleCredentialResponse,
+          auto_select: false,
+          cancel_on_tap_outside: true
+        });
+
+        window.google.accounts.id.renderButton(googleBtnContainer, {
+          theme: 'outline',
+          size: 'large',
+          width: 320,
+          text: 'continue_with',
+          shape: 'rectangular',
+          logo_alignment: 'left'
+        });
+      } catch (err) {
+        console.error('GIS render error:', err);
+      }
+    } else {
+      // Client ID not yet set: show graceful configuration prompt & direct phone sign-in
+      googleBtnContainer.innerHTML = `
+        <div class="space-y-4 w-full">
+          <div class="p-3.5 rounded-2xl bg-amber-50 border border-amber-200 text-left space-y-2">
+            <div class="flex items-center gap-1.5 text-amber-900 font-bold text-xs">
+              <i data-lucide="shield-alert" class="w-4 h-4 text-amber-600 shrink-0"></i>
+              <span>Google OAuth Setup Required</span>
+            </div>
+            <p class="text-[11px] text-amber-800 leading-relaxed">
+              Google Sign-In requires your Google Cloud OAuth Client ID.
+            </p>
+            <div class="pt-1">
+              <label class="block text-[10px] font-bold uppercase tracking-wider text-amber-900 mb-1">Paste Google Client ID:</label>
+              <div class="flex gap-1.5">
+                <input type="text" id="ec-client-id-input" placeholder="...apps.googleusercontent.com" class="w-full px-2.5 py-1.5 text-xs bg-white border border-amber-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 font-mono text-slate-800">
+                <button onclick="EarthConePortal.saveClientId()" class="px-3 py-1.5 bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs rounded-lg transition shrink-0">Connect</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="relative flex items-center justify-center my-2">
+            <div class="border-t border-slate-200 w-full"></div>
+            <span class="bg-white px-3 text-[10px] text-slate-400 font-bold uppercase tracking-wider relative">Or Sign In Directly</span>
+            <div class="border-t border-slate-200 w-full"></div>
+          </div>
+
+          <div class="space-y-2 text-left">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">Your Full Name</label>
+              <input type="text" id="ec-direct-name" placeholder="Enter patient / family member name" class="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500 font-medium">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">Mobile / WhatsApp Number</label>
+              <div class="relative">
+                <span class="absolute left-3 top-2 text-xs font-bold text-slate-500">+91</span>
+                <input type="tel" id="ec-direct-phone" placeholder="9876543210" pattern="[0-9]{10}" class="w-full pl-11 pr-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500 font-bold">
+              </div>
+            </div>
+            <button onclick="EarthConePortal.loginWithPhoneDirect()" class="w-full py-2.5 px-4 bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs rounded-xl shadow-md transition flex items-center justify-center gap-2 mt-2">
+              <i data-lucide="log-in" class="w-4 h-4"></i>
+              <span>Continue to Care Portal</span>
+            </button>
+          </div>
+        </div>
+      `;
+      if (window.lucide) lucide.createIcons();
+    }
+  }
+
+  function saveClientId() {
+    const input = document.getElementById('ec-client-id-input');
+    if (!input || !input.value.trim()) {
+      showToast('Please paste a valid Google Client ID', true);
       return;
     }
+    const val = input.value.trim();
+    localStorage.setItem('ec_google_client_id', val);
+    window.GOOGLE_CLIENT_ID = val;
+    showToast('Client ID saved! Initializing Google Auth...');
+    initGoogleAuth();
+  }
 
-    const clientId = window.GOOGLE_CLIENT_ID || '1016839352721-dummygoogleclientid.apps.googleusercontent.com';
-
-    window.google.accounts.id.initialize({
-      client_id: clientId,
-      callback: handleCredentialResponse,
-      auto_select: false,
-      cancel_on_tap_outside: true
-    });
-
-    const googleBtnContainer = document.getElementById('g_id_signin_button');
-    if (googleBtnContainer) {
-      window.google.accounts.id.renderButton(googleBtnContainer, {
-        theme: 'outline',
-        size: 'large',
-        width: 320,
-        text: 'continue_with',
-        shape: 'rectangular',
-        logo_alignment: 'left'
-      });
+  function loginWithPhoneDirect() {
+    const nameInput = document.getElementById('ec-direct-name');
+    const phoneInput = document.getElementById('ec-direct-phone');
+    const name = (nameInput && nameInput.value.trim()) || 'Valued Patient';
+    const phone = (phoneInput && phoneInput.value.trim()) || '';
+    if (!phone || phone.replace(/\D/g, '').length < 10) {
+      showToast('Please enter a valid 10-digit mobile number', true);
+      return;
     }
+    const cleanPhone = phone.replace(/\D/g, '').slice(-10);
+    const user = {
+      name: name,
+      email: `${cleanPhone}@earthconehomenursing.in`,
+      phone: cleanPhone,
+      avatar: 'https://www.svgrepo.com/show/475656/google-color.svg'
+    };
+    STATE.user = user;
+    STATE.token = 'direct_session_' + Date.now();
+    localStorage.setItem('ec_portal_user', JSON.stringify(user));
+    localStorage.setItem('ec_portal_token', STATE.token);
+    closeLogin();
+    updateNavState();
+    showToast(`Welcome to EarthCone Portal, ${name}!`);
   }
 
   // Handle Response from Google
@@ -562,6 +668,8 @@ window.EarthConePortal = (function() {
   // Public Interface
   return {
     init,
+    saveClientId,
+    loginWithPhoneDirect,
     openLogin: () => document.getElementById('ec-login-modal')?.classList.remove('hidden'),
     closeLogin: () => document.getElementById('ec-login-modal')?.classList.add('hidden'),
     openPhoneModal: () => document.getElementById('ec-phone-modal')?.classList.remove('hidden'),
