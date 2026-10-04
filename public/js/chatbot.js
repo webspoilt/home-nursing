@@ -535,9 +535,9 @@
     setTimeout(() => {
       hideTyping();
       const userName = answers.name ? answers.name : 'there';
-      addBotMessage(`Thank you, ${userName}! 📋 Your care callback request has been registered.`);
+      addBotMessage(`All details have been sent to our clinical team! 📋`);
       setTimeout(() => {
-        addBotMessage(`Our Clinical Supervisor on duty across Bengaluru will call ${answers.phone || 'you'} within 15 minutes.`);
+        addBotMessage(`Our team will call you soon to confirm your care requirements. If you want instant support or a quick quote, feel free to call us or WhatsApp us directly below:`);
         setTimeout(() => {
           showActionButtons();
           showRestartButton();
@@ -552,8 +552,8 @@
 
     const callBtn = document.createElement('a');
     callBtn.href = 'tel:+919931450495';
-    callBtn.style.cssText = 'display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; background: #0a2540; color: #fff; border-radius: 12px; font-size: 13px; font-weight: 700; text-decoration: none; transition: opacity 0.2s;';
-    callBtn.innerHTML = `<span>📞 Call Now (+91 9931450495)</span>`;
+    callBtn.style.cssText = 'display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; background: #0a2540; color: #fff; border-radius: 12px; font-size: 13.5px; font-weight: 700; text-decoration: none; transition: all 0.2s; box-shadow: 0 4px 12px rgba(10,37,64,0.15);';
+    callBtn.innerHTML = `<span>📞 Call Us: +91 9931450495</span>`;
 
     const waMsg = buildWhatsAppMessage();
     const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(waMsg)}`;
@@ -561,8 +561,8 @@
     waBtn.href = url;
     waBtn.target = '_blank';
     waBtn.rel = 'noopener noreferrer';
-    waBtn.style.cssText = 'display: flex; align-items: center; justify-content: center; gap: 8px; padding: 10px; background: #f8fafc; color: #0f172a; border: 1px solid #cbd5e1; border-radius: 12px; font-size: 12px; font-weight: 600; text-decoration: none;';
-    waBtn.innerHTML = `<span>💬 Or Message on WhatsApp (Optional)</span>`;
+    waBtn.style.cssText = 'display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; background: #25D366; color: #fff; border-radius: 12px; font-size: 13.5px; font-weight: 700; text-decoration: none; transition: all 0.2s; box-shadow: 0 4px 12px rgba(37,211,102,0.2);';
+    waBtn.innerHTML = `<span>💬 WhatsApp Us: +91 9931450495</span>`;
 
     wrap.appendChild(callBtn);
     wrap.appendChild(waBtn);
