@@ -213,6 +213,11 @@
   <!-- Custom Enhanced CSS -->
   <link rel="stylesheet" href="css/custom.css">
 
+  <!-- Cache Busting Headers -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+
   <!-- Vercel Web Analytics -->
   <script>
     window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
@@ -550,243 +555,347 @@
       <!-- Services Grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         
-        <!-- Service Card 1 -->
-        <div class="interactive-card bg-slate-50/70 hover:bg-white rounded-3xl p-7 border border-slate-200/80 flex flex-col justify-between">
-          <div class="space-y-4">
-            <div class="w-14 h-14 rounded-2xl bg-teal-100 text-teal-700 flex items-center justify-center shadow-sm">
-              <i data-lucide="activity-square" class="w-7 h-7"></i>
+        <!-- Service Card 1: 24/7 Critical & Bedside Nursing -->
+        <div class="interactive-card bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+          <div>
+            <div class="relative h-48 sm:h-52 w-full overflow-hidden bg-slate-100">
+              <img src="images/services/critical-nursing.jpg" alt="24/7 Critical & Bedside Nursing at Home" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/20 to-transparent"></div>
+              <span class="absolute bottom-3 left-3 px-2.5 py-1 rounded-lg bg-teal-600/90 backdrop-blur-md text-white font-extrabold text-[10px] uppercase tracking-wider flex items-center gap-1.5 shadow-sm">
+                <i data-lucide="activity-square" class="w-3.5 h-3.5"></i> Hospital-Grade ICU
+              </span>
             </div>
-            <h3 class="font-heading text-xl font-bold text-slate-900">
-              24/7 Critical & Bedside Nursing
-            </h3>
-            <p class="text-slate-600 text-sm leading-relaxed">
-              Continuous 12-hr & 24-hr round-the-clock intensive bedside care by trained nurses for bedridden, paralyzed, or critically ill patients.
-            </p>
-            <ul class="space-y-2 text-xs text-slate-600 pt-2 border-t border-slate-200">
-              <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-teal-600"></i> Tracheostomy & Ryle's Tube feeding</li>
-              <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-teal-600"></i> Oxygen cylinder & BiPAP monitoring</li>
-              <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-teal-600"></i> Continuous vitals & medication logs</li>
-            </ul>
+            <div class="p-6 space-y-3">
+              <h3 class="font-heading text-xl font-bold text-slate-900 group-hover:text-teal-700 transition-colors">
+                24/7 Critical & Bedside Nursing
+              </h3>
+              <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">
+                Continuous 12-hr & 24-hr round-the-clock intensive bedside care by trained nurses for bedridden, paralyzed, or critically ill patients.
+              </p>
+              <ul class="space-y-2 text-xs text-slate-600 pt-3 border-t border-slate-100">
+                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-teal-600 shrink-0"></i> Tracheostomy & Ryle's Tube feeding</li>
+                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-teal-600 shrink-0"></i> Oxygen cylinder & BiPAP monitoring</li>
+                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-teal-600 shrink-0"></i> Continuous vitals & medication logs</li>
+              </ul>
+            </div>
           </div>
-          <div class="pt-5 mt-4 border-t border-slate-200/90 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <div>
-              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Care Starting From</span>
-              <p class="font-heading font-extrabold text-base text-slate-900">₹2,499<span class="text-xs font-normal text-slate-500"> / 24-hr day</span></p>
+          <div class="p-6 pt-0">
+            <div class="pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3">
+              <div>
+                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Care Starting From</span>
+                <p class="font-heading font-extrabold text-base text-slate-900">₹2,499<span class="text-xs font-normal text-slate-500"> / 24-hr day</span></p>
+              </div>
+              <div class="flex items-center gap-2 w-full sm:w-auto">
+                <button onclick="EarthConePortal.openCallbackModal('24/7 Critical & Bedside Nursing')" class="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 py-2.5 px-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer">
+                  <i data-lucide="phone-call" class="w-3.5 h-3.5"></i>
+                  <span>Request Callback</span>
+                </button>
+                <a href="tel:+918971288849" class="p-2.5 rounded-xl bg-slate-100 hover:bg-teal-50 text-slate-700 hover:text-teal-700 transition-colors border border-slate-200" title="Direct Phone Call">
+                  <i data-lucide="phone" class="w-4 h-4"></i>
+                </a>
+              </div>
             </div>
-            <button onclick="EarthConePortal.openCallbackModal('24/7 Critical & Bedside Nursing')" class="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-blue-50 hover:bg-blue-600 text-blue-700 hover:text-white font-bold text-xs transition-all duration-200 shadow-xs cursor-pointer">
-              <i data-lucide="phone-call" class="w-3.5 h-3.5"></i>
-              <span>Request Callback</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Service Card 2 -->
-        <div class="interactive-card bg-slate-50/70 hover:bg-white rounded-3xl p-7 border border-slate-200/80 flex flex-col justify-between">
-          <div class="space-y-4">
-            <div class="w-14 h-14 rounded-2xl bg-blue-100 text-blue-700 flex items-center justify-center shadow-sm">
-              <i data-lucide="heart-handshake" class="w-7 h-7"></i>
-            </div>
-            <h3 class="font-heading text-xl font-bold text-slate-900">
-              Elderly & Senior Citizen Care
-            </h3>
-            <p class="text-slate-600 text-sm leading-relaxed">
-              Warm, respectful, and dignified companionship and medical management for senior parents and elders who need daily assistance.
-            </p>
-            <ul class="space-y-2 text-xs text-slate-600 pt-2 border-t border-slate-200">
-              <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-blue-600"></i> Mobility, bathing & hygiene assistance</li>
-              <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-blue-600"></i> Dementia, Alzheimer's & Parkinson's care</li>
-              <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-blue-600"></i> Timely diet & medicine administration</li>
-            </ul>
-          </div>
-          <div class="pt-5 mt-4 border-t border-slate-200/90 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <div>
-              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Care Starting From</span>
-              <p class="font-heading font-extrabold text-base text-slate-900">₹1,499<span class="text-xs font-normal text-slate-500"> / 12-hr shift</span></p>
-            </div>
-            <button onclick="EarthConePortal.openCallbackModal('Elderly & Senior Citizen Care')" class="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-blue-50 hover:bg-blue-600 text-blue-700 hover:text-white font-bold text-xs transition-all duration-200 shadow-xs cursor-pointer">
-              <i data-lucide="phone-call" class="w-3.5 h-3.5"></i>
-              <span>Request Callback</span>
-            </button>
           </div>
         </div>
 
-        <!-- Service Card 3 -->
-        <div class="interactive-card bg-slate-50/70 hover:bg-white rounded-3xl p-7 border border-slate-200/80 flex flex-col justify-between">
-          <div class="space-y-4">
-            <div class="w-14 h-14 rounded-2xl bg-cyan-100 text-cyan-700 flex items-center justify-center shadow-sm">
-              <i data-lucide="shield-plus" class="w-7 h-7"></i>
+        <!-- Service Card 2: Elderly & Senior Citizen Care -->
+        <div class="interactive-card bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+          <div>
+            <div class="relative h-48 sm:h-52 w-full overflow-hidden bg-slate-100">
+              <img src="images/services/elderly-care.jpg" alt="Elderly & Senior Citizen Care at Home" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/20 to-transparent"></div>
+              <span class="absolute bottom-3 left-3 px-2.5 py-1 rounded-lg bg-blue-600/90 backdrop-blur-md text-white font-extrabold text-[10px] uppercase tracking-wider flex items-center gap-1.5 shadow-sm">
+                <i data-lucide="heart-handshake" class="w-3.5 h-3.5"></i> Dignified Assisted Living
+              </span>
             </div>
-            <h3 class="font-heading text-xl font-bold text-slate-900">
-              Post-Operative & Surgery Recovery
-            </h3>
-            <p class="text-slate-600 text-sm leading-relaxed">
-              Specialized post-discharge surgical care to prevent hospital readmissions, infections, and speed up healthy recuperation.
-            </p>
-            <ul class="space-y-2 text-xs text-slate-600 pt-2 border-t border-slate-200">
-              <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-cyan-600"></i> Orthopedic & Cardiac surgery recovery</li>
-              <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-cyan-600"></i> Suture/Staple removal & drain care</li>
-              <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-cyan-600"></i> Pain relief & post-op monitoring</li>
-            </ul>
+            <div class="p-6 space-y-3">
+              <h3 class="font-heading text-xl font-bold text-slate-900 group-hover:text-blue-700 transition-colors">
+                Elderly & Senior Citizen Care
+              </h3>
+              <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">
+                Warm, respectful, and dignified companionship and medical management for senior parents and elders who need daily assistance.
+              </p>
+              <ul class="space-y-2 text-xs text-slate-600 pt-3 border-t border-slate-100">
+                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-blue-600 shrink-0"></i> Mobility, bathing & hygiene assistance</li>
+                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-blue-600 shrink-0"></i> Dementia, Alzheimer's & Parkinson's care</li>
+                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-blue-600 shrink-0"></i> Timely diet & medicine administration</li>
+              </ul>
+            </div>
           </div>
-          <div class="pt-5 mt-4 border-t border-slate-200/90 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <div>
-              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Care Starting From</span>
-              <p class="font-heading font-extrabold text-base text-slate-900">₹1,699<span class="text-xs font-normal text-slate-500"> / shift</span></p>
+          <div class="p-6 pt-0">
+            <div class="pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3">
+              <div>
+                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Care Starting From</span>
+                <p class="font-heading font-extrabold text-base text-slate-900">₹1,499<span class="text-xs font-normal text-slate-500"> / 12-hr shift</span></p>
+              </div>
+              <div class="flex items-center gap-2 w-full sm:w-auto">
+                <button onclick="EarthConePortal.openCallbackModal('Elderly & Senior Citizen Care')" class="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 py-2.5 px-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer">
+                  <i data-lucide="phone-call" class="w-3.5 h-3.5"></i>
+                  <span>Request Callback</span>
+                </button>
+                <a href="tel:+918971288849" class="p-2.5 rounded-xl bg-slate-100 hover:bg-blue-50 text-slate-700 hover:text-blue-700 transition-colors border border-slate-200" title="Direct Phone Call">
+                  <i data-lucide="phone" class="w-4 h-4"></i>
+                </a>
+              </div>
             </div>
-            <button onclick="EarthConePortal.openCallbackModal('Post-Operative & Surgery Recovery')" class="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-blue-50 hover:bg-blue-600 text-blue-700 hover:text-white font-bold text-xs transition-all duration-200 shadow-xs cursor-pointer">
-              <i data-lucide="phone-call" class="w-3.5 h-3.5"></i>
-              <span>Request Callback</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Service Card 4 -->
-        <div class="interactive-card bg-slate-50/70 hover:bg-white rounded-3xl p-7 border border-slate-200/80 flex flex-col justify-between">
-          <div class="space-y-4">
-            <div class="w-14 h-14 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center shadow-sm">
-              <i data-lucide="syringe" class="w-7 h-7"></i>
-            </div>
-            <h3 class="font-heading text-xl font-bold text-slate-900">
-              Home Visit Medical Procedures
-            </h3>
-            <p class="text-slate-600 text-sm leading-relaxed">
-              Avoid traffic and hospital queues. Qualified nurses visit your home on-demand for quick diagnostic and clinical procedures.
-            </p>
-            <ul class="space-y-2 text-xs text-slate-600 pt-2 border-t border-slate-200">
-              <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-amber-600"></i> IV Infusions, Drips & Injections (IM/IV/SC)</li>
-              <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-amber-600"></i> Sterile Wound & Bed Sore Dressing</li>
-              <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-amber-600"></i> Foley Catheter insertion & Blood Sugar check</li>
-            </ul>
-          </div>
-          <div class="pt-5 mt-4 border-t border-slate-200/90 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <div>
-              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Care Starting From</span>
-              <p class="font-heading font-extrabold text-base text-slate-900">₹599<span class="text-xs font-normal text-slate-500"> / visit</span></p>
-            </div>
-            <button onclick="EarthConePortal.openCallbackModal('Home Visit Medical Procedures')" class="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-blue-50 hover:bg-blue-600 text-blue-700 hover:text-white font-bold text-xs transition-all duration-200 shadow-xs cursor-pointer">
-              <i data-lucide="phone-call" class="w-3.5 h-3.5"></i>
-              <span>Request Callback</span>
-            </button>
           </div>
         </div>
 
-        <!-- Service Card 5 -->
-        <div class="interactive-card bg-slate-50/70 hover:bg-white rounded-3xl p-7 border border-slate-200/80 flex flex-col justify-between">
-          <div class="space-y-4">
-            <div class="w-14 h-14 rounded-2xl bg-indigo-100 text-indigo-700 flex items-center justify-center shadow-sm">
-              <i data-lucide="person-standing" class="w-7 h-7"></i>
+        <!-- Service Card 3: Post-Operative & Surgery Recovery -->
+        <div class="interactive-card bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+          <div>
+            <div class="relative h-48 sm:h-52 w-full overflow-hidden bg-slate-100">
+              <img src="images/services/post-op-recovery.jpg" alt="Post-Operative & Surgery Recovery Care" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/20 to-transparent"></div>
+              <span class="absolute bottom-3 left-3 px-2.5 py-1 rounded-lg bg-cyan-700/90 backdrop-blur-md text-white font-extrabold text-[10px] uppercase tracking-wider flex items-center gap-1.5 shadow-sm">
+                <i data-lucide="shield-plus" class="w-3.5 h-3.5"></i> Safe Post-Surgical Healing
+              </span>
             </div>
-            <h3 class="font-heading text-xl font-bold text-slate-900">
-              Physiotherapy & Rehabilitation
-            </h3>
-            <p class="text-slate-600 text-sm leading-relaxed">
-              Certified physiotherapists deliver tailored home exercises to regain strength, balance, joint mobility, and stroke rehabilitation.
-            </p>
-            <ul class="space-y-2 text-xs text-slate-600 pt-2 border-t border-slate-200">
-              <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-indigo-600"></i> Stroke & Neuro-rehab therapies</li>
-              <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-indigo-600"></i> Knee/Hip replacement joint mobility</li>
-              <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-indigo-600"></i> Chronic back & neck pain relief</li>
-            </ul>
+            <div class="p-6 space-y-3">
+              <h3 class="font-heading text-xl font-bold text-slate-900 group-hover:text-cyan-800 transition-colors">
+                Post-Operative & Surgery Recovery
+              </h3>
+              <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">
+                Specialized post-discharge surgical care to prevent hospital readmissions, infections, and speed up healthy recuperation.
+              </p>
+              <ul class="space-y-2 text-xs text-slate-600 pt-3 border-t border-slate-100">
+                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-cyan-600 shrink-0"></i> Orthopedic & Cardiac surgery recovery</li>
+                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-cyan-600 shrink-0"></i> Suture/Staple removal & drain care</li>
+                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-cyan-600 shrink-0"></i> Pain relief & post-op monitoring</li>
+              </ul>
+            </div>
           </div>
-          <div class="pt-5 mt-4 border-t border-slate-200/90 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <div>
-              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Care Starting From</span>
-              <p class="font-heading font-extrabold text-base text-slate-900">₹899<span class="text-xs font-normal text-slate-500"> / session</span></p>
+          <div class="p-6 pt-0">
+            <div class="pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3">
+              <div>
+                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Care Starting From</span>
+                <p class="font-heading font-extrabold text-base text-slate-900">₹1,699<span class="text-xs font-normal text-slate-500"> / shift</span></p>
+              </div>
+              <div class="flex items-center gap-2 w-full sm:w-auto">
+                <button onclick="EarthConePortal.openCallbackModal('Post-Operative & Surgery Recovery')" class="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 py-2.5 px-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer">
+                  <i data-lucide="phone-call" class="w-3.5 h-3.5"></i>
+                  <span>Request Callback</span>
+                </button>
+                <a href="tel:+918971288849" class="p-2.5 rounded-xl bg-slate-100 hover:bg-cyan-50 text-slate-700 hover:text-cyan-700 transition-colors border border-slate-200" title="Direct Phone Call">
+                  <i data-lucide="phone" class="w-4 h-4"></i>
+                </a>
+              </div>
             </div>
-            <button onclick="EarthConePortal.openCallbackModal('Physiotherapy & Rehabilitation')" class="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-blue-50 hover:bg-blue-600 text-blue-700 hover:text-white font-bold text-xs transition-all duration-200 shadow-xs cursor-pointer">
-              <i data-lucide="phone-call" class="w-3.5 h-3.5"></i>
-              <span>Request Callback</span>
-            </button>
           </div>
         </div>
 
-        <!-- Service Card 6 -->
-        <div class="interactive-card bg-slate-50/70 hover:bg-white rounded-3xl p-7 border border-slate-200/80 flex flex-col justify-between">
-          <div class="space-y-4">
-            <div class="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center shadow-sm">
-              <i data-lucide="heart" class="w-7 h-7"></i>
+        <!-- Service Card 4: Home Visit Medical Procedures -->
+        <div class="interactive-card bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+          <div>
+            <div class="relative h-48 sm:h-52 w-full overflow-hidden bg-slate-100">
+              <img src="images/services/home-procedures.jpg" alt="Home Visit Medical Procedures and IV Injections" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/20 to-transparent"></div>
+              <span class="absolute bottom-3 left-3 px-2.5 py-1 rounded-lg bg-amber-600/90 backdrop-blur-md text-white font-extrabold text-[10px] uppercase tracking-wider flex items-center gap-1.5 shadow-sm">
+                <i data-lucide="syringe" class="w-3.5 h-3.5"></i> On-Demand At Home
+              </span>
             </div>
-            <h3 class="font-heading text-xl font-bold text-slate-900">
-              Palliative & Chronic Care
-            </h3>
-            <p class="text-slate-600 text-sm leading-relaxed">
-              Empathetic end-of-life and chronic illness care focused on pain management, comfort, emotional well-being, and family peace.
-            </p>
-            <ul class="space-y-2 text-xs text-slate-600 pt-2 border-t border-slate-200">
-              <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i> Advanced cancer & terminal support</li>
-              <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i> Pain and symptom alleviation</li>
-              <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i> Psychological counseling & family aid</li>
-            </ul>
+            <div class="p-6 space-y-3">
+              <h3 class="font-heading text-xl font-bold text-slate-900 group-hover:text-amber-800 transition-colors">
+                Home Visit Medical Procedures
+              </h3>
+              <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">
+                Avoid traffic and hospital queues. Qualified nurses visit your home on-demand for quick diagnostic and clinical procedures.
+              </p>
+              <ul class="space-y-2 text-xs text-slate-600 pt-3 border-t border-slate-100">
+                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-amber-600 shrink-0"></i> IV Infusions, Drips & Injections (IM/IV/SC)</li>
+                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-amber-600 shrink-0"></i> Sterile Wound & Bed Sore Dressing</li>
+                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-amber-600 shrink-0"></i> Foley Catheter insertion & Blood Sugar check</li>
+              </ul>
+            </div>
           </div>
-          <div class="pt-5 mt-4 border-t border-slate-200/90 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <div>
-              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Care Starting From</span>
-              <p class="font-heading font-extrabold text-base text-slate-900">₹1,799<span class="text-xs font-normal text-slate-500"> / shift</span></p>
+          <div class="p-6 pt-0">
+            <div class="pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3">
+              <div>
+                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Care Starting From</span>
+                <p class="font-heading font-extrabold text-base text-slate-900">₹599<span class="text-xs font-normal text-slate-500"> / visit</span></p>
+              </div>
+              <div class="flex items-center gap-2 w-full sm:w-auto">
+                <button onclick="EarthConePortal.openCallbackModal('Home Visit Medical Procedures')" class="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 py-2.5 px-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer">
+                  <i data-lucide="phone-call" class="w-3.5 h-3.5"></i>
+                  <span>Request Callback</span>
+                </button>
+                <a href="tel:+918971288849" class="p-2.5 rounded-xl bg-slate-100 hover:bg-amber-50 text-slate-700 hover:text-amber-700 transition-colors border border-slate-200" title="Direct Phone Call">
+                  <i data-lucide="phone" class="w-4 h-4"></i>
+                </a>
+              </div>
             </div>
-            <button onclick="EarthConePortal.openCallbackModal('Palliative & Chronic Care')" class="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-blue-50 hover:bg-blue-600 text-blue-700 hover:text-white font-bold text-xs transition-all duration-200 shadow-xs cursor-pointer">
-              <i data-lucide="phone-call" class="w-3.5 h-3.5"></i>
-              <span>Request Callback</span>
-            </button>
+          </div>
+        </div>
+
+        <!-- Service Card 5: Physiotherapy & Rehabilitation -->
+        <div class="interactive-card bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+          <div>
+            <div class="relative h-48 sm:h-52 w-full overflow-hidden bg-slate-100">
+              <img src="images/services/physiotherapy.jpg" alt="Physiotherapy & Mobility Rehabilitation" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/20 to-transparent"></div>
+              <span class="absolute bottom-3 left-3 px-2.5 py-1 rounded-lg bg-indigo-600/90 backdrop-blur-md text-white font-extrabold text-[10px] uppercase tracking-wider flex items-center gap-1.5 shadow-sm">
+                <i data-lucide="person-standing" class="w-3.5 h-3.5"></i> Certified Therapists
+              </span>
+            </div>
+            <div class="p-6 space-y-3">
+              <h3 class="font-heading text-xl font-bold text-slate-900 group-hover:text-indigo-700 transition-colors">
+                Physiotherapy & Rehabilitation
+              </h3>
+              <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">
+                Certified physiotherapists deliver tailored home exercises to regain strength, balance, joint mobility, and stroke rehabilitation.
+              </p>
+              <ul class="space-y-2 text-xs text-slate-600 pt-3 border-t border-slate-100">
+                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-indigo-600 shrink-0"></i> Stroke & Neuro-rehab therapies</li>
+                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-indigo-600 shrink-0"></i> Knee/Hip replacement joint mobility</li>
+                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-indigo-600 shrink-0"></i> Chronic back & neck pain relief</li>
+              </ul>
+            </div>
+          </div>
+          <div class="p-6 pt-0">
+            <div class="pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3">
+              <div>
+                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Care Starting From</span>
+                <p class="font-heading font-extrabold text-base text-slate-900">₹899<span class="text-xs font-normal text-slate-500"> / session</span></p>
+              </div>
+              <div class="flex items-center gap-2 w-full sm:w-auto">
+                <button onclick="EarthConePortal.openCallbackModal('Physiotherapy & Rehabilitation')" class="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 py-2.5 px-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer">
+                  <i data-lucide="phone-call" class="w-3.5 h-3.5"></i>
+                  <span>Request Callback</span>
+                </button>
+                <a href="tel:+918971288849" class="p-2.5 rounded-xl bg-slate-100 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 transition-colors border border-slate-200" title="Direct Phone Call">
+                  <i data-lucide="phone" class="w-4 h-4"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Service Card 6: Palliative & Chronic Care -->
+        <div class="interactive-card bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+          <div>
+            <div class="relative h-48 sm:h-52 w-full overflow-hidden bg-slate-100">
+              <img src="images/services/palliative-care.jpg" alt="Palliative and Chronic Nursing Care" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/20 to-transparent"></div>
+              <span class="absolute bottom-3 left-3 px-2.5 py-1 rounded-lg bg-emerald-600/90 backdrop-blur-md text-white font-extrabold text-[10px] uppercase tracking-wider flex items-center gap-1.5 shadow-sm">
+                <i data-lucide="heart" class="w-3.5 h-3.5"></i> Compassionate & Gentle
+              </span>
+            </div>
+            <div class="p-6 space-y-3">
+              <h3 class="font-heading text-xl font-bold text-slate-900 group-hover:text-emerald-700 transition-colors">
+                Palliative & Chronic Care
+              </h3>
+              <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">
+                Empathetic end-of-life and chronic illness care focused on pain management, comfort, emotional well-being, and family peace.
+              </p>
+              <ul class="space-y-2 text-xs text-slate-600 pt-3 border-t border-slate-100">
+                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600 shrink-0"></i> Advanced cancer & terminal support</li>
+                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600 shrink-0"></i> Pain and symptom alleviation</li>
+                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600 shrink-0"></i> Psychological counseling & family aid</li>
+              </ul>
+            </div>
+          </div>
+          <div class="p-6 pt-0">
+            <div class="pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3">
+              <div>
+                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Care Starting From</span>
+                <p class="font-heading font-extrabold text-base text-slate-900">₹1,799<span class="text-xs font-normal text-slate-500"> / shift</span></p>
+              </div>
+              <div class="flex items-center gap-2 w-full sm:w-auto">
+                <button onclick="EarthConePortal.openCallbackModal('Palliative & Chronic Care')" class="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 py-2.5 px-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer">
+                  <i data-lucide="phone-call" class="w-3.5 h-3.5"></i>
+                  <span>Request Callback</span>
+                </button>
+                <a href="tel:+918971288849" class="p-2.5 rounded-xl bg-slate-100 hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 transition-colors border border-slate-200" title="Direct Phone Call">
+                  <i data-lucide="phone" class="w-4 h-4"></i>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
 
         <!-- Service Card 7: Sterile Dressing & Wound Care -->
-        <div class="interactive-card bg-slate-50/70 hover:bg-white rounded-3xl p-7 border border-slate-200/80 flex flex-col justify-between">
-          <div class="space-y-4">
-            <div class="w-14 h-14 rounded-2xl bg-rose-100 text-rose-700 flex items-center justify-center shadow-sm">
-              <i data-lucide="crosshair" class="w-7 h-7"></i>
+        <div class="interactive-card bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+          <div>
+            <div class="relative h-48 sm:h-52 w-full overflow-hidden bg-slate-100">
+              <img src="images/services/wound-care.jpg" alt="Sterile Dressing & Wound Care at Home" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/20 to-transparent"></div>
+              <span class="absolute bottom-3 left-3 px-2.5 py-1 rounded-lg bg-rose-600/90 backdrop-blur-md text-white font-extrabold text-[10px] uppercase tracking-wider flex items-center gap-1.5 shadow-sm">
+                <i data-lucide="crosshair" class="w-3.5 h-3.5"></i> Infection-Free Aseptic Care
+              </span>
             </div>
-            <h3 class="font-heading text-xl font-bold text-slate-900">
-              Sterile Dressing &amp; Wound Care
-            </h3>
-            <p class="text-slate-600 text-sm leading-relaxed">
-              Clinical-grade sterile dressing, bed sore staging &amp; treatment, surgical incision care, and diabetic ulcer management by certified home nurses.
-            </p>
-            <ul class="space-y-2 text-xs text-slate-600 pt-2 border-t border-slate-200">
-              <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-rose-600"></i> Bed sore prevention &amp; advanced dressings</li>
-              <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-rose-600"></i> Post-surgery stitch, staple &amp; suture care</li>
-              <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-rose-600"></i> Diabetic foot &amp; chronic wound healing</li>
-            </ul>
+            <div class="p-6 space-y-3">
+              <h3 class="font-heading text-xl font-bold text-slate-900 group-hover:text-rose-700 transition-colors">
+                Sterile Dressing &amp; Wound Care
+              </h3>
+              <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">
+                Clinical-grade sterile dressing, bed sore staging &amp; treatment, surgical incision care, and diabetic ulcer management by certified home nurses.
+              </p>
+              <ul class="space-y-2 text-xs text-slate-600 pt-3 border-t border-slate-100">
+                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-rose-600 shrink-0"></i> Bed sore prevention &amp; advanced dressings</li>
+                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-rose-600 shrink-0"></i> Post-surgery stitch, staple &amp; suture care</li>
+                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-rose-600 shrink-0"></i> Diabetic foot &amp; chronic wound healing</li>
+              </ul>
+            </div>
           </div>
-          <div class="pt-5 mt-4 border-t border-slate-200/90 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <div>
-              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Care Starting From</span>
-              <p class="font-heading font-extrabold text-base text-slate-900">₹699<span class="text-xs font-normal text-slate-500"> / visit</span></p>
+          <div class="p-6 pt-0">
+            <div class="pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3">
+              <div>
+                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Care Starting From</span>
+                <p class="font-heading font-extrabold text-base text-slate-900">₹699<span class="text-xs font-normal text-slate-500"> / visit</span></p>
+              </div>
+              <div class="flex items-center gap-2 w-full sm:w-auto">
+                <button onclick="EarthConePortal.openCallbackModal('Sterile Dressing & Wound Care')" class="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 py-2.5 px-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer">
+                  <i data-lucide="phone-call" class="w-3.5 h-3.5"></i>
+                  <span>Request Callback</span>
+                </button>
+                <a href="tel:+918971288849" class="p-2.5 rounded-xl bg-slate-100 hover:bg-rose-50 text-slate-700 hover:text-rose-700 transition-colors border border-slate-200" title="Direct Phone Call">
+                  <i data-lucide="phone" class="w-4 h-4"></i>
+                </a>
+              </div>
             </div>
-            <button onclick="EarthConePortal.openCallbackModal('Sterile Dressing & Wound Care')" class="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-blue-50 hover:bg-blue-600 text-blue-700 hover:text-white font-bold text-xs transition-all duration-200 shadow-xs cursor-pointer">
-              <i data-lucide="phone-call" class="w-3.5 h-3.5"></i>
-              <span>Request Callback</span>
-            </button>
           </div>
         </div>
 
         <!-- Service Card 8: Ryles Tube Insertion & Feeding Care -->
-        <div class="interactive-card bg-slate-50/70 hover:bg-white rounded-3xl p-7 border border-slate-200/80 flex flex-col justify-between">
-          <div class="space-y-4">
-            <div class="w-14 h-14 rounded-2xl bg-teal-100 text-teal-800 flex items-center justify-center shadow-sm">
-              <i data-lucide="stethoscope" class="w-7 h-7"></i>
+        <div class="interactive-card bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+          <div>
+            <div class="relative h-48 sm:h-52 w-full overflow-hidden bg-slate-100">
+              <img src="images/services/ryles-tube.jpg" alt="Ryles Tube Insertion & Enteral Feeding Care" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/20 to-transparent"></div>
+              <span class="absolute bottom-3 left-3 px-2.5 py-1 rounded-lg bg-teal-700/90 backdrop-blur-md text-white font-extrabold text-[10px] uppercase tracking-wider flex items-center gap-1.5 shadow-sm">
+                <i data-lucide="stethoscope" class="w-3.5 h-3.5"></i> Clinical Enteral Nutrition
+              </span>
             </div>
-            <h3 class="font-heading text-xl font-bold text-slate-900">
-              Ryles Tube Insertion &amp; Feeding Care
-            </h3>
-            <p class="text-slate-600 text-sm leading-relaxed">
-              Safe nasogastric (Ryles) tube insertion, aspiration checks, regular flushing, scheduled nutritional enteral feeding, and blockage relief at home.
-            </p>
-            <ul class="space-y-2 text-xs text-slate-600 pt-2 border-t border-slate-200">
-              <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-teal-600"></i> Expert Ryles tube insertion &amp; replacement</li>
-              <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-teal-600"></i> Liquid diet &amp; crushed medicine administration</li>
-              <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-teal-600"></i> Aspiration prevention &amp; position protocol</li>
-            </ul>
+            <div class="p-6 space-y-3">
+              <h3 class="font-heading text-xl font-bold text-slate-900 group-hover:text-teal-800 transition-colors">
+                Ryles Tube Insertion &amp; Feeding Care
+              </h3>
+              <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">
+                Safe nasogastric (Ryles) tube insertion, aspiration checks, regular flushing, scheduled nutritional enteral feeding, and blockage relief at home.
+              </p>
+              <ul class="space-y-2 text-xs text-slate-600 pt-3 border-t border-slate-100">
+                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-teal-600 shrink-0"></i> Expert Ryles tube insertion &amp; replacement</li>
+                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-teal-600 shrink-0"></i> Liquid diet &amp; crushed medicine administration</li>
+                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-teal-600 shrink-0"></i> Aspiration prevention &amp; position protocol</li>
+              </ul>
+            </div>
           </div>
-          <div class="pt-5 mt-4 border-t border-slate-200/90 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <div>
-              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Care Starting From</span>
-              <p class="font-heading font-extrabold text-base text-slate-900">₹799<span class="text-xs font-normal text-slate-500"> / visit</span></p>
+          <div class="p-6 pt-0">
+            <div class="pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3">
+              <div>
+                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Care Starting From</span>
+                <p class="font-heading font-extrabold text-base text-slate-900">₹799<span class="text-xs font-normal text-slate-500"> / visit</span></p>
+              </div>
+              <div class="flex items-center gap-2 w-full sm:w-auto">
+                <button onclick="EarthConePortal.openCallbackModal('Ryles Tube Insertion & Feeding Care')" class="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 py-2.5 px-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer">
+                  <i data-lucide="phone-call" class="w-3.5 h-3.5"></i>
+                  <span>Request Callback</span>
+                </button>
+                <a href="tel:+918971288849" class="p-2.5 rounded-xl bg-slate-100 hover:bg-teal-50 text-slate-700 hover:text-teal-700 transition-colors border border-slate-200" title="Direct Phone Call">
+                  <i data-lucide="phone" class="w-4 h-4"></i>
+                </a>
+              </div>
             </div>
-            <button onclick="EarthConePortal.openCallbackModal('Ryles Tube Insertion & Feeding Care')" class="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-blue-50 hover:bg-blue-600 text-blue-700 hover:text-white font-bold text-xs transition-all duration-200 shadow-xs cursor-pointer">
-              <i data-lucide="phone-call" class="w-3.5 h-3.5"></i>
-              <span>Request Callback</span>
-            </button>
           </div>
         </div>
 
