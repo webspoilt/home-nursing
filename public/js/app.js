@@ -194,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </p>
             <div class="pt-3 border-t border-blue-200/60 flex flex-col sm:flex-row items-center justify-center gap-2.5">
               <a href="tel:+919931450495" class="w-full sm:w-auto px-4 py-2 rounded-xl bg-blue-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 hover:bg-blue-800 transition shadow-sm">
-                <i data-lucide="phone" class="w-3.5 h-3.5"></i> Direct Helpline (+91 9931450495)
+                <i data-lucide="phone" class="w-3.5 h-3.5 text-emerald-300"></i> Call Now (+91 9931450495)
               </a>
               <a href="https://wa.me/919931450495?text=Hello%20EarthCone,%20I%20just%20requested%20a%20callback%20(Ref:%20${leadId})" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-4 py-2 rounded-xl bg-white text-slate-700 font-semibold text-xs border border-slate-200 flex items-center justify-center gap-1.5 hover:bg-slate-50 transition">
                 <i data-lucide="message-square" class="w-3.5 h-3.5 text-emerald-600"></i> Optional WhatsApp

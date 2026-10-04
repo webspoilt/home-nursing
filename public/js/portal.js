@@ -599,8 +599,8 @@ window.EarthConePortal = (function() {
               Our Clinical Supervisor on duty across Bengaluru has received your request and will call <strong class="text-slate-900" id="cb-phone-display">+91 XXXXX XXXXX</strong> within your chosen window.
             </p>
             <div class="pt-3 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-center gap-3">
-              <a href="tel:+919931450495" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-slate-900 text-white font-bold text-xs flex items-center justify-center gap-2 hover:bg-slate-800 transition">
-                <i data-lucide="phone" class="w-3.5 h-3.5 text-emerald-400"></i> Speak Now (+91 9931450495)
+              <a href="tel:+919931450495" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-blue-700 text-white font-bold text-xs flex items-center justify-center gap-2 hover:bg-blue-800 transition shadow-sm">
+                <i data-lucide="phone" class="w-3.5 h-3.5 text-emerald-300"></i> Call Now (+91 9931450495)
               </a>
               <button onclick="EarthConePortal.closeCallbackModal()" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-slate-100 text-slate-700 font-bold text-xs hover:bg-slate-200 transition">
                 Close Window

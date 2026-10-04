@@ -286,16 +286,16 @@
           <span>Schedule Care</span>
         </button>
 
-        <a href="tel:+919931450495" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 text-slate-800 text-xs sm:text-sm font-bold hover:bg-slate-100 transition shadow-xs">
-          <i data-lucide="phone-call" class="w-4 h-4 text-cyan-600"></i>
-          <span>Helpline</span>
+        <a href="tel:+919931450495" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-blue-700 hover:bg-blue-800 text-white text-xs sm:text-sm font-bold transition shadow-sm">
+          <i data-lucide="phone" class="w-4 h-4 text-emerald-300"></i>
+          <span>Call Now</span>
         </a>
       </div>
 
       <!-- Mobile Button -->
       <div class="flex lg:hidden items-center space-x-2">
         <div class="portal-auth-btn-container scale-90"></div>
-        <a href="tel:+919931450495" class="p-2.5 rounded-xl bg-teal-50 text-teal-700 border border-teal-200/70">
+        <a href="tel:+919931450495" class="p-2.5 rounded-xl bg-blue-50 text-blue-700 border border-blue-200/70" aria-label="Call Now">
           <i data-lucide="phone" class="w-4 h-4"></i>
         </a>
         <button id="mobile-menu-btn" class="p-2.5 rounded-xl text-slate-700 hover:bg-slate-100 border border-slate-200 focus:outline-none" aria-label="Toggle Menu">
@@ -320,9 +320,9 @@
       <a href="#testimonials" class="mobile-nav-link block py-2.5 px-3 rounded-xl font-semibold text-slate-700 hover:bg-teal-50 hover:text-teal-700">Testimonials</a>
       <a href="#contact" class="mobile-nav-link block py-2.5 px-3 rounded-xl font-semibold text-slate-700 hover:bg-teal-50 hover:text-teal-700">Contact &amp; Location</a>
       <div class="pt-3 border-t border-slate-100 flex flex-col gap-2.5">
-        <a href="tel:+919931450495" class="w-full flex items-center justify-center gap-2 py-3 rounded-xl border border-slate-200 text-slate-800 font-bold bg-slate-50">
-          <i data-lucide="phone-call" class="w-4 h-4 text-cyan-600"></i>
-          <span>Call +91 9931450495</span>
+        <a href="tel:+919931450495" class="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-blue-700 text-white font-bold shadow-sm">
+          <i data-lucide="phone" class="w-4 h-4 text-emerald-300"></i>
+          <span>Call Now (+91 9931450495)</span>
         </a>
       </div>
     </div>
@@ -370,22 +370,24 @@
           <!-- Dual Conversion Buttons -->
           <div class="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
             <button onclick="EarthConePortal.openCallbackModal()" 
-                    class="btn-shimmer w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-blue-700 via-blue-800 to-indigo-900 text-white font-extrabold text-base shadow-xl shadow-blue-900/25 hover:shadow-blue-900/40 transition transform hover:-translate-y-0.5">
+                    class="btn-shimmer w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-blue-700 via-blue-800 to-indigo-900 text-white font-extrabold text-base shadow-xl shadow-blue-900/25 hover:shadow-blue-900/40 transition transform hover:-translate-y-0.5 cursor-pointer">
               <i data-lucide="phone-call" class="w-5 h-5"></i>
               <span>Request a Care Callback</span>
             </button>
 
-            <button onclick="EarthConePortal.openBookingWizard()" 
-                    class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-2xl bg-white hover:bg-slate-50 text-slate-800 font-bold text-base border border-slate-300 shadow-sm transition">
-              <i data-lucide="clipboard-check" class="w-5 h-5 text-blue-700"></i>
-              <span>Schedule Patient Assessment</span>
-            </button>
+            <a href="tel:+919931450495" 
+               class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-2xl bg-white hover:bg-slate-50 text-slate-900 font-extrabold text-base border-2 border-blue-600 shadow-md transition transform hover:-translate-y-0.5">
+              <i data-lucide="phone" class="w-5 h-5 text-blue-600"></i>
+              <span>Call Now (+91 9931450495)</span>
+            </a>
           </div>
 
           <div class="pt-2 flex items-center justify-center lg:justify-start gap-2 text-xs font-semibold text-slate-500">
             <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
             <span>Senior Medical Supervisor on Stand-by:</span>
-            <a href="tel:+919931450495" class="text-blue-700 font-bold hover:underline">+91 9931450495</a>
+            <a href="tel:+919931450495" class="text-blue-700 font-bold hover:underline inline-flex items-center gap-1">
+              <i data-lucide="phone-forwarded" class="w-3.5 h-3.5"></i> +91 9931450495
+            </a>
           </div>
 
           <!-- Trust Badges -->
@@ -987,9 +989,9 @@
                   <p class="font-bold text-sm text-white">Have a special medical condition?</p>
                   <p class="text-xs text-blue-200">Speak directly with our Nursing Supervisor</p>
                 </div>
-                <button onclick="EarthConePortal.openCallbackModal('Senior Supervisor Consultation')" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs whitespace-nowrap shadow-md flex items-center gap-1.5 transition cursor-pointer">
-                  <i data-lucide="phone-call" class="w-4 h-4"></i> Speak with Supervisor
-                </button>
+                <a href="tel:+919931450495" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs whitespace-nowrap shadow-md flex items-center gap-1.5 transition">
+                  <i data-lucide="phone" class="w-4 h-4 text-emerald-300"></i> Call Supervisor Now
+                </a>
               </div>
 
             </div>
@@ -1648,11 +1650,15 @@
   </footer>
 
   <!-- Floating Clinical Callback Capsule (Desktop) -->
-  <div class="floating-callback-badge hidden md:flex items-center gap-3">
+  <div class="floating-callback-badge hidden md:flex items-center gap-2.5">
+    <a href="tel:+919931450495" class="flex items-center gap-2 px-4 py-2.5 rounded-full bg-blue-700 hover:bg-blue-800 text-white text-xs font-bold shadow-xl transition hover:scale-105">
+      <i data-lucide="phone" class="w-3.5 h-3.5 text-emerald-300"></i>
+      <span>Call Now</span>
+    </a>
     <button onclick="EarthConePortal.openCallbackModal()" class="flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-slate-900/95 hover:bg-slate-900 text-white text-xs font-bold shadow-2xl border border-blue-400/30 transition hover:scale-105 cursor-pointer backdrop-blur-md">
       <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
       <i data-lucide="phone-call" class="w-3.5 h-3.5 text-blue-300"></i>
-      <span>Request a Care Callback</span>
+      <span>Request Callback</span>
     </button>
   </div>
 
@@ -1660,7 +1666,7 @@
   <div class="mobile-bottom-care-bar md:hidden">
     <a href="tel:+919931450495" class="btn-call">
       <i data-lucide="phone" class="w-4 h-4"></i>
-      <span>Call Helpline</span>
+      <span>Call Now</span>
     </a>
     <button onclick="EarthConePortal.openCallbackModal()" class="btn-callback">
       <i data-lucide="phone-call" class="w-4 h-4"></i>

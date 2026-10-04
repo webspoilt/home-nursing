@@ -553,7 +553,7 @@
     const callBtn = document.createElement('a');
     callBtn.href = 'tel:+919931450495';
     callBtn.style.cssText = 'display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; background: #0a2540; color: #fff; border-radius: 12px; font-size: 13px; font-weight: 700; text-decoration: none; transition: opacity 0.2s;';
-    callBtn.innerHTML = `<span>📞 Speak with Supervisor Now (+91 9931450495)</span>`;
+    callBtn.innerHTML = `<span>📞 Call Now (+91 9931450495)</span>`;
 
     const waMsg = buildWhatsAppMessage();
     const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(waMsg)}`;
