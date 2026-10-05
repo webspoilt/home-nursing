@@ -696,8 +696,9 @@
         localStorage.setItem(ADMIN_KEY_STORAGE, urlKey);
       }
 
+      const storedUser = localStorage.getItem('earthcone_admin_user') || 'admin';
       if (CURRENT_KEY) {
-        verifyAndOpenDashboard(CURRENT_KEY);
+        verifyAndOpenDashboard(CURRENT_KEY, storedUser);
       } else {
         showAuthGate();
       }
@@ -748,65 +749,34 @@
       }
 
       // Check if credentials match: username 'admin' and password 'Earthcone@123' or master key
-      const isDirectMatch = (username === 'admin' && password === 'Earthcone@123') || password === 'earthcone-admin-2024';
+      const isDirectMatch = (username === 'admin' && (password === 'Earthcone@123' || password === 'earthcone-admin-2024'));
 
-      try {
-        const query = `key=${encodeURIComponent(password)}&u=${encodeURIComponent(username)}&p=${encodeURIComponent(password)}`;
-        const res = await fetch(`/api/dashboard?${query}`);
-        if (res.ok) {
-          const data = await res.json();
-          CURRENT_KEY = password;
-          localStorage.setItem(ADMIN_KEY_STORAGE, password);
-          localStorage.setItem('earthcone_admin_user', username);
-          
-          document.getElementById('auth-gate').classList.add('hidden');
-          document.getElementById('dashboard-app').classList.remove('hidden');
-          
-          renderDashboard(data);
-        } else if (isDirectMatch) {
-          CURRENT_KEY = password;
-          localStorage.setItem(ADMIN_KEY_STORAGE, password);
-          localStorage.setItem('earthcone_admin_user', username);
-          document.getElementById('auth-gate').classList.add('hidden');
-          document.getElementById('dashboard-app').classList.remove('hidden');
-          fetchDashboardData(true);
-        } else {
-          // Fallback to Express /api/leads if running locally
-          const fallbackRes = await fetch(`/api/leads?${query}`);
-          if (fallbackRes.ok) {
-            const fallbackData = await fallbackRes.json();
-            CURRENT_KEY = password;
-            localStorage.setItem(ADMIN_KEY_STORAGE, password);
-            localStorage.setItem('earthcone_admin_user', username);
-            
-            document.getElementById('auth-gate').classList.add('hidden');
-            document.getElementById('dashboard-app').classList.remove('hidden');
-            
-            renderFallbackData(fallbackData);
-          } else {
-            alert('Invalid Username or Password. Please try again.');
-            showAuthGate();
-          }
-        }
-      } catch (err) {
-        console.error('Auth check error:', err);
-        if (isDirectMatch) {
-          CURRENT_KEY = password;
-          localStorage.setItem(ADMIN_KEY_STORAGE, password);
-          localStorage.setItem('earthcone_admin_user', username);
-          document.getElementById('auth-gate').classList.add('hidden');
-          document.getElementById('dashboard-app').classList.remove('hidden');
-          fetchDashboardData(true);
-        } else {
-          alert('Could not authenticate. Verify network or server status.');
-        }
-      } finally {
+      if (!isDirectMatch) {
+        alert('Invalid Username or Password. Please try again.');
         if (btn) {
           btn.disabled = false;
           btn.innerHTML = `<span>Authenticate &amp; Open Dashboard</span><i data-lucide="arrow-right" class="w-4 h-4"></i>`;
         }
         if (window.lucide) lucide.createIcons();
+        return;
       }
+
+      // Valid credentials: immediately unlock the UI
+      CURRENT_KEY = password;
+      localStorage.setItem(ADMIN_KEY_STORAGE, password);
+      localStorage.setItem('earthcone_admin_user', username);
+
+      document.getElementById('auth-gate').classList.add('hidden');
+      document.getElementById('dashboard-app').classList.remove('hidden');
+
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = `<span>Authenticate &amp; Open Dashboard</span><i data-lucide="arrow-right" class="w-4 h-4"></i>`;
+      }
+      if (window.lucide) lucide.createIcons();
+
+      // Now fetch data in background
+      await fetchDashboardData(true);
     }
 
     async function fetchDashboardData(showSpinner = false) {
