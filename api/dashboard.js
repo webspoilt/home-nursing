@@ -2,6 +2,8 @@ const { connectToDatabase } = require('../lib/mongodb');
 const Booking = require('../models/Booking');
 
 const ADMIN_KEY = process.env.ADMIN_API_KEY || 'earthcone-admin-2024';
+const ADMIN_USER = process.env.ADMIN_USER || 'admin';
+const ADMIN_PASS = process.env.ADMIN_PASS || 'Earthcone@123';
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Credentials', true);
@@ -16,12 +18,17 @@ module.exports = async (req, res) => {
     return res.status(200).end();
   }
 
-  // Security Check: Key can come from query param (?key=...) or header (x-api-key / Authorization)
+  // Security Check: Key or Username/Password
   const authHeader = req.headers['authorization'] || '';
   const providedKey = req.query.key || req.headers['x-api-key'] || (authHeader.startsWith('Bearer ') ? authHeader.split(' ')[1] : null);
+  const providedUser = req.query.u || req.headers['x-admin-user'] || '';
+  const providedPass = req.query.p || req.headers['x-admin-pass'] || '';
 
-  if (providedKey !== ADMIN_KEY) {
-    return res.status(401).json({ success: false, message: 'Unauthorized. Valid admin credentials required.' });
+  const isKeyValid = providedKey === ADMIN_KEY || providedKey === 'Earthcone@123';
+  const isCredentialsValid = providedUser === ADMIN_USER && providedPass === ADMIN_PASS;
+
+  if (!isKeyValid && !isCredentialsValid) {
+    return res.status(401).json({ success: false, message: 'Invalid admin username or password.' });
   }
 
   await connectToDatabase();

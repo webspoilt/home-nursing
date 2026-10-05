@@ -36,6 +36,10 @@
       "dest": "/api/dashboard.js"
     },
     {
+      "src": "/admin",
+      "dest": "/public/dashboard/index.html"
+    },
+    {
       "src": "/dashboard",
       "dest": "/public/dashboard/index.html"
     },
