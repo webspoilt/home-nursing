@@ -68,12 +68,12 @@ module.exports = async (req, res) => {
       let sheetLeads = [];
       let sheetVisitors = [];
 
-      // Query Google Sheets Webhook directly if configured (with 3.5s timeout so dashboard never hangs)
+      // Query Google Sheets Webhook directly if configured (with 12s timeout for Google Script redirects)
       const googleSheetUrl = process.env.GOOGLE_SHEET_WEBHOOK_URL || 'https://script.google.com/macros/s/AKfycbw4E1alIwDGS1dhuPaSZuXy-B3CL_zYX6Bp882Q-VHdXPRfmDPEPjOJZKOvvCB5Uq5ydw/exec';
       if (googleSheetUrl && googleSheetUrl.startsWith('http')) {
         try {
           const controller = new AbortController();
-          const timer = setTimeout(() => controller.abort(), 3500);
+          const timer = setTimeout(() => controller.abort(), 12000);
           const sheetRes = await fetch(googleSheetUrl, { redirect: 'follow', signal: controller.signal });
           clearTimeout(timer);
           if (sheetRes.ok) {

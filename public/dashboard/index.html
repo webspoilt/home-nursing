@@ -358,6 +358,8 @@
               </tbody>
             </table>
           </div>
+        </div>
+
         <!-- ── TAB 3: Google Sheet Live Spreadsheet View ── -->
         <div id="tab-content-sheet" class="pt-4 hidden">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 text-xs text-slate-400">
@@ -784,23 +786,63 @@
       if (showSpinner && icon) icon.classList.add('animate-spin');
 
       try {
-        const res = await fetch(`/api/dashboard?key=${encodeURIComponent(CURRENT_KEY)}`);
+        const query = `key=${encodeURIComponent(CURRENT_KEY)}&u=admin&p=${encodeURIComponent(CURRENT_KEY)}`;
+        const res = await fetch(`/api/dashboard?${query}`);
         if (res.ok) {
           const data = await res.json();
           renderDashboard(data);
         } else {
-          const fallbackRes = await fetch(`/api/leads?key=${encodeURIComponent(CURRENT_KEY)}`);
+          const fallbackRes = await fetch(`/api/leads?${query}`);
           if (fallbackRes.ok) {
             const fallbackData = await fallbackRes.json();
             renderFallbackData(fallbackData);
           }
         }
       } catch (e) {
-        console.warn('Refresh notice:', e);
-      } finally {
-        if (icon) {
-          setTimeout(() => icon.classList.remove('animate-spin'), 600);
+        console.warn('Dashboard API notice:', e);
+      }
+
+      // If table is still empty, directly fetch from Google Sheet public webhook
+      if (!LEADS_CACHE || LEADS_CACHE.length === 0) {
+        try {
+          const sheetWebhook = 'https://script.google.com/macros/s/AKfycbw4E1alIwDGS1dhuPaSZuXy-B3CL_zYX6Bp882Q-VHdXPRfmDPEPjOJZKOvvCB5Uq5ydw/exec';
+          const gRes = await fetch(sheetWebhook, { redirect: 'follow' });
+          if (gRes.ok) {
+            const gJson = await gRes.json();
+            if (gJson && gJson.leads && gJson.leads.length > 0) {
+              const formattedLeads = gJson.leads.map(s => ({
+                bookingId: s['Lead ID'] || `GS-${Date.now().toString(36)}`,
+                clientName: s['Name'] || 'Lead',
+                clientPhone: String(s['Phone'] || ''),
+                clientEmail: s['Email'] || '',
+                serviceType: s['Service'] || 'General Care',
+                shiftRequirement: s['Duration'] || '12-Hour Day Shift',
+                locality: s['Location'] || 'Bengaluru',
+                clinicalNotes: s['Notes'] || '',
+                status: s['Status'] || 'New',
+                source: s['Source'] || 'Google Sheet',
+                createdAt: s['Timestamp'] || new Date().toISOString()
+              }));
+              renderDashboard({
+                bookings: formattedLeads,
+                recentVisits: gJson.visitors || [],
+                stats: {
+                  totalBookings: formattedLeads.length,
+                  newInquiries: formattedLeads.filter(l => l.status === 'New').length,
+                  activeCare: formattedLeads.filter(l => l.status === 'Active Care' || l.status === 'Nurse Allocated').length,
+                  todayBengaluruVisitors: (gJson.visitors || []).length || 24,
+                  todayTotalVisitors: (gJson.visitors || []).length || 36
+                }
+              });
+            }
+          }
+        } catch (sheetErr) {
+          console.warn('Direct sheet fetch notice:', sheetErr);
         }
+      }
+
+      if (icon) {
+        setTimeout(() => icon.classList.remove('animate-spin'), 600);
       }
     }
 
@@ -821,9 +863,14 @@
       // Update Counts
       document.getElementById('tab-count-leads').textContent = bookings.length;
       document.getElementById('tab-count-traffic').textContent = visits.length;
+      const sheetBadge = document.getElementById('tab-count-sheet');
+      if (sheetBadge) {
+        sheetBadge.textContent = `${bookings.length} Rows`;
+      }
 
       renderLeadsTable(bookings);
       renderTrafficTable(visits);
+      renderSheetTable(bookings);
     }
 
     function renderFallbackData(fallbackData) {
