@@ -16,7 +16,9 @@ const {
   getAllLeads,
   getAllInquiries,
   getLeadCount,
-  getInquiryCount
+  getInquiryCount,
+  updateInquiryStatus,
+  updateLeadStatus
 } = require('./db/database');
 
 // Middleware
@@ -174,7 +176,8 @@ app.post('/api/inquiry', (req, res) => {
 
 // ── Admin: View Captured Leads & Inquiries ──
 app.get('/api/leads', (req, res) => {
-  const key = req.query.key || req.headers['x-api-key'];
+  const authHeader = req.headers['authorization'] || '';
+  const key = req.query.key || req.headers['x-api-key'] || (authHeader.startsWith('Bearer ') ? authHeader.split(' ')[1] : null);
   if (key !== ADMIN_KEY) {
     return res.status(401).json({ error: 'Unauthorized. Provide ?key=YOUR_KEY or x-api-key header.' });
   }
@@ -197,6 +200,35 @@ app.get('/api/leads', (req, res) => {
   } catch (error) {
     res.status(500).json({ error: 'Unable to retrieve leads from database.' });
   }
+});
+
+// ── Admin: Update Lead / Inquiry Status ──
+app.patch('/api/leads/:id', (req, res) => {
+  const authHeader = req.headers['authorization'] || '';
+  const key = req.query.key || req.headers['x-api-key'] || (authHeader.startsWith('Bearer ') ? authHeader.split(' ')[1] : null);
+  if (key !== ADMIN_KEY) {
+    return res.status(401).json({ error: 'Unauthorized. Provide valid credentials.' });
+  }
+
+  try {
+    const { id } = req.params;
+    const { status, notes, type } = req.body || {};
+
+    if (type === 'lead') {
+      updateLeadStatus(id, status);
+    } else {
+      updateInquiryStatus(id, status, notes);
+    }
+
+    res.status(200).json({ success: true, message: 'Status updated' });
+  } catch (err) {
+    res.status(500).json({ success: false, message: 'Failed to update status' });
+  }
+});
+
+// Dashboard Route
+app.get('/dashboard', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'dashboard', 'index.html'));
 });
 
 // SPA Fallback

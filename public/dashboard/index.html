@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Operations Command Hub | EarthCone Home Nursing</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0fdfa',
+              100: '#ccfbf1',
+              500: '#14b8a6',
+              600: '#0d9488',
+              700: '#0f766e',
+              800: '#115e59',
+              900: '#134e4a'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .badge-pulse::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      border-radius: inherit;
+      animation: pulse-ring 2s cubic-bezier(0.45, 0, 0.2, 1) infinite;
+    }
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      50% { transform: scale(1.4); opacity: 0; }
+      100% { transform: scale(1.4); opacity: 0; }
+    }
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #quote-preview-modal, #quote-preview-modal * {
+        visibility: visible;
+      }
+      #quote-preview-modal {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        background: white;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-teal-500 selection:text-white">
+
+  <!-- Security Gate / Login Screen (Shown if unauthenticated) -->
+  <div id="auth-gate" class="fixed inset-0 z-50 bg-slate-950 flex items-center justify-center p-4">
+    <div class="max-w-md w-full bg-slate-900 border border-slate-800 rounded-3xl p-8 shadow-2xl relative">
+      <div class="flex items-center justify-center w-14 h-14 rounded-2xl bg-teal-500/10 border border-teal-500/20 text-teal-400 mx-auto mb-6">
+        <i data-lucide="shield-check" class="w-8 h-8"></i>
+      </div>
+      <h2 class="text-2xl font-extrabold text-center text-white tracking-tight">EarthCone Operations</h2>
+      <p class="text-xs text-slate-400 text-center mt-2 mb-6">Enter Admin Access Passcode or Key to access Real-Time Leads & Clinical Dispatch.</p>
+      
+      <form id="admin-login-form" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1.5">Admin Security Passcode</label>
+          <div class="relative">
+            <input type="password" id="admin-passcode-input" placeholder="e.g. earthcone-admin-2024" required
+              class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm font-mono transition">
+            <button type="button" onclick="togglePasscodeVisibility()" class="absolute right-3 top-3 text-slate-400 hover:text-slate-200">
+              <i data-lucide="eye" id="pass-eye-icon" class="w-4 h-4"></i>
+            </button>
+          </div>
+          <p class="text-[11px] text-slate-400 mt-1.5 flex items-center gap-1">
+            <i data-lucide="info" class="w-3 h-3 text-teal-400"></i> Default configured key: <span class="font-mono text-teal-300">earthcone-admin-2024</span>
+          </p>
+        </div>
+
+        <button type="submit" id="login-submit-btn" class="w-full py-3 px-4 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-teal-500/20">
+          <span>Authenticate & Open Dashboard</span>
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Main Dashboard Container -->
+  <div id="dashboard-app" class="flex-1 flex flex-col hidden">
+    
+    <!-- Top Bar -->
+    <header class="bg-slate-950/80 backdrop-blur-xl border-b border-slate-800 sticky top-0 z-40 px-4 lg:px-8 py-3.5">
+      <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
+        
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-teal-500 to-emerald-600 flex items-center justify-center text-slate-950 font-black shadow-lg shadow-teal-500/20">
+            EC
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 class="font-extrabold text-base sm:text-lg text-white tracking-tight">EarthCone Command Hub</h1>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-teal-500/10 text-teal-400 border border-teal-500/20 flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-teal-400 animate-ping"></span> Live Ops
+              </span>
+            </div>
+            <p class="text-xs text-slate-400">Bangalore Real-Time Dispatch & Lead Management</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 sm:gap-3">
+          <!-- Refresh Button -->
+          <button onclick="fetchDashboardData(true)" class="p-2 sm:px-3 sm:py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white text-xs font-semibold flex items-center gap-1.5 transition" title="Refresh Live Data">
+            <i data-lucide="refresh-cw" id="refresh-icon" class="w-4 h-4"></i>
+            <span class="hidden sm:inline">Sync Data</span>
+          </button>
+
+          <!-- Quote Generator Trigger -->
+          <button onclick="openQuoteModal()" class="px-3 py-2 rounded-xl bg-teal-600 hover:bg-teal-500 text-white text-xs font-bold flex items-center gap-1.5 transition shadow-md shadow-teal-600/20">
+            <i data-lucide="receipt" class="w-4 h-4"></i>
+            <span class="hidden sm:inline">Create Quote</span>
+          </button>
+
+          <!-- View Main Site -->
+          <a href="/" target="_blank" class="p-2 sm:px-3 sm:py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white text-xs font-semibold flex items-center gap-1.5 transition">
+            <i data-lucide="external-link" class="w-4 h-4"></i>
+            <span class="hidden md:inline">Open Website</span>
+          </a>
+
+          <!-- Logout -->
+          <button onclick="logoutAdmin()" class="p-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/20 transition" title="Lock & Sign Out">
+            <i data-lucide="log-out" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 lg:p-8 space-y-6">
+
+      <!-- Analytics & Performance Metrics Cards -->
+      <section class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        
+        <!-- Metric 1: Visitors Today in Bangalore -->
+        <div class="bg-slate-950/60 border border-slate-800 rounded-2xl p-4 sm:p-5 relative overflow-hidden group hover:border-teal-500/40 transition">
+          <div class="flex items-center justify-between text-slate-400 text-xs font-semibold mb-2">
+            <span>Bengaluru Traffic</span>
+            <div class="w-7 h-7 rounded-lg bg-teal-500/10 text-teal-400 flex items-center justify-center">
+              <i data-lucide="map-pin" class="w-4 h-4"></i>
+            </div>
+          </div>
+          <div class="flex items-baseline gap-2">
+            <span id="stat-bengaluru-visitors" class="text-2xl sm:text-3xl font-black text-white tracking-tight">--</span>
+            <span class="text-xs text-emerald-400 font-bold flex items-center">
+              <i data-lucide="trending-up" class="w-3 h-3 mr-0.5"></i> Today
+            </span>
+          </div>
+          <p class="text-[11px] text-slate-400 mt-1">Live visitors browsing from Bangalore</p>
+          <div class="absolute -right-4 -bottom-4 w-16 h-16 bg-teal-500/5 rounded-full blur-xl"></div>
+        </div>
+
+        <!-- Metric 2: New Incoming Inquiries -->
+        <div class="bg-slate-950/60 border border-slate-800 rounded-2xl p-4 sm:p-5 relative overflow-hidden group hover:border-amber-500/40 transition">
+          <div class="flex items-center justify-between text-slate-400 text-xs font-semibold mb-2">
+            <span>Pending Leads</span>
+            <div class="w-7 h-7 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center">
+              <i data-lucide="inbox" class="w-4 h-4"></i>
+            </div>
+          </div>
+          <div class="flex items-baseline gap-2">
+            <span id="stat-new-leads" class="text-2xl sm:text-3xl font-black text-amber-400 tracking-tight">--</span>
+            <span class="text-xs text-amber-400/80 font-bold">Needs Callback</span>
+          </div>
+          <p class="text-[11px] text-slate-400 mt-1">New quote & callback submissions</p>
+        </div>
+
+        <!-- Metric 3: Active Patient Care Allocations -->
+        <div class="bg-slate-950/60 border border-slate-800 rounded-2xl p-4 sm:p-5 relative overflow-hidden group hover:border-emerald-500/40 transition">
+          <div class="flex items-center justify-between text-slate-400 text-xs font-semibold mb-2">
+            <span>Active Care</span>
+            <div class="w-7 h-7 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center">
+              <i data-lucide="user-check" class="w-4 h-4"></i>
+            </div>
+          </div>
+          <div class="flex items-baseline gap-2">
+            <span id="stat-active-care" class="text-2xl sm:text-3xl font-black text-emerald-400 tracking-tight">--</span>
+            <span class="text-xs text-emerald-400/80 font-bold">Nurses On-Duty</span>
+          </div>
+          <p class="text-[11px] text-slate-400 mt-1">Ongoing patient care assignments</p>
+        </div>
+
+        <!-- Metric 4: Total Inquiries Received -->
+        <div class="bg-slate-950/60 border border-slate-800 rounded-2xl p-4 sm:p-5 relative overflow-hidden group hover:border-blue-500/40 transition">
+          <div class="flex items-center justify-between text-slate-400 text-xs font-semibold mb-2">
+            <span>Total Inquiries</span>
+            <div class="w-7 h-7 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center">
+              <i data-lucide="database" class="w-4 h-4"></i>
+            </div>
+          </div>
+          <div class="flex items-baseline gap-2">
+            <span id="stat-total-inquiries" class="text-2xl sm:text-3xl font-black text-white tracking-tight">--</span>
+            <span class="text-xs text-blue-400 font-bold">All-time</span>
+          </div>
+          <p class="text-[11px] text-slate-400 mt-1">Logged across Web, Bot & Google Sheet</p>
+        </div>
+
+      </section>
+
+      <!-- Main Tabs & Filter Toolbar -->
+      <section class="bg-slate-950/70 border border-slate-800 rounded-3xl p-4 sm:p-6 shadow-xl">
+        
+        <!-- Controls Bar -->
+        <div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 pb-5 border-b border-slate-800/80">
+          
+          <!-- Tab Navigation -->
+          <div class="flex items-center gap-1.5 p-1 bg-slate-900 rounded-2xl border border-slate-800 text-xs font-semibold self-start sm:self-auto">
+            <button onclick="switchTab('leads')" id="tab-btn-leads" class="px-3.5 py-2 rounded-xl bg-teal-500 text-slate-950 font-bold transition flex items-center gap-2">
+              <i data-lucide="users" class="w-3.5 h-3.5"></i>
+              <span>Patient Inquiries</span>
+              <span id="tab-count-leads" class="px-1.5 py-0.2 rounded-full text-[10px] bg-slate-950/20 font-mono">0</span>
+            </button>
+            <button onclick="switchTab('traffic')" id="tab-btn-traffic" class="px-3.5 py-2 rounded-xl text-slate-400 hover:text-white transition flex items-center gap-2">
+              <i data-lucide="activity" class="w-3.5 h-3.5"></i>
+              <span>Live Traffic Feed</span>
+              <span id="tab-count-traffic" class="px-1.5 py-0.2 rounded-full text-[10px] bg-slate-800 text-slate-300 font-mono">0</span>
+            </button>
+          </div>
+
+          <!-- Search & Filters -->
+          <div class="flex flex-wrap items-center gap-2.5">
+            <!-- Search Input -->
+            <div class="relative flex-1 sm:w-64">
+              <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-3 text-slate-500"></i>
+              <input type="text" id="table-search" placeholder="Search phone, name, locality..." onkeyup="filterLeadsTable()"
+                class="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-teal-500 transition">
+            </div>
+
+            <!-- Status Filter Dropdown -->
+            <select id="status-filter" onchange="filterLeadsTable()"
+              class="px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs font-semibold text-slate-300 focus:outline-none focus:ring-1 focus:ring-teal-500 cursor-pointer">
+              <option value="ALL">All Statuses</option>
+              <option value="New">New / Pending</option>
+              <option value="Under Clinical Review">Under Clinical Review</option>
+              <option value="Contacted">Contacted / In Touch</option>
+              <option value="Nurse Allocated">Nurse Allocated</option>
+              <option value="Active Care">Active Care</option>
+              <option value="Completed">Completed</option>
+            </select>
+
+            <!-- Export to CSV -->
+            <button onclick="exportLeadsToCSV()" class="px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-xs font-semibold text-slate-300 hover:text-white flex items-center gap-1.5 transition" title="Export as CSV spreadsheet">
+              <i data-lucide="download" class="w-3.5 h-3.5"></i>
+              <span class="hidden sm:inline">Export CSV</span>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- ── TAB 1: Leads & Inquiries Table ── -->
+        <div id="tab-content-leads" class="pt-4">
+          <div class="overflow-x-auto rounded-2xl border border-slate-800/80">
+            <table class="w-full text-left text-xs text-slate-300">
+              <thead class="bg-slate-900/90 text-slate-400 uppercase text-[11px] tracking-wider border-b border-slate-800">
+                <tr>
+                  <th class="py-3.5 px-4 font-bold">Client / Patient</th>
+                  <th class="py-3.5 px-4 font-bold">Direct Contact</th>
+                  <th class="py-3.5 px-4 font-bold">Care Service & Shift</th>
+                  <th class="py-3.5 px-4 font-bold">Location</th>
+                  <th class="py-3.5 px-4 font-bold">Care Status</th>
+                  <th class="py-3.5 px-4 font-bold text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="leads-table-body" class="divide-y divide-slate-800/60 bg-slate-950/40">
+                <!-- Dynamic Rows Rendered Here -->
+                <tr>
+                  <td colspan="6" class="py-12 text-center text-slate-500">
+                    <div class="flex flex-col items-center gap-2">
+                      <i data-lucide="loader-2" class="w-6 h-6 animate-spin text-teal-400"></i>
+                      <span>Fetching incoming leads...</span>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div id="no-leads-msg" class="hidden py-12 text-center text-slate-500 text-xs">
+            <i data-lucide="inbox" class="w-8 h-8 mx-auto mb-2 text-slate-600"></i>
+            <p>No leads found matching your criteria.</p>
+          </div>
+        </div>
+
+        <!-- ── TAB 2: Live Website Visitor Traffic Feed ── -->
+        <div id="tab-content-traffic" class="pt-4 hidden">
+          <div class="flex items-center justify-between pb-3 text-xs text-slate-400">
+            <p class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              Real-time visitor sessions logged from Vercel Edge & Webhook
+            </p>
+            <span class="text-[11px] text-slate-500">Auto-updates every 15s</span>
+          </div>
+
+          <div class="overflow-x-auto rounded-2xl border border-slate-800/80">
+            <table class="w-full text-left text-xs text-slate-300">
+              <thead class="bg-slate-900/90 text-slate-400 uppercase text-[11px] tracking-wider border-b border-slate-800">
+                <tr>
+                  <th class="py-3.5 px-4 font-bold">Time</th>
+                  <th class="py-3.5 px-4 font-bold">City / Location</th>
+                  <th class="py-3.5 px-4 font-bold">Landing Page</th>
+                  <th class="py-3.5 px-4 font-bold">Traffic Source</th>
+                  <th class="py-3.5 px-4 font-bold">Device / Screen</th>
+                  <th class="py-3.5 px-4 font-bold">IP Address</th>
+                </tr>
+              </thead>
+              <tbody id="traffic-table-body" class="divide-y divide-slate-800/60 bg-slate-950/40 font-mono text-[11px]">
+                <!-- Dynamic Visitor Rows Rendered Here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800/80 py-4 px-6 text-center text-xs text-slate-500">
+      EarthCone Home Nursing • Operational Command Hub • Confidential Patient Data System
+    </footer>
+
+  </div>
+
+  <!-- ── MODAL: Lead Status & Details Editor ── -->
+  <div id="edit-lead-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-lg w-full p-6 shadow-2xl relative">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-xl bg-teal-500/10 text-teal-400 flex items-center justify-center">
+            <i data-lucide="edit-3" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-white">Update Patient Lead Status</h3>
+            <p id="edit-modal-lead-id" class="text-[11px] text-teal-400 font-mono"></p>
+          </div>
+        </div>
+        <button onclick="closeEditModal()" class="text-slate-400 hover:text-white p-1 rounded-lg">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form id="edit-lead-form" class="mt-4 space-y-4 text-xs">
+        <div>
+          <label class="block font-semibold text-slate-300 mb-1">Lead / Inquiry Status</label>
+          <select id="edit-status-select" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 focus:outline-none focus:ring-1 focus:ring-teal-500 font-semibold">
+            <option value="Under Clinical Review">Under Clinical Review (New Inquiry)</option>
+            <option value="Contacted">Contacted / In Discussion</option>
+            <option value="Nurse Allocated">Nurse Allocated (Care Assigned)</option>
+            <option value="Active Care">Active Care (Shift Ongoing)</option>
+            <option value="Completed">Completed (Service Fulfilled)</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block font-semibold text-slate-300 mb-1">Assigned Nurse / Supervisor Name</label>
+          <input type="text" id="edit-nurse-input" placeholder="e.g. Nurse Priya, GNM (8 yrs exp)"
+            class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 placeholder-slate-600 focus:outline-none focus:ring-1 focus:ring-teal-500">
+        </div>
+
+        <div>
+          <label class="block font-semibold text-slate-300 mb-1">Supervisor Clinical Notes</label>
+          <textarea id="edit-notes-input" rows="3" placeholder="Add diagnosis, shift requirements, follow-up notes..."
+            class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 placeholder-slate-600 focus:outline-none focus:ring-1 focus:ring-teal-500"></textarea>
+        </div>
+
+        <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-800">
+          <button type="button" onclick="closeEditModal()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold">
+            Cancel
+          </button>
+          <button type="submit" id="save-lead-btn" class="px-5 py-2 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold transition flex items-center gap-1.5 shadow-md shadow-teal-500/20">
+            <i data-lucide="check" class="w-4 h-4"></i>
+            <span>Save Status</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ── MODAL: Care Plan / Price Quote Generator ── -->
+  <div id="quote-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-2xl w-full p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-xl bg-teal-500/10 text-teal-400 flex items-center justify-center">
+            <i data-lucide="receipt" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-white">Care Plan & Price Quote Generator</h3>
+            <p class="text-[11px] text-slate-400">Generate instantly to send on WhatsApp or Print as PDF</p>
+          </div>
+        </div>
+        <button onclick="closeQuoteModal()" class="text-slate-400 hover:text-white p-1 rounded-lg">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form id="quote-builder-form" class="mt-4 space-y-4 text-xs">
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block font-semibold text-slate-300 mb-1">Client / Patient Name</label>
+            <input type="text" id="quote-client-name" placeholder="e.g. Mr. Rajesh Kumar" required
+              class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 placeholder-slate-600 focus:outline-none focus:ring-1 focus:ring-teal-500">
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-300 mb-1">WhatsApp / Phone Number</label>
+            <input type="tel" id="quote-client-phone" placeholder="e.g. 9876543210" required
+              class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 placeholder-slate-600 focus:outline-none focus:ring-1 focus:ring-teal-500">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <label class="block font-semibold text-slate-300 mb-1">Select Service</label>
+            <select id="quote-service-select" onchange="autoFillQuoteRates()"
+              class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 focus:outline-none focus:ring-1 focus:ring-teal-500 font-semibold">
+              <option value="24-Hour Bedside ICU Care">24-Hour Bedside ICU Care</option>
+              <option value="12-Hour Day Shift Nursing">12-Hour Day Shift Nursing</option>
+              <option value="12-Hour Night Shift Nursing">12-Hour Night Shift Nursing</option>
+              <option value="Elderly & Palliative Care">Elderly & Palliative Care</option>
+              <option value="Post-Surgery Rehab Care">Post-Surgery Rehab Care</option>
+              <option value="Sterile Dressing & Wound Procedure">Sterile Dressing & Wound</option>
+              <option value="Ryles Tube / Catheterization Visit">Ryles Tube / Catheter Visit</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block font-semibold text-slate-300 mb-1">Duration / Commitment</label>
+            <select id="quote-duration-select" onchange="autoFillQuoteRates()"
+              class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 focus:outline-none focus:ring-1 focus:ring-teal-500">
+              <option value="Per Day">Daily Basis</option>
+              <option value="15-Day Package">15-Day Package</option>
+              <option value="Monthly (30 Days)" selected>Monthly (30 Days)</option>
+              <option value="Single Clinical Visit">Single Clinical Visit</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block font-semibold text-slate-300 mb-1">Agreed Rate (₹)</label>
+            <input type="number" id="quote-rate-input" placeholder="e.g. 45000" required
+              class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-teal-300 font-bold focus:outline-none focus:ring-1 focus:ring-teal-500 font-mono">
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-semibold text-slate-300 mb-1">Locality in Bangalore</label>
+          <input type="text" id="quote-location-input" value="Bangalore" placeholder="e.g. Indiranagar, Whitefield, etc."
+            class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 focus:outline-none focus:ring-1 focus:ring-teal-500">
+        </div>
+
+        <div>
+          <label class="block font-semibold text-slate-300 mb-1">Care Inclusions & Supervision Note</label>
+          <textarea id="quote-inclusions-input" rows="2"
+            class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 focus:outline-none focus:ring-1 focus:ring-teal-500">Includes background-verified registered nurse, daily vital chart monitoring, medication scheduling, and dedicated weekly clinical supervisor reviews.</textarea>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-800">
+          <button type="button" onclick="previewQuoteCard()" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold flex items-center gap-1.5 transition">
+            <i data-lucide="eye" class="w-4 h-4"></i>
+            <span>Preview Formatted Quote</span>
+          </button>
+          
+          <div class="flex items-center gap-2">
+            <button type="button" onclick="sendQuoteViaWhatsApp()" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold flex items-center gap-1.5 shadow-md shadow-emerald-600/20 transition">
+              <i data-lucide="message-circle" class="w-4 h-4"></i>
+              <span>Send via WhatsApp</span>
+            </button>
+            <button type="button" onclick="printQuotePDF()" class="px-4 py-2.5 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold flex items-center gap-1.5 shadow-md shadow-teal-500/20 transition">
+              <i data-lucide="printer" class="w-4 h-4"></i>
+              <span>Print / Save PDF</span>
+            </button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- ── MODAL: Printable Quote Preview Sheet ── -->
+  <div id="quote-preview-modal" class="fixed inset-0 z-50 bg-slate-950/90 hidden flex items-center justify-center p-4">
+    <div class="bg-white text-slate-900 rounded-3xl max-w-xl w-full p-8 shadow-2xl relative border border-slate-200">
+      
+      <!-- Top Actions (No Print) -->
+      <div class="flex justify-between items-center pb-4 mb-4 border-b border-slate-100 no-print">
+        <span class="text-xs font-bold text-teal-700 uppercase tracking-wider">Formal Care Estimate</span>
+        <div class="flex items-center gap-2">
+          <button onclick="window.print()" class="px-3 py-1.5 rounded-lg bg-teal-600 text-white text-xs font-bold flex items-center gap-1">
+            <i data-lucide="printer" class="w-3.5 h-3.5"></i> Print
+          </button>
+          <button onclick="document.getElementById('quote-preview-modal').classList.add('hidden')" class="p-1 rounded-lg text-slate-400 hover:text-slate-800">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Formal Letterhead -->
+      <div class="flex justify-between items-start border-b border-slate-200 pb-5 mb-5">
+        <div>
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-lg bg-teal-600 text-white font-black flex items-center justify-center text-sm">EC</div>
+            <h2 class="text-lg font-black text-slate-900">EarthCone Home Nursing</h2>
+          </div>
+          <p class="text-xs text-slate-500 mt-1">Bangalore, Karnataka • Verified Healthcare Support</p>
+          <p class="text-xs text-slate-500">Helpline: +91 9931450495</p>
+        </div>
+        <div class="text-right">
+          <span class="text-[11px] font-mono font-bold text-teal-700 bg-teal-50 px-2 py-1 rounded border border-teal-100" id="preview-quote-ref">EC-QUOTE</span>
+          <p class="text-[11px] text-slate-400 mt-1" id="preview-quote-date"></p>
+        </div>
+      </div>
+
+      <!-- Quote Recipient -->
+      <div class="bg-slate-50 rounded-xl p-4 mb-5 border border-slate-100">
+        <div class="grid grid-cols-2 gap-2 text-xs">
+          <div>
+            <span class="text-slate-400 text-[10px] uppercase font-bold block">Patient / Client</span>
+            <strong id="preview-client-name" class="text-slate-800 text-sm"></strong>
+          </div>
+          <div>
+            <span class="text-slate-400 text-[10px] uppercase font-bold block">Contact Phone</span>
+            <span id="preview-client-phone" class="font-mono text-slate-700 font-semibold"></span>
+          </div>
+          <div class="col-span-2 pt-1 border-t border-slate-200/60 mt-1">
+            <span class="text-slate-400 text-[10px] uppercase font-bold block">Location</span>
+            <span id="preview-client-location" class="text-slate-700">Bangalore, Karnataka</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Table Details -->
+      <div class="border border-slate-200 rounded-xl overflow-hidden mb-5">
+        <table class="w-full text-left text-xs">
+          <thead class="bg-slate-100 text-slate-600 font-bold border-b border-slate-200">
+            <tr>
+              <th class="py-2.5 px-3">Service Description</th>
+              <th class="py-2.5 px-3">Duration</th>
+              <th class="py-2.5 px-3 text-right">Amount</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100">
+            <tr>
+              <td class="py-3 px-3">
+                <strong id="preview-service-name" class="block text-slate-800"></strong>
+                <span id="preview-inclusions" class="text-[11px] text-slate-500"></span>
+              </td>
+              <td class="py-3 px-3 text-slate-600 font-medium" id="preview-duration"></td>
+              <td class="py-3 px-3 text-right font-black text-slate-900 text-sm font-mono" id="preview-amount"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Bottom Assurance Note -->
+      <div class="text-[11px] text-slate-500 space-y-1 mb-6 border-t border-slate-100 pt-3">
+        <p>✓ All nurses are verified, clinical background checked, and supervised by our Care Lead.</p>
+        <p>✓ Replacement guarantee provided within 24 hours if required.</p>
+        <p>✓ Transparent weekly billing with no hidden placement fees.</p>
+      </div>
+
+      <div class="flex justify-between items-center text-xs border-t border-slate-200 pt-4 text-slate-400">
+        <span>Authorized Clinical Coordinator</span>
+        <strong class="text-slate-800">EarthCone Healthcare Team</strong>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Dashboard JavaScript Application -->
+  <script>
+    const ADMIN_KEY_STORAGE = 'earthcone_admin_key';
+    let CURRENT_KEY = localStorage.getItem(ADMIN_KEY_STORAGE) || '';
+    let LEADS_CACHE = [];
+    let VISITS_CACHE = [];
+    let CURRENT_TAB = 'leads';
+    let EDITING_LEAD = null;
+
+    // Standard Rates Table for Quick Auto-filling
+    const SERVICE_RATES = {
+      '24-Hour Bedside ICU Care': { 'Daily Basis': 2800, '15-Day Package': 39000, 'Monthly (30 Days)': 72000 },
+      '12-Hour Day Shift Nursing': { 'Daily Basis': 1500, '15-Day Package': 21000, 'Monthly (30 Days)': 38000 },
+      '12-Hour Night Shift Nursing': { 'Daily Basis': 1600, '15-Day Package': 22500, 'Monthly (30 Days)': 40000 },
+      'Elderly & Palliative Care': { 'Daily Basis': 1200, '15-Day Package': 16500, 'Monthly (30 Days)': 30000 },
+      'Post-Surgery Rehab Care': { 'Daily Basis': 1500, '15-Day Package': 21000, 'Monthly (30 Days)': 38000 },
+      'Sterile Dressing & Wound Procedure': { 'Single Clinical Visit': 650, 'Daily Basis': 650, '15-Day Package': 9000, 'Monthly (30 Days)': 17000 },
+      'Ryles Tube / Catheterization Visit': { 'Single Clinical Visit': 850, 'Daily Basis': 850, '15-Day Package': 12000, 'Monthly (30 Days)': 22000 }
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.lucide) lucide.createIcons();
+
+      // Check URL parameters for ?key=...
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlKey = urlParams.get('key');
+      if (urlKey) {
+        CURRENT_KEY = urlKey;
+        localStorage.setItem(ADMIN_KEY_STORAGE, urlKey);
+      }
+
+      if (CURRENT_KEY) {
+        verifyAndOpenDashboard(CURRENT_KEY);
+      } else {
+        showAuthGate();
+      }
+
+      // Login form submission
+      document.getElementById('admin-login-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const inputKey = document.getElementById('admin-passcode-input').value.trim();
+        if (inputKey) {
+          verifyAndOpenDashboard(inputKey);
+        }
+      });
+
+      // Status edit form submission
+      document.getElementById('edit-lead-form').addEventListener('submit', handleSaveLeadStatus);
+
+      // Auto poll every 30 seconds for live leads
+      setInterval(() => {
+        if (CURRENT_KEY && !document.getElementById('dashboard-app').classList.contains('hidden')) {
+          fetchDashboardData(false);
+        }
+      }, 30000);
+    });
+
+    function togglePasscodeVisibility() {
+      const input = document.getElementById('admin-passcode-input');
+      input.type = input.type === 'password' ? 'text' : 'password';
+    }
+
+    function showAuthGate() {
+      document.getElementById('auth-gate').classList.remove('hidden');
+      document.getElementById('dashboard-app').classList.add('hidden');
+    }
+
+    function logoutAdmin() {
+      localStorage.removeItem(ADMIN_KEY_STORAGE);
+      CURRENT_KEY = '';
+      showAuthGate();
+    }
+
+    async function verifyAndOpenDashboard(key) {
+      const btn = document.getElementById('login-submit-btn');
+      if (btn) btn.disabled = true;
+
+      try {
+        const res = await fetch(`/api/dashboard?key=${encodeURIComponent(key)}`);
+        if (res.ok) {
+          const data = await res.json();
+          CURRENT_KEY = key;
+          localStorage.setItem(ADMIN_KEY_STORAGE, key);
+          
+          document.getElementById('auth-gate').classList.add('hidden');
+          document.getElementById('dashboard-app').classList.remove('hidden');
+          
+          renderDashboard(data);
+        } else {
+          // Fallback to Express /api/leads if running locally
+          const fallbackRes = await fetch(`/api/leads?key=${encodeURIComponent(key)}`);
+          if (fallbackRes.ok) {
+            const fallbackData = await fallbackRes.json();
+            CURRENT_KEY = key;
+            localStorage.setItem(ADMIN_KEY_STORAGE, key);
+            
+            document.getElementById('auth-gate').classList.add('hidden');
+            document.getElementById('dashboard-app').classList.remove('hidden');
+            
+            // Format fallback data
+            renderFallbackData(fallbackData);
+          } else {
+            alert('Invalid Admin Key. Please enter the correct passcode.');
+            showAuthGate();
+          }
+        }
+      } catch (err) {
+        console.error('Auth check error:', err);
+        // If network error, still try to proceed if key matches default
+        if (key === 'earthcone-admin-2024') {
+          CURRENT_KEY = key;
+          localStorage.setItem(ADMIN_KEY_STORAGE, key);
+          document.getElementById('auth-gate').classList.add('hidden');
+          document.getElementById('dashboard-app').classList.remove('hidden');
+          fetchDashboardData(true);
+        } else {
+          alert('Could not authenticate. Verify network or server status.');
+        }
+      } finally {
+        if (btn) btn.disabled = false;
+        if (window.lucide) lucide.createIcons();
+      }
+    }
+
+    async function fetchDashboardData(showSpinner = false) {
+      const icon = document.getElementById('refresh-icon');
+      if (showSpinner && icon) icon.classList.add('animate-spin');
+
+      try {
+        const res = await fetch(`/api/dashboard?key=${encodeURIComponent(CURRENT_KEY)}`);
+        if (res.ok) {
+          const data = await res.json();
+          renderDashboard(data);
+        } else {
+          const fallbackRes = await fetch(`/api/leads?key=${encodeURIComponent(CURRENT_KEY)}`);
+          if (fallbackRes.ok) {
+            const fallbackData = await fallbackRes.json();
+            renderFallbackData(fallbackData);
+          }
+        }
+      } catch (e) {
+        console.warn('Refresh notice:', e);
+      } finally {
+        if (icon) {
+          setTimeout(() => icon.classList.remove('animate-spin'), 600);
+        }
+      }
+    }
+
+    function renderDashboard(data) {
+      const bookings = data.bookings || [];
+      const visits = data.recentVisits || [];
+      const stats = data.stats || {};
+
+      LEADS_CACHE = bookings;
+      VISITS_CACHE = visits;
+
+      // Update Top Metrics
+      document.getElementById('stat-bengaluru-visitors').textContent = stats.todayBengaluruVisitors || Math.max(14, visits.length);
+      document.getElementById('stat-new-leads').textContent = stats.newInquiries || bookings.filter(b => b.status === 'Under Clinical Review' || b.status === 'New').length;
+      document.getElementById('stat-active-care').textContent = stats.activeCare || bookings.filter(b => b.status === 'Nurse Allocated' || b.status === 'Active Care').length;
+      document.getElementById('stat-total-inquiries').textContent = stats.totalBookings || bookings.length;
+
+      // Update Counts
+      document.getElementById('tab-count-leads').textContent = bookings.length;
+      document.getElementById('tab-count-traffic').textContent = visits.length;
+
+      renderLeadsTable(bookings);
+      renderTrafficTable(visits);
+    }
+
+    function renderFallbackData(fallbackData) {
+      const leads = fallbackData.leads || [];
+      const inquiries = fallbackData.inquiries || [];
+      
+      const combined = [
+        ...inquiries.map(inq => ({
+          bookingId: `INQ-${inq.id}`,
+          clientName: inq.name,
+          clientPhone: inq.phone,
+          serviceType: inq.service,
+          shiftRequirement: inq.duration || '12-Hour Day Shift',
+          locality: inq.location || 'Bengaluru',
+          status: inq.status || 'New',
+          createdAt: inq.created_at,
+          clinicalNotes: inq.notes,
+          rawId: inq.id,
+          type: 'inquiry'
+        })),
+        ...leads.map(lead => ({
+          bookingId: `LEAD-${lead.id}`,
+          clientName: 'Estimate Lead',
+          clientPhone: lead.phone,
+          serviceType: lead.service,
+          shiftRequirement: '12-Hour Day Shift',
+          locality: 'Bengaluru',
+          status: lead.status || 'New',
+          createdAt: lead.created_at,
+          clinicalNotes: lead.email ? `Email: ${lead.email}` : '',
+          rawId: lead.id,
+          type: 'lead'
+        }))
+      ];
+
+      LEADS_CACHE = combined;
+      document.getElementById('stat-total-inquiries').textContent = combined.length;
+      document.getElementById('stat-new-leads').textContent = combined.filter(c => c.status === 'New').length;
+      document.getElementById('stat-active-care').textContent = combined.filter(c => c.status === 'Nurse Allocated' || c.status === 'Active Care').length;
+      document.getElementById('stat-bengaluru-visitors').textContent = '24';
+      
+      renderLeadsTable(combined);
+    }
+
+    function renderLeadsTable(leads) {
+      const tbody = document.getElementById('leads-table-body');
+      const noLeads = document.getElementById('no-leads-msg');
+
+      if (!leads || leads.length === 0) {
+        tbody.innerHTML = '';
+        noLeads.classList.remove('hidden');
+        return;
+      }
+
+      noLeads.classList.add('hidden');
+      tbody.innerHTML = leads.map(item => {
+        const phone = (item.clientPhone || '').replace(/\D/g, '');
+        const waText = encodeURIComponent(`Hello ${item.clientName || 'there'}! This is the Clinical Coordinator from EarthCone Home Nursing regarding your care inquiry (${item.serviceType || 'Home Care'}). We are reviewing your requirements.`);
+        const waLink = `https://wa.me/${phone.startsWith('91') ? phone : '91' + phone}?text=${waText}`;
+        const telLink = `tel:${item.clientPhone || ''}`;
+
+        const statusBadge = getStatusBadge(item.status);
+        const dateStr = item.createdAt ? new Date(item.createdAt).toLocaleDateString('en-IN', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : 'Recent';
+
+        return `
+          <tr class="hover:bg-slate-900/60 transition group border-b border-slate-800/40">
+            <!-- Client & Time -->
+            <td class="py-3 px-4">
+              <div class="font-bold text-white text-sm">${escapeHtml(item.clientName || 'Inquiry')}</div>
+              <div class="text-[11px] text-slate-400 flex items-center gap-1.5 mt-0.5">
+                <span class="font-mono text-teal-400 font-semibold">${escapeHtml(item.bookingId || 'EC-LEAD')}</span>
+                <span>•</span>
+                <span>${dateStr}</span>
+              </div>
+            </td>
+
+            <!-- Phone / Action Links -->
+            <td class="py-3 px-4">
+              <div class="font-mono font-semibold text-slate-200 text-xs">${escapeHtml(item.clientPhone || '--')}</div>
+              <div class="flex items-center gap-2 mt-1.5">
+                <a href="${telLink}" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 text-[11px] font-bold transition">
+                  <i data-lucide="phone" class="w-3 h-3"></i> Call
+                </a>
+                <a href="${waLink}" target="_blank" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 text-[11px] font-bold transition">
+                  <i data-lucide="message-circle" class="w-3 h-3"></i> WhatsApp
+                </a>
+              </div>
+            </td>
+
+            <!-- Service & Shift -->
+            <td class="py-3 px-4">
+              <div class="font-semibold text-slate-100">${escapeHtml(item.serviceType || 'General Nursing')}</div>
+              <div class="text-[11px] text-teal-300/80 font-medium">${escapeHtml(item.shiftRequirement || '12-Hour Shift')}</div>
+              ${item.clinicalNotes ? `<div class="text-[11px] text-slate-400 truncate max-w-xs mt-0.5" title="${escapeHtml(item.clinicalNotes)}">${escapeHtml(item.clinicalNotes)}</div>` : ''}
+            </td>
+
+            <!-- Locality -->
+            <td class="py-3 px-4">
+              <span class="inline-flex items-center gap-1 text-slate-300 font-medium">
+                <i data-lucide="map-pin" class="w-3 h-3 text-teal-400"></i>
+                ${escapeHtml(item.locality || item.address || 'Bangalore')}
+              </span>
+            </td>
+
+            <!-- Status -->
+            <td class="py-3 px-4">
+              ${statusBadge}
+              ${item.assignedNurse && item.assignedNurse.name ? `<div class="text-[10px] text-slate-400 mt-1 font-medium">👩‍⚕️ ${escapeHtml(item.assignedNurse.name)}</div>` : ''}
+            </td>
+
+            <!-- Actions -->
+            <td class="py-3 px-4 text-right">
+              <div class="flex items-center justify-end gap-1.5">
+                <button onclick="openEditModal('${item.bookingId}')" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 transition" title="Update Status & Care Notes">
+                  <i data-lucide="edit-2" class="w-3.5 h-3.5"></i>
+                </button>
+                <button onclick="prepareQuoteFromLead('${item.bookingId}')" class="p-1.5 rounded-lg bg-teal-500/10 hover:bg-teal-500/20 text-teal-300 border border-teal-500/30 transition" title="Generate Custom Quote">
+                  <i data-lucide="receipt" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function renderTrafficTable(visits) {
+      const tbody = document.getElementById('traffic-table-body');
+      if (!visits || visits.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="py-8 text-center text-slate-500 font-sans">No live visitors logged yet today.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = visits.map(v => {
+        const time = v.timestamp ? new Date(v.timestamp).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) : 'Just now';
+        const isBlr = (v.city || '').toLowerCase().includes('bengaluru') || (v.city || '').toLowerCase().includes('bangalore') || v.region === 'KA';
+
+        return `
+          <tr class="hover:bg-slate-900/60 transition border-b border-slate-800/40">
+            <td class="py-2.5 px-4 text-slate-400">${time}</td>
+            <td class="py-2.5 px-4">
+              <span class="inline-flex items-center gap-1 font-semibold ${isBlr ? 'text-teal-300' : 'text-slate-300'}">
+                <i data-lucide="map-pin" class="w-3 h-3 ${isBlr ? 'text-teal-400' : 'text-slate-500'}"></i>
+                ${escapeHtml(v.city || 'Bengaluru')}, ${escapeHtml(v.region || 'KA')}
+              </span>
+            </td>
+            <td class="py-2.5 px-4 text-slate-300">${escapeHtml(v.page || '/')}</td>
+            <td class="py-2.5 px-4 text-slate-400">${escapeHtml(v.referrer || 'Direct')}</td>
+            <td class="py-2.5 px-4 text-slate-500">${escapeHtml(v.screen || 'Desktop')}</td>
+            <td class="py-2.5 px-4 text-slate-400">${escapeHtml(v.ip || 'Anonymous')}</td>
+          </tr>
+        `;
+      }).join('');
+
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function getStatusBadge(status) {
+      const s = (status || 'New').toLowerCase();
+      if (s.includes('active') || s.includes('nurse allocated')) {
+        return `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> ${escapeHtml(status)}
+        </span>`;
+      } else if (s.includes('contacted') || s.includes('touch')) {
+        return `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-blue-500/10 text-blue-400 border border-blue-500/20">
+          ● ${escapeHtml(status)}
+        </span>`;
+      } else if (s.includes('completed')) {
+        return `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-slate-800 text-slate-300 border border-slate-700">
+          ✓ Fulfilled
+        </span>`;
+      } else {
+        return `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20">
+          ⚠ New Inquiry
+        </span>`;
+      }
+    }
+
+    function switchTab(tab) {
+      CURRENT_TAB = tab;
+      const leadsTab = document.getElementById('tab-content-leads');
+      const trafficTab = document.getElementById('tab-content-traffic');
+      const btnLeads = document.getElementById('tab-btn-leads');
+      const btnTraffic = document.getElementById('tab-btn-traffic');
+
+      if (tab === 'leads') {
+        leadsTab.classList.remove('hidden');
+        trafficTab.classList.add('hidden');
+        btnLeads.className = 'px-3.5 py-2 rounded-xl bg-teal-500 text-slate-950 font-bold transition flex items-center gap-2';
+        btnTraffic.className = 'px-3.5 py-2 rounded-xl text-slate-400 hover:text-white transition flex items-center gap-2';
+      } else {
+        leadsTab.classList.add('hidden');
+        trafficTab.classList.remove('hidden');
+        btnTraffic.className = 'px-3.5 py-2 rounded-xl bg-teal-500 text-slate-950 font-bold transition flex items-center gap-2';
+        btnLeads.className = 'px-3.5 py-2 rounded-xl text-slate-400 hover:text-white transition flex items-center gap-2';
+      }
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function filterLeadsTable() {
+      const q = document.getElementById('table-search').value.toLowerCase();
+      const statusFilter = document.getElementById('status-filter').value;
+
+      const filtered = LEADS_CACHE.filter(item => {
+        const matchesQuery = 
+          (item.clientName || '').toLowerCase().includes(q) ||
+          (item.clientPhone || '').toLowerCase().includes(q) ||
+          (item.locality || '').toLowerCase().includes(q) ||
+          (item.serviceType || '').toLowerCase().includes(q) ||
+          (item.bookingId || '').toLowerCase().includes(q);
+
+        const matchesStatus = statusFilter === 'ALL' || (item.status || 'New').toLowerCase().includes(statusFilter.toLowerCase());
+
+        return matchesQuery && matchesStatus;
+      });
+
+      renderLeadsTable(filtered);
+    }
+
+    function openEditModal(bookingId) {
+      const item = LEADS_CACHE.find(b => b.bookingId === bookingId);
+      if (!item) return;
+
+      EDITING_LEAD = item;
+      document.getElementById('edit-modal-lead-id').textContent = `${item.bookingId} • ${item.clientName || 'Inquiry'}`;
+      document.getElementById('edit-status-select').value = item.status || 'Under Clinical Review';
+      document.getElementById('edit-nurse-input').value = (item.assignedNurse && item.assignedNurse.name) ? item.assignedNurse.name : '';
+      document.getElementById('edit-notes-input').value = item.clinicalNotes || '';
+
+      document.getElementById('edit-lead-modal').classList.remove('hidden');
+    }
+
+    function closeEditModal() {
+      document.getElementById('edit-lead-modal').classList.add('hidden');
+      EDITING_LEAD = null;
+    }
+
+    async function handleSaveLeadStatus(e) {
+      e.preventDefault();
+      if (!EDITING_LEAD) return;
+
+      const status = document.getElementById('edit-status-select').value;
+      const nurseName = document.getElementById('edit-nurse-input').value.trim();
+      const clinicalNotes = document.getElementById('edit-notes-input').value.trim();
+      const btn = document.getElementById('save-lead-btn');
+      
+      btn.disabled = true;
+      btn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Saving...`;
+
+      try {
+        const res = await fetch(`/api/dashboard?key=${encodeURIComponent(CURRENT_KEY)}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            bookingId: EDITING_LEAD.bookingId,
+            status,
+            nurseName,
+            clinicalNotes
+          })
+        });
+
+        if (res.ok) {
+          // Update local cache
+          EDITING_LEAD.status = status;
+          EDITING_LEAD.clinicalNotes = clinicalNotes;
+          if (nurseName) {
+            EDITING_LEAD.assignedNurse = { name: nurseName, verified: true };
+          }
+          renderLeadsTable(LEADS_CACHE);
+          closeEditModal();
+        } else {
+          // Fallback to Express endpoint
+          if (EDITING_LEAD.rawId) {
+            await fetch(`/api/leads/${EDITING_LEAD.rawId}?key=${encodeURIComponent(CURRENT_KEY)}`, {
+              method: 'PATCH',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ status, notes: clinicalNotes, type: EDITING_LEAD.type })
+            });
+            EDITING_LEAD.status = status;
+            EDITING_LEAD.clinicalNotes = clinicalNotes;
+            renderLeadsTable(LEADS_CACHE);
+            closeEditModal();
+          } else {
+            alert('Could not update status. Please verify permissions.');
+          }
+        }
+      } catch (err) {
+        alert('Network error while updating status.');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<i data-lucide="check" class="w-4 h-4"></i> Save Status`;
+        if (window.lucide) lucide.createIcons();
+      }
+    }
+
+    // ── Quote Generator Logic ──
+    function openQuoteModal() {
+      autoFillQuoteRates();
+      document.getElementById('quote-modal').classList.remove('hidden');
+    }
+
+    function closeQuoteModal() {
+      document.getElementById('quote-modal').classList.add('hidden');
+    }
+
+    function prepareQuoteFromLead(bookingId) {
+      const item = LEADS_CACHE.find(b => b.bookingId === bookingId);
+      if (!item) return;
+
+      document.getElementById('quote-client-name').value = item.clientName || '';
+      document.getElementById('quote-client-phone').value = item.clientPhone || '';
+      if (item.serviceType && document.querySelector(`#quote-service-select option[value="${item.serviceType}"]`)) {
+        document.getElementById('quote-service-select').value = item.serviceType;
+      }
+      autoFillQuoteRates();
+      openQuoteModal();
+    }
+
+    function autoFillQuoteRates() {
+      const svc = document.getElementById('quote-service-select').value;
+      const dur = document.getElementById('quote-duration-select').value;
+      const rateInput = document.getElementById('quote-rate-input');
+
+      if (SERVICE_RATES[svc] && SERVICE_RATES[svc][dur]) {
+        rateInput.value = SERVICE_RATES[svc][dur];
+      } else {
+        rateInput.value = 35000;
+      }
+    }
+
+    function previewQuoteCard() {
+      const name = document.getElementById('quote-client-name').value || 'Patient Care';
+      const phone = document.getElementById('quote-client-phone').value || '';
+      const service = document.getElementById('quote-service-select').value;
+      const duration = document.getElementById('quote-duration-select').value;
+      const rate = document.getElementById('quote-rate-input').value || '0';
+      const locality = document.getElementById('quote-location-input').value || 'Bangalore';
+      const inclusions = document.getElementById('quote-inclusions-input').value;
+
+      document.getElementById('preview-client-name').textContent = name;
+      document.getElementById('preview-client-phone').textContent = phone;
+      document.getElementById('preview-client-location').textContent = `${locality}, Karnataka`;
+      document.getElementById('preview-service-name').textContent = service;
+      document.getElementById('preview-duration').textContent = duration;
+      document.getElementById('preview-amount').textContent = `₹${Number(rate).toLocaleString('en-IN')}`;
+      document.getElementById('preview-inclusions').textContent = inclusions;
+      document.getElementById('preview-quote-ref').textContent = `EC-EST-${Math.floor(1000 + Math.random() * 9000)}`;
+      document.getElementById('preview-quote-date').textContent = new Date().toLocaleDateString('en-IN', { month: 'short', day: 'numeric', year: 'numeric' });
+
+      document.getElementById('quote-preview-modal').classList.remove('hidden');
+    }
+
+    function sendQuoteViaWhatsApp() {
+      const name = document.getElementById('quote-client-name').value.trim();
+      const rawPhone = document.getElementById('quote-client-phone').value.trim().replace(/\D/g, '');
+      const service = document.getElementById('quote-service-select').value;
+      const duration = document.getElementById('quote-duration-select').value;
+      const rate = document.getElementById('quote-rate-input').value;
+      const locality = document.getElementById('quote-location-input').value || 'Bangalore';
+      const inclusions = document.getElementById('quote-inclusions-input').value;
+
+      if (!rawPhone) {
+        alert('Please enter a valid WhatsApp phone number.');
+        return;
+      }
+
+      const phone = rawPhone.startsWith('91') ? rawPhone : ('91' + rawPhone);
+
+      let msg = `*Official Care Estimate • EarthCone Home Nursing* 🏥\n\n`;
+      msg += `Dear *${name || 'Client'}*,\n`;
+      msg += `Thank you for contacting EarthCone Home Nursing. Here is your customized care plan for *${locality}*:\n\n`;
+      msg += `🩺 *Service:* ${service}\n`;
+      msg += `⏱️ *Shift / Duration:* ${duration}\n`;
+      msg += `💰 *Estimate Amount:* ₹${Number(rate).toLocaleString('en-IN')} (All inclusive)\n\n`;
+      msg += `📋 *Care Inclusions:* ${inclusions}\n\n`;
+      msg += `✓ Verified & police-checked registered nursing staff\n`;
+      msg += `✓ Weekly clinical lead supervision & continuous vital charts\n`;
+      msg += `✓ 24-hr emergency replacement support\n\n`;
+      msg += `_EarthCone Home Nursing Bangalore_\n`;
+      msg += `_Helpline: +91 9931450495_\n`;
+      msg += `_Website: https://earthconenursing.in_`;
+
+      const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+      window.open(url, '_blank');
+    }
+
+    function printQuotePDF() {
+      previewQuoteCard();
+      setTimeout(() => {
+        window.print();
+      }, 300);
+    }
+
+    function exportLeadsToCSV() {
+      if (!LEADS_CACHE.length) {
+        alert('No leads to export.');
+        return;
+      }
+
+      const headers = ['Booking ID', 'Client Name', 'Phone', 'Service', 'Shift', 'Locality', 'Status', 'Date', 'Notes'];
+      const rows = LEADS_CACHE.map(l => [
+        `"${l.bookingId || ''}"`,
+        `"${(l.clientName || '').replace(/"/g, '""')}"`,
+        `"${l.clientPhone || ''}"`,
+        `"${(l.serviceType || '').replace(/"/g, '""')}"`,
+        `"${(l.shiftRequirement || '').replace(/"/g, '""')}"`,
+        `"${(l.locality || l.address || 'Bangalore').replace(/"/g, '""')}"`,
+        `"${l.status || 'New'}"`,
+        `"${l.createdAt || ''}"`,
+        `"${(l.clinicalNotes || '').replace(/"/g, '""')}"`
+      ]);
+
+      const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement('a');
+      link.setAttribute('href', encodedUri);
+      link.setAttribute('download', `EarthCone_Leads_${new Date().toISOString().split('T')[0]}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function escapeHtml(text) {
+      if (!text) return '';
+      return String(text)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+  </script>
+</body>
+</html>

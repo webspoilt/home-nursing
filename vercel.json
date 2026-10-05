@@ -32,8 +32,12 @@
       "dest": "/api/user-phone.js"
     },
     {
-      "src": "/api/bookings",
-      "dest": "/api/bookings.js"
+      "src": "/api/dashboard",
+      "dest": "/api/dashboard.js"
+    },
+    {
+      "src": "/dashboard",
+      "dest": "/public/dashboard/index.html"
     },
     {
       "src": "/(.*)",

@@ -26,7 +26,30 @@ module.exports = async (req, res) => {
     const leadId = 'EC-' + Date.now().toString(36).toUpperCase();
     const targetNumber = '919931450495';
 
-    // Forward lead to Google Sheets (Webhook)
+    // ── 1. Save to MongoDB Booking collection if available ──
+    try {
+      const { connectToDatabase } = require('../lib/mongodb');
+      const Booking = require('../models/Booking');
+      await connectToDatabase();
+      await Booking.create({
+        bookingId: leadId,
+        clientName: (name || 'Estimate Lead').trim(),
+        clientPhone: phone.trim(),
+        clientEmail: (email || '').trim() || 'estimate@earthconenursing.com',
+        serviceType: service || 'General Nursing Care',
+        patientName: (name || 'Estimate Lead').trim(),
+        shiftRequirement: '12-Hour Day Shift',
+        startDate: new Date().toISOString().split('T')[0],
+        address: 'Bengaluru',
+        locality: 'Bengaluru',
+        clinicalNotes: details ? `Source: ${source || 'estimate-form'} | Notes: ${details}` : `Source: ${source || 'estimate-form'}`,
+        status: 'Under Clinical Review'
+      });
+    } catch (dbErr) {
+      console.warn('MongoDB save notice for estimate lead:', dbErr.message);
+    }
+
+    // ── 2. Forward lead to Google Sheets (Webhook) ──
     const googleSheetUrl = process.env.GOOGLE_SHEET_WEBHOOK_URL || 'https://script.google.com/macros/s/AKfycbw4E1alIwDGS1dhuPaSZuXy-B3CL_zYX6Bp882Q-VHdXPRfmDPEPjOJZKOvvCB5Uq5ydw/exec';
     if (googleSheetUrl && googleSheetUrl.startsWith('http')) {
       try {

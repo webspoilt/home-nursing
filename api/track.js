@@ -24,6 +24,26 @@ module.exports = async (req, res) => {
     const latitude = req.headers['x-vercel-ip-latitude'] || '';
     const longitude = req.headers['x-vercel-ip-longitude'] || '';
 
+    // Log to MongoDB if connected
+    try {
+      const { connectToDatabase } = require('../lib/mongodb');
+      const Visit = require('../models/Visit');
+      await connectToDatabase();
+      await Visit.create({
+        ip: clientIp,
+        city: city || 'Bengaluru',
+        region: region || 'KA',
+        country: country || 'IN',
+        coordinates: latitude && longitude ? `${latitude}, ${longitude}` : '',
+        page: page || '/',
+        referrer: referrer || 'Direct',
+        screen: screen || 'Unknown',
+        userAgent: userAgent || req.headers['user-agent'] || ''
+      });
+    } catch (dbErr) {
+      console.warn('MongoDB visit save notice:', dbErr.message);
+    }
+
     const googleSheetUrl = process.env.GOOGLE_SHEET_WEBHOOK_URL || 'https://script.google.com/macros/s/AKfycbw4E1alIwDGS1dhuPaSZuXy-B3CL_zYX6Bp882Q-VHdXPRfmDPEPjOJZKOvvCB5Uq5ydw/exec';
 
     if (googleSheetUrl && googleSheetUrl.startsWith('http')) {

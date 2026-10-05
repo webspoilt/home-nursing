@@ -108,6 +108,22 @@ function getInquiryCount() {
   return r.length ? r[0].values[0][0] : 0;
 }
 
+function updateInquiryStatus(id, status, notes) {
+  if (notes !== undefined) {
+    db.run(`UPDATE inquiries SET status = ?, notes = ? WHERE id = ?`, [status, notes, id]);
+  } else {
+    db.run(`UPDATE inquiries SET status = ? WHERE id = ?`, [status, id]);
+  }
+  save();
+  return true;
+}
+
+function updateLeadStatus(id, status) {
+  db.run(`UPDATE leads SET status = ? WHERE id = ?`, [status, id]);
+  save();
+  return true;
+}
+
 module.exports = {
   initDatabase,
   insertLead,
@@ -115,5 +131,7 @@ module.exports = {
   getAllLeads,
   getAllInquiries,
   getLeadCount,
-  getInquiryCount
+  getInquiryCount,
+  updateInquiryStatus,
+  updateLeadStatus
 };
