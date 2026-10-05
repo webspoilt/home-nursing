@@ -107,7 +107,57 @@ function doPost(e) {
 }
 
 function doGet(e) {
-  return ContentService
-    .createTextOutput(JSON.stringify({ 'status': 'EarthCone Google Sheet Webhook is active and running with Leads & Visitor Analytics tabs.' }))
-    .setMimeType(ContentService.MimeType.JSON);
+  try {
+    var doc = SpreadsheetApp.getActiveSpreadsheet();
+    var leadsSheet = doc.getSheetByName("Leads");
+    var visitorsSheet = doc.getSheetByName("Visitors");
+
+    var leadsData = [];
+    if (leadsSheet) {
+      var leadValues = leadsSheet.getDataRange().getValues();
+      if (leadValues.length > 1) {
+        var headers = leadValues[0];
+        for (var i = 1; i < leadValues.length; i++) {
+          var row = leadValues[i];
+          var leadObj = {};
+          for (var j = 0; j < headers.length; j++) {
+            leadObj[headers[j].toString().trim()] = row[j];
+          }
+          leadsData.push(leadObj);
+        }
+      }
+    }
+
+    var visitorsData = [];
+    if (visitorsSheet) {
+      var visitorValues = visitorsSheet.getDataRange().getValues();
+      if (visitorValues.length > 1) {
+        var vHeaders = visitorValues[0];
+        for (var k = Math.max(1, visitorValues.length - 100); k < visitorValues.length; k++) {
+          var vRow = visitorValues[k];
+          var vObj = {};
+          for (var m = 0; m < vHeaders.length; m++) {
+            vObj[vHeaders[m].toString().trim()] = vRow[m];
+          }
+          visitorsData.push(vObj);
+        }
+      }
+    }
+
+    return ContentService
+      .createTextOutput(JSON.stringify({
+        status: 'success',
+        spreadsheetName: doc.getName(),
+        totalLeads: leadsData.length,
+        totalVisitors: visitorsData.length,
+        leads: leadsData.reverse(),
+        visitors: visitorsData.reverse()
+      }))
+      .setMimeType(ContentService.MimeType.JSON);
+
+  } catch (err) {
+    return ContentService
+      .createTextOutput(JSON.stringify({ status: 'error', error: err.toString() }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
 }

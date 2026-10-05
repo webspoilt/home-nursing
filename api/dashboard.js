@@ -58,16 +58,74 @@ module.exports = async (req, res) => {
         console.warn('MongoDB query notice for visits:', vErr.message);
       }
 
+      let sheetLeads = [];
+      let sheetVisitors = [];
+
+      // Query Google Sheets Webhook directly if configured
+      const googleSheetUrl = process.env.GOOGLE_SHEET_WEBHOOK_URL || 'https://script.google.com/macros/s/AKfycbw4E1alIwDGS1dhuPaSZuXy-B3CL_zYX6Bp882Q-VHdXPRfmDPEPjOJZKOvvCB5Uq5ydw/exec';
+      if (googleSheetUrl && googleSheetUrl.startsWith('http')) {
+        try {
+          const sheetRes = await fetch(googleSheetUrl, { redirect: 'follow' });
+          if (sheetRes.ok) {
+            const sheetJson = await sheetRes.json();
+            if (sheetJson && sheetJson.leads) {
+              sheetLeads = sheetJson.leads.map(s => ({
+                bookingId: s['Lead ID'] || `GS-${Date.now().toString(36)}`,
+                clientName: s['Name'] || 'Lead',
+                clientPhone: s['Phone'] || '',
+                clientEmail: s['Email'] || '',
+                serviceType: s['Service'] || 'General Care',
+                shiftRequirement: s['Duration'] || '12-Hour Day Shift',
+                locality: s['Location'] || 'Bengaluru',
+                clinicalNotes: s['Notes'] || '',
+                status: s['Status'] || 'New',
+                source: s['Source'] || 'Google Sheet',
+                createdAt: s['Timestamp'] || new Date().toISOString()
+              }));
+            }
+            if (sheetJson && sheetJson.visitors) {
+              sheetVisitors = sheetJson.visitors.map(v => ({
+                timestamp: v['Timestamp'],
+                city: v['Location / City'] || 'Bengaluru',
+                page: v['Page'] || '/',
+                referrer: v['Traffic Source'] || 'Direct',
+                screen: v['Screen Size'] || '',
+                ip: v['IP Address'] || 'Anonymous'
+              }));
+            }
+          }
+        } catch (sErr) {
+          console.warn('Google Sheet fetch error:', sErr.message);
+        }
+      }
+
+      // Merge Google Sheet leads with MongoDB Bookings (deduplicate by bookingId/phone)
+      const existingIds = new Set(bookings.map(b => b.bookingId));
+      const mergedBookings = [...bookings];
+
+      for (const sl of sheetLeads) {
+        if (!existingIds.has(sl.bookingId)) {
+          mergedBookings.push(sl);
+          existingIds.add(sl.bookingId);
+        }
+      }
+
+      const mergedVisits = visits.length > 0 ? visits : sheetVisitors;
+
       return res.status(200).json({
         success: true,
-        bookings,
-        recentVisits: visits,
+        bookings: mergedBookings,
+        recentVisits: mergedVisits,
+        googleSheetSync: {
+          configured: !!googleSheetUrl,
+          sheetLeadsCount: sheetLeads.length
+        },
         stats: {
-          totalBookings: bookings.length,
-          newInquiries: bookings.filter(b => b.status === 'Under Clinical Review' || b.status === 'New').length,
-          activeCare: bookings.filter(b => b.status === 'Nurse Allocated' || b.status === 'Active Care' || b.status === 'In Touch').length,
-          todayBengaluruVisitors: todayVisitorsBengaluru || Math.max(14, visits.length),
-          todayTotalVisitors: totalVisitsToday || Math.max(22, visits.length)
+          totalBookings: mergedBookings.length,
+          newInquiries: mergedBookings.filter(b => b.status === 'Under Clinical Review' || b.status === 'New').length,
+          activeCare: mergedBookings.filter(b => b.status === 'Nurse Allocated' || b.status === 'Active Care' || b.status === 'In Touch').length,
+          todayBengaluruVisitors: todayVisitorsBengaluru || Math.max(14, mergedVisits.length),
+          todayTotalVisitors: totalVisitsToday || Math.max(22, mergedVisits.length)
         },
         timestamp: new Date().toISOString()
       });

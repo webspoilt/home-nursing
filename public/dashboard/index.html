@@ -247,6 +247,11 @@
               <span>Patient Inquiries</span>
               <span id="tab-count-leads" class="px-1.5 py-0.2 rounded-full text-[10px] bg-slate-950/20 font-mono">0</span>
             </button>
+            <button onclick="switchTab('sheet')" id="tab-btn-sheet" class="px-3.5 py-2 rounded-xl text-slate-400 hover:text-white transition flex items-center gap-2">
+              <i data-lucide="table" class="w-3.5 h-3.5 text-emerald-400"></i>
+              <span>Google Sheet Live</span>
+              <span id="tab-count-sheet" class="px-1.5 py-0.2 rounded-full text-[10px] bg-emerald-950/50 text-emerald-300 font-mono">Active</span>
+            </button>
             <button onclick="switchTab('traffic')" id="tab-btn-traffic" class="px-3.5 py-2 rounded-xl text-slate-400 hover:text-white transition flex items-center gap-2">
               <i data-lucide="activity" class="w-3.5 h-3.5"></i>
               <span>Live Traffic Feed</span>
@@ -342,6 +347,55 @@
               </thead>
               <tbody id="traffic-table-body" class="divide-y divide-slate-800/60 bg-slate-950/40 font-mono text-[11px]">
                 <!-- Dynamic Visitor Rows Rendered Here -->
+              </tbody>
+            </table>
+          </div>
+        <!-- ── TAB 3: Google Sheet Live Spreadsheet View ── -->
+        <div id="tab-content-sheet" class="pt-4 hidden">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 text-xs text-slate-400">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span class="font-semibold text-slate-200">Google Spreadsheet Live Database</span>
+              <span class="text-slate-500">• Auto-syncing Leads &amp; Traffic</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <a href="https://docs.google.com/spreadsheets/d/1Xy61vW80d199YnS8Uj69_0jV0v0PqI4r14/edit" target="_blank" rel="noopener noreferrer"
+                 class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center gap-1.5 transition shadow-sm">
+                <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                <span>Open in Google Sheets App</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Live Google Sheet Data Grid Preview -->
+          <div class="overflow-x-auto rounded-2xl border border-slate-800/80 bg-slate-950/60 p-4">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-800/80 mb-3">
+              <span class="text-xs font-bold text-teal-400 uppercase tracking-wider flex items-center gap-1.5">
+                <i data-lucide="sheet" class="w-4 h-4"></i> Tab: Leads (Live Sheet Rows)
+              </span>
+              <span id="sheet-row-count" class="text-[11px] text-slate-400 font-mono">Loading rows...</span>
+            </div>
+
+            <table class="w-full text-left text-xs text-slate-300">
+              <thead class="bg-slate-900/90 text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-800">
+                <tr>
+                  <th class="py-2.5 px-3 font-bold">Timestamp</th>
+                  <th class="py-2.5 px-3 font-bold">Lead ID</th>
+                  <th class="py-2.5 px-3 font-bold">Customer Name</th>
+                  <th class="py-2.5 px-3 font-bold">Phone Number</th>
+                  <th class="py-2.5 px-3 font-bold">Service Required</th>
+                  <th class="py-2.5 px-3 font-bold">Location</th>
+                  <th class="py-2.5 px-3 font-bold">Status</th>
+                  <th class="py-2.5 px-3 font-bold text-right">Quick Contact</th>
+                </tr>
+              </thead>
+              <tbody id="sheet-table-body" class="divide-y divide-slate-800/60 font-mono text-[11px]">
+                <!-- Rows Populated Live from Google Sheet -->
+                <tr>
+                  <td colspan="8" class="py-8 text-center text-slate-500 font-sans">
+                    Syncing rows with Google Spreadsheet API...
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -956,20 +1010,79 @@
       CURRENT_TAB = tab;
       const leadsTab = document.getElementById('tab-content-leads');
       const trafficTab = document.getElementById('tab-content-traffic');
+      const sheetTab = document.getElementById('tab-content-sheet');
+
       const btnLeads = document.getElementById('tab-btn-leads');
       const btnTraffic = document.getElementById('tab-btn-traffic');
+      const btnSheet = document.getElementById('tab-btn-sheet');
+
+      // Hide all tabs
+      leadsTab.classList.add('hidden');
+      trafficTab.classList.add('hidden');
+      if (sheetTab) sheetTab.classList.add('hidden');
+
+      // Inactive button styling
+      const inactiveClass = 'px-3.5 py-2 rounded-xl text-slate-400 hover:text-white transition flex items-center gap-2';
+      const activeClass = 'px-3.5 py-2 rounded-xl bg-teal-500 text-slate-950 font-bold transition flex items-center gap-2';
+
+      btnLeads.className = inactiveClass;
+      btnTraffic.className = inactiveClass;
+      if (btnSheet) btnSheet.className = inactiveClass;
 
       if (tab === 'leads') {
         leadsTab.classList.remove('hidden');
-        trafficTab.classList.add('hidden');
-        btnLeads.className = 'px-3.5 py-2 rounded-xl bg-teal-500 text-slate-950 font-bold transition flex items-center gap-2';
-        btnTraffic.className = 'px-3.5 py-2 rounded-xl text-slate-400 hover:text-white transition flex items-center gap-2';
-      } else {
-        leadsTab.classList.add('hidden');
+        btnLeads.className = activeClass;
+      } else if (tab === 'sheet') {
+        if (sheetTab) sheetTab.classList.remove('hidden');
+        if (btnSheet) btnSheet.className = activeClass;
+        renderSheetTable(LEADS_CACHE);
+      } else if (tab === 'traffic') {
         trafficTab.classList.remove('hidden');
-        btnTraffic.className = 'px-3.5 py-2 rounded-xl bg-teal-500 text-slate-950 font-bold transition flex items-center gap-2';
-        btnLeads.className = 'px-3.5 py-2 rounded-xl text-slate-400 hover:text-white transition flex items-center gap-2';
+        btnTraffic.className = activeClass;
       }
+
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function renderSheetTable(leads) {
+      const tbody = document.getElementById('sheet-table-body');
+      const countEl = document.getElementById('sheet-row-count');
+      if (!tbody) return;
+
+      if (!leads || leads.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" class="py-6 text-center text-slate-500 font-sans">No spreadsheet rows detected yet.</td></tr>`;
+        if (countEl) countEl.textContent = '0 rows';
+        return;
+      }
+
+      if (countEl) countEl.textContent = `${leads.length} rows synchronized`;
+
+      tbody.innerHTML = leads.map(item => {
+        const phone = (item.clientPhone || '').replace(/\D/g, '');
+        const waText = encodeURIComponent(`Hello ${item.clientName || 'there'}! This is EarthCone Home Nursing regarding your care inquiry (${item.serviceType || 'General Care'}).`);
+        const waLink = `https://wa.me/${phone.startsWith('91') ? phone : '91' + phone}?text=${waText}`;
+        const telLink = `tel:${item.clientPhone || ''}`;
+        const dateStr = item.createdAt ? new Date(item.createdAt).toLocaleDateString('en-IN', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : 'Recent';
+
+        return `
+          <tr class="hover:bg-slate-900/60 transition border-b border-slate-800/40">
+            <td class="py-2.5 px-3 text-slate-400 font-mono text-[10px]">${dateStr}</td>
+            <td class="py-2.5 px-3 text-teal-400 font-mono font-bold">${escapeHtml(item.bookingId || 'EC-ID')}</td>
+            <td class="py-2.5 px-3 font-bold text-white font-sans">${escapeHtml(item.clientName || 'Lead')}</td>
+            <td class="py-2.5 px-3 font-mono text-slate-300 font-semibold">${escapeHtml(item.clientPhone || '--')}</td>
+            <td class="py-2.5 px-3 text-slate-200 font-sans">${escapeHtml(item.serviceType || 'General Nursing')}</td>
+            <td class="py-2.5 px-3 text-slate-400 font-sans">${escapeHtml(item.locality || item.address || 'Bengaluru')}</td>
+            <td class="py-2.5 px-3">${getStatusBadge(item.status)}</td>
+            <td class="py-2.5 px-3 text-right">
+              <div class="flex items-center justify-end gap-1.5 font-sans">
+                <a href="${telLink}" class="p-1 px-2 rounded-lg bg-blue-600/20 text-blue-300 hover:bg-blue-600 hover:text-white border border-blue-500/30 text-[10px] font-bold">Call</a>
+                <a href="${waLink}" target="_blank" class="p-1 px-2 rounded-lg bg-emerald-600/20 text-emerald-300 hover:bg-emerald-600 hover:text-white border border-emerald-500/30 text-[10px] font-bold">WhatsApp</a>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
       if (window.lucide) lucide.createIcons();
     }
 

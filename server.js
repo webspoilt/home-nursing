@@ -231,8 +231,12 @@ app.get('/dashboard', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'dashboard', 'index.html'));
 });
 
-// SPA Fallback
+// SPA Fallback (Automatically routes admin.* subdomains straight to Dashboard)
 app.get('*', (req, res) => {
+  const host = req.headers.host || '';
+  if (host.startsWith('admin.')) {
+    return res.sendFile(path.join(__dirname, 'public', 'dashboard', 'index.html'));
+  }
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 

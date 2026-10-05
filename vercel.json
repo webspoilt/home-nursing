@@ -41,6 +41,16 @@
     },
     {
       "src": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "admin\\..*"
+        }
+      ],
+      "dest": "/public/dashboard/index.html"
+    },
+    {
+      "src": "/(.*)",
       "dest": "/public/$1"
     }
   ],
